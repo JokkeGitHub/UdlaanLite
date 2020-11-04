@@ -189,6 +189,10 @@ namespace UdlaansSystem
             {
                 CardReaderInput.Text = getcardUID();
             }
+            else
+            {
+                CardReaderInput.Text = "";
+            }
         }
     }
 }

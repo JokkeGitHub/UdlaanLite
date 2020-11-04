@@ -140,14 +140,14 @@
         
         <!-- Custom header -->
         <Frame x:Name="Display" Margin="0" NavigationUIVisibility="Hidden"/>
-        <TextBlock Background="#1c1b1b" VerticalAlignment="Top" Height="30" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
-        <Image Source="logo.png" MaxHeight="26" Margin="0,2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
-        <TextBlock Text="R.U.S." FontFamily="Roboto" FontSize="15" Foreground="GhostWhite" Margin="47,2,0,420" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
-        <TextBlock Text="Ringsteds Udlåns System" FontFamily="Roboto" FontSize="12" Foreground="GhostWhite" Margin="47,16,606,414" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
-        <Button Background="Transparent" Content="&#x1F5D5;" FontSize="18" VerticalAlignment="Top" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,60,0" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
-        <Button x:Name="resizeButton" Background="Transparent" Content="&gt;" FontSize="18" VerticalAlignment="Top" ToolTip="Resize" Click="Button_Click_Resize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,30,0" Style="{DynamicResource NavButtons}"/>
-        <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="710,395,0,0" VerticalAlignment="Top" Height="33" Width="68" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
+        <TextBlock Background="#1c1b1b" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16" Grid.RowSpan="2"/>
+        <Image Source="logo.png" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <TextBlock Text="R.U.S." FontFamily="Roboto" FontSize="15" Foreground="GhostWhite" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" VerticalAlignment="Bottom"/>
+        <TextBlock Text="Ringsteds Udlåns System" FontFamily="Roboto" FontSize="12" Foreground="GhostWhite" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <Button Background="Transparent" Content="-" FontSize="18" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="13" Grid.ColumnSpan="1"/>
+        <Button x:Name="resizeButton" Background="Transparent" Content="&gt;" FontSize="18" ToolTip="Resize" Click="Button_Click_Resize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="1"/>
+        <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="15" Grid.ColumnSpan="1"/>
+        
 
         <!-- CHECKBOXES -->
         <CheckBox x:Name="CheckBoxUniLogin"  Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1" IsChecked="False">
