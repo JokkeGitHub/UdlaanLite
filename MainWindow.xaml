@@ -148,9 +148,8 @@
         <Button x:Name="resizeButton" Background="Transparent" Content="&gt;" FontSize="18" ToolTip="Resize" Click="Button_Click_Resize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="1"/>
         <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="15" Grid.ColumnSpan="1"/>
         
-
         <!-- CHECKBOXES -->
-        <CheckBox x:Name="CheckBoxUniLogin"  Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1" IsChecked="False">
+        <CheckBox x:Name="CheckBoxUniLogin" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1" IsChecked="False">
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="7" ScaleY="7"/>
             </CheckBox.LayoutTransform>
