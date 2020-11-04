@@ -139,24 +139,24 @@ namespace UdlaansSystem
         {
             WindowState = WindowState.Minimized;
         }
-        ///// <summary>
-        ///// Resize
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //public void Button_Click_Resize(object sender, RoutedEventArgs e)
-        //{
-        //    if (WindowState.Equals(WindowState.Normal))
-        //    {
-        //        WindowState = WindowState.Maximized;
-        //        resizeButton.Content = ">";
-        //    }
-        //    else
-        //    {
-        //        WindowState = WindowState.Normal;
-        //        resizeButton.Content = "<";
-        //    }
-        //}
+        /// <summary>
+        /// Resize
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Button_Click_Resize(object sender, RoutedEventArgs e)
+        {
+            if (WindowState.Equals(WindowState.Normal))
+            {
+                WindowState = WindowState.Maximized;
+                resizeButton.Content = ">";
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                resizeButton.Content = "<";
+            }
+        }
         /// <summary>
         /// Close
         /// </summary>
