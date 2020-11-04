@@ -5,8 +5,177 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UdlaansSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="ZBC R.U.S." Height="450" Width="800"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Background="Gray">
+
+    <!-- Window resrouces -->
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FF0000"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="Transparent"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <SolidColorBrush x:Key="Buttons.MouseOver.Background" Color="#2b2a2a"/>
+        <Style x:Key="NavButtons" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource Buttons.MouseOver.Background}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Buttons.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CloseBtn" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Disable stretching of the window, while allowing it to be minimized from the tabbar -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="1" ResizeBorderThickness="0" CaptionHeight="0"/>
+    </WindowChrome.WindowChrome>
+    
     <Grid>
-        <Button Click="Button_Click"></Button>
+        <!-- 15 COLUMNS-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 20 ROWS -->
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Custom header -->
+        <Frame x:Name="Display" Margin="0" NavigationUIVisibility="Hidden"/>
+        <TextBlock Background="#1c1b1b" VerticalAlignment="Top" Height="30" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
+        <Image Source="logo.png" MaxHeight="26" Margin="0,2,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
+        <TextBlock Text="R.U.S." FontFamily="Roboto" FontSize="15" Foreground="GhostWhite" Margin="47,2,0,420" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
+        <TextBlock Text="Ringsteds Udlåns System" FontFamily="Roboto" FontSize="12" Foreground="GhostWhite" Margin="47,16,606,414" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
+        <Button Background="Transparent" Content="&#x1F5D5;" FontSize="18" VerticalAlignment="Top" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,30,0" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
+        <!--<Button x:Name="resizeButton" Background="Transparent" Content="&gt;" FontSize="18" VerticalAlignment="Top" ToolTip="Resize" Click="Button_Click_Resize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" Margin="0,0,30,0" Style="{DynamicResource NavButtons}"/>-->
+        <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Height="31" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="710,395,0,0" VerticalAlignment="Top" Height="33" Width="68" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16"/>
+
+        <!-- CHECKBOXES -->
+        <CheckBox x:Name="CheckBoxUniLogin"  Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1" IsChecked="False">
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="7" ScaleY="7"/>
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+
+        <CheckBox x:Name="CheckBoxCardReader"  Grid.Row="3" Grid.Column="9" Grid.RowSpan="2" Grid.ColumnSpan="1" IsChecked="False">
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="7" ScaleY="7"/>
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+
+        <!-- INPUT TEXTBOXES -->
+        <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4">UniLogin</TextBox>
+        <TextBox x:Name="CardReaderInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4" IsReadOnly="True">Kort Aflæser</TextBox>
+
+        <TextBox x:Name="NameInput" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="11">Navn</TextBox>
+
+        <!-- OUTPUT TEXTBOXES -->
+        <TextBox x:Name="UniLoginStatus" TextAlignment="Center" FontSize="32" Grid.Row="2" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette UniLogin lånt?</TextBox>
+        <TextBox x:Name="CardStatus" TextAlignment="Center" FontSize="32" Grid.Row="2" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette kortet lånt?</TextBox>
+
+        <!-- INTERACTIVE BUTTONS -->
+        <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="4"/>
+        <Button Name="BtnCheckCard" Content="Tjek kortet for lån" Click="ButtonClickGetCardUID" FontSize="32" Grid.Row="5" Grid.Column="10" Grid.ColumnSpan="4"/>
+        <Button x:Name="BtnSubmit" Content="Udlån" FontSize="32" Grid.Row="13" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button x:Name="BtnReturn" Content="Aflever" FontSize="32" Grid.Row="13" Grid.Column="11" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
     </Grid>
 </Window>
