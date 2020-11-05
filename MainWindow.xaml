@@ -154,7 +154,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        
         <!-- Custom header -->
         <Frame x:Name="Display" Margin="0" Grid.Row="2" Grid.ColumnSpan="16" Grid.RowSpan="18" NavigationUIVisibility="Hidden"/>
         <TextBlock Background="#1c1b1b" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16" Grid.RowSpan="2"/>
