@@ -179,20 +179,24 @@ namespace UdlaansSystem
         public MainWindow()
         {
             InitializeComponent();
-            SelectDevice();
-            establishContext();
+            //SelectDevice();
+            //establishContext();
         }
 
-        private void ButtonClickGetCardUID(object sender, RoutedEventArgs e)
+        private void Export_Click(object sender, RoutedEventArgs e)
         {
-            if (connectCard())
-            {
-                CardReaderInput.Text = getcardUID();
-            }
-            else
-            {
-                CardReaderInput.Text = "";
-            }
+            Display.Content = new Export();
         }
+        //private void ButtonClickGetCardUID(object sender, RoutedEventArgs e)
+        //{
+        //    if (connectCard())
+        //    {
+        //        CardReaderInput.Text = getcardUID();
+        //    }
+        //    else
+        //    {
+        //        CardReaderInput.Text = "";
+        //    }
+        //}
     }
 }
