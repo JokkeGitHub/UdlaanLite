@@ -1,44 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace UdlaansSystem
 {
-    /// <summary>
-    /// Interaction logic for Export.xaml
-    /// </summary>
     public partial class Export : Page
-    {       
-            int retCode;
-            int hCard;
-            int hContext;
-            int Protocol;
+    {
+        #region NFC Reader
+        int retCode;
+        int hCard;
+        int hContext;
+        int Protocol;
+        string readername = "ACS ACR122 0"; //Change depending on reader
         public bool connActive = false;
-        string readername = "ACS ACR122 0";      // change depending on reader
         public byte[] SendBuff = new byte[263];
         public byte[] RecvBuff = new byte[263];
         public int SendLen, RecvLen, nBytesRet, reqType, Aprotocol, dwProtocol, cbPciLength;
         public Card.SCARD_READERSTATE RdrState;
         public Card.SCARD_IO_REQUEST pioSendRequest;
-
-        public Export()
-        {
-            InitializeComponent();
-            SelectDevice();
-            establishContext();
-        }
-
         public void SelectDevice()
         {
             List<string> availableReaders = this.ListReaders();
@@ -46,7 +27,6 @@ namespace UdlaansSystem
             readername = availableReaders[0].ToString();//selecting first device
             this.RdrState.RdrName = readername;
         }
-
         public List<string> ListReaders()
         {
             int ReaderCount = 0;
@@ -74,27 +54,23 @@ namespace UdlaansSystem
             int indx = 0;
             if (ReaderCount > 0)
             {
-                // Convert reader buffer to string
+                //Convert reader buffer to string
                 while (ReadersList[indx] != 0)
                 {
-
                     while (ReadersList[indx] != 0)
                     {
                         rName = rName + (char)ReadersList[indx];
                         indx = indx + 1;
                     }
-
                     //Add reader name to list
                     AvailableReaderList.Add(rName);
                     rName = "";
                     indx = indx + 1;
-
                 }
             }
             return AvailableReaderList;
 
         }
-
         internal void establishContext()
         {
             retCode = Card.SCardEstablishContext(Card.SCARD_SCOPE_SYSTEM, 0, 0, ref hContext);
@@ -105,19 +81,6 @@ namespace UdlaansSystem
                 return;
             }
         }
-        private void BtnCheckCard_Click(object sender, RoutedEventArgs e)
-        {
-            if (connectCard())
-            {
-                string cardUID = getcardUID();
-                CardReaderInput.Text = cardUID; //displaying on text block
-            }
-            else
-            {
-                CardReaderInput.Text = "";
-            }
-        }
-
         public bool connectCard()
         {
             connActive = true;
@@ -133,7 +96,6 @@ namespace UdlaansSystem
             }
             return true;
         }
-
         private string getcardUID()//only for mifare 1k cards
         {
             string cardUID = "";
@@ -153,8 +115,33 @@ namespace UdlaansSystem
             {
                 cardUID = BitConverter.ToString(receivedUID.Take(4).ToArray()).Replace("-", string.Empty).ToLower();
             }
-
             return cardUID;
+        }
+        #endregion
+        /// <summary>
+        /// Main
+        /// </summary>
+        public Export()
+        {
+            InitializeComponent();
+            SelectDevice();
+            establishContext();
+        }
+        /// <summary>
+        /// Scan card click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCheckCard_Click(object sender, RoutedEventArgs e)
+        {
+            if (connectCard())
+            {
+                CardReaderInput.Text = getcardUID();
+            }
+            else
+            {
+                CardReaderInput.Text = "";
+            }
         }
     }
 }
