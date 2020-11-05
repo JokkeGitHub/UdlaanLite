@@ -70,6 +70,15 @@ namespace UdlaansSystem
         {
             Display.Content = new Import();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            Display.Content = new Register();
+        }
         #endregion
         public MainWindow()
         {

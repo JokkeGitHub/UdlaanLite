@@ -168,5 +168,6 @@
         <!-- Navigation -->
         <Button x:Name="Export" Grid.Row="0" Grid.Column="5" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Udlån" Cursor="Hand" Click="Export_Click" Style="{DynamicResource ButtonStyle1}"/>
         <Button x:Name="Import" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Aflevering" Cursor="Hand" Click="Import_Click" Style="{DynamicResource ButtonStyle1}"/>
+        <Button x:Name="Register" Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Registrer PC" Cursor="Hand" Click="Register_Click"  Style="{DynamicResource ButtonStyle1}"/>
     </Grid>
 </Window>
