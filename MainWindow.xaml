@@ -86,13 +86,30 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource Buttons.MouseOver.Background}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Buttons.MouseOver.Background}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <!-- Disable stretching of the window, while allowing it to be minimized from the tabbar -->
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="1" ResizeBorderThickness="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
-    
+
     <Grid>
         <!-- 15 COLUMNS-->
         <Grid.ColumnDefinitions>
@@ -137,9 +154,9 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!-- Custom header -->
-        <Frame x:Name="Display" Margin="0" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="Display" Margin="0" Grid.Row="2" Grid.ColumnSpan="16" Grid.RowSpan="18" NavigationUIVisibility="Hidden"/>
         <TextBlock Background="#1c1b1b" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16" Grid.RowSpan="2"/>
         <Image Source="logo.png" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
         <TextBlock Text="R.U.S." FontFamily="Roboto" FontSize="15" Foreground="GhostWhite" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" VerticalAlignment="Bottom"/>
@@ -147,34 +164,9 @@
         <Button Background="Transparent" Content="-" FontSize="18" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="13" Grid.ColumnSpan="1"/>
         <Button x:Name="resizeButton" Background="Transparent" Content="&gt;" FontSize="18" ToolTip="Resize" Click="Button_Click_Resize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="1"/>
         <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="15" Grid.ColumnSpan="1"/>
-        
-        <!-- CHECKBOXES -->
-        <CheckBox x:Name="CheckBoxUniLogin" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1" IsChecked="False">
-            <CheckBox.LayoutTransform>
-                <ScaleTransform ScaleX="7" ScaleY="7"/>
-            </CheckBox.LayoutTransform>
-        </CheckBox>
 
-        <CheckBox x:Name="CheckBoxCardReader"  Grid.Row="3" Grid.Column="9" Grid.RowSpan="2" Grid.ColumnSpan="1" IsChecked="False">
-            <CheckBox.LayoutTransform>
-                <ScaleTransform ScaleX="7" ScaleY="7"/>
-            </CheckBox.LayoutTransform>
-        </CheckBox>
-
-        <!-- INPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4">UniLogin</TextBox>
-        <TextBox x:Name="CardReaderInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4" IsReadOnly="True">Kort Aflæser</TextBox>
-
-        <TextBox x:Name="NameInput" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="11">Navn</TextBox>
-
-        <!-- OUTPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginStatus" TextAlignment="Center" FontSize="32" Grid.Row="2" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette UniLogin lånt?</TextBox>
-        <TextBox x:Name="CardStatus" TextAlignment="Center" FontSize="32" Grid.Row="2" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette kortet lånt?</TextBox>
-
-        <!-- INTERACTIVE BUTTONS -->
-        <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="4"/>
-        <Button Name="BtnCheckCard" Content="Tjek kortet for lån" Click="ButtonClickGetCardUID" FontSize="32" Grid.Row="5" Grid.Column="10" Grid.ColumnSpan="4"/>
-        <Button x:Name="BtnSubmit" Content="Udlån" FontSize="32" Grid.Row="13" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
-        <Button x:Name="BtnReturn" Content="Aflever" FontSize="32" Grid.Row="13" Grid.Column="11" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <!-- Navigation -->
+        <Button x:Name="Export" Grid.Row="0" Grid.Column="5" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Udlån" Cursor="Hand" Click="Export_Click" Style="{DynamicResource ButtonStyle1}"/>
+        <Button x:Name="Import" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Aflevering" Cursor="Hand" Click="Import_Click" Style="{DynamicResource ButtonStyle1}"/>
     </Grid>
 </Window>
