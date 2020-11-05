@@ -154,7 +154,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!-- Custom header -->
         <Frame x:Name="Display" Margin="0" Grid.Row="2" Grid.ColumnSpan="16" Grid.RowSpan="18" NavigationUIVisibility="Hidden"/>
         <TextBlock Background="#1c1b1b" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16" Grid.RowSpan="2"/>
@@ -166,8 +166,7 @@
         <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="15" Grid.ColumnSpan="1"/>
 
         <!-- Navigation -->
-        <StackPanel Width="300" Orientation="Horizontal" Grid.Row="0" Grid.Column="5">
-            <Button x:Name="Export" BorderThickness="0,0,0,1" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Udlån" Cursor="Hand" Click="Export_Click" Style="{DynamicResource ButtonStyle1}"/>
-        </StackPanel>
+        <Button x:Name="Export" Grid.Row="0" Grid.Column="5" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Udlån" Cursor="Hand" Click="Export_Click" Style="{DynamicResource ButtonStyle1}"/>
+        <Button x:Name="Import" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Aflevering" Cursor="Hand" Click="Import_Click" Style="{DynamicResource ButtonStyle1}"/>
     </Grid>
 </Window>

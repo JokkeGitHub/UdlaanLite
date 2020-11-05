@@ -6,9 +6,6 @@ using System.Windows.Input;
 
 namespace UdlaansSystem
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         #region WindowUI
@@ -65,6 +62,15 @@ namespace UdlaansSystem
         private void Export_Click(object sender, RoutedEventArgs e)
         {
             Display.Content = new Export();
+        }
+        /// <summary>
+        /// Import page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Import_Click(object sender, RoutedEventArgs e)
+        {
+            Display.Content = new Import();
         }
         #endregion
         public MainWindow()
