@@ -187,7 +187,7 @@ namespace UdlaansSystem
         {
             if (connectCard())
             {
-                CardReaderInput.Text = getcardUID();
+                CardReaderInput.Text = getcardUID(); // Hello
             }
             else
             {
