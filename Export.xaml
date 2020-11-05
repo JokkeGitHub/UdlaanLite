@@ -70,6 +70,7 @@
         <!-- INPUT TEXTBOXES -->
         <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4">UniLogin</TextBox>
         <TextBox x:Name="CardReaderInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4" IsReadOnly="True">Kort Aflæser</TextBox>
+        <TextBox x:Name="QRScannerInput" TextAlignment="Center" FontSize="50" Grid.Row="13" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4" IsReadOnly="True" KeyDown="QRScannerInput_KeyDown">QR Scanner</TextBox>
 
         <TextBox x:Name="NameInput" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="11">Navn</TextBox>
 
@@ -81,7 +82,6 @@
         <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="4"/>
         <Button Name="BtnCheckCard" Content="Tjek kortet for lån" Click="BtnCheckCard_Click" FontSize="32" Grid.Row="5" Grid.Column="10" Grid.ColumnSpan="4"/>
         <Button x:Name="BtnSubmit" Content="Udlån" FontSize="32" Grid.Row="13" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
-        <Button x:Name="BtnReturn" Content="Aflever" FontSize="32" Grid.Row="13" Grid.Column="11" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
 
     </Grid>
 </Page>
