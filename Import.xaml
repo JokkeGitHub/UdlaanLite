@@ -62,7 +62,7 @@
 
         <!-- INTERACTIVE BUTTONS -->
         <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="4"/>
-        <Button x:Name="BtnReturn" Content="Aflever" FontSize="32" Grid.Row="13" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button x:Name="BtnReturn" Content="Aflever" FontSize="32" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
 
 
     </Grid>

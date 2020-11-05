@@ -55,17 +55,20 @@
         </Grid.RowDefinitions>
 
         <!-- INPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4">UniLogin</TextBox>
-        <TextBox x:Name="QRScannerInput" TextAlignment="Center" FontSize="50" Grid.Row="13" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4" IsReadOnly="True" KeyDown="QRScannerInput_KeyDown">QR Scanner</TextBox>
-
-        <TextBox x:Name="NameInput" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="11">Navn</TextBox>
+        <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4">UniLogin</TextBox>
+        <TextBox x:Name="NameInput" TextAlignment="Center" FontSize="50" Grid.Row="7" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="11">Navn</TextBox>
+        <TextBox x:Name="PhonenumberInput" TextAlignment="Center" FontSize="50" Grid.Row="10" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="11">Telefonnummer</TextBox>
+        
+        <!-- QR CODE TEXTBOXES -->
+        <TextBox x:Name="QRScannerUniLogin" TextAlignment="Center" FontSize="50" Grid.Row="2" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4" IsReadOnly="True" KeyDown="QRScannerUniLogin_KeyDown">QR Scanner</TextBox>
+        <TextBox x:Name="QRScannerSerialNumber" TextAlignment="Center" FontSize="50" Grid.Row="13" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="11" IsReadOnly="True" KeyDown="QRScannerSerialNumber_KeyDown">QR PC Serienummer</TextBox>
 
         <!-- OUTPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginStatus" TextAlignment="Center" FontSize="32" Grid.Row="2" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette UniLogin lånt?</TextBox>
+        <TextBox x:Name="UniLoginStatus" TextAlignment="Center" FontSize="32" Grid.Row="1" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette UniLogin lånt?</TextBox>
 
         <!-- INTERACTIVE BUTTONS -->
-        <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="4"/>
-        <Button x:Name="BtnSubmit" Content="Udlån" FontSize="32" Grid.Row="13" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="4"/>
+        <Button x:Name="BtnSubmit" Content="Udlån" FontSize="32" Grid.Row="17" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
 
     </Grid>
 </Page>
