@@ -41,9 +41,13 @@ CREATE or REPLACE PROCEDURE tlf_loan(
 )
 language plpgsql as $$
 begin
-	INSERT INTO OneTimeLoan VALUES (tlf_number, qr_id_pc, todays_date);
-	UPDATE pc SET in_stock = false WHERE QR_ID = qr_id_pc;
-	commit;
+	if ((Select in_stock from pc where qr_id = qr_id_pc) = true) then
+		INSERT INTO OneTimeLoan VALUES (tlf_number, qr_id_pc, todays_date);
+		UPDATE pc SET in_stock = false WHERE QR_ID = qr_id_pc;
+		commit;
+	else
+		raise info 'Computer id er ikke på lager %', now();
+	end if;
 end;$$;
 
 CREATE or REPLACE PROCEDURE tlf_return(
@@ -51,9 +55,13 @@ CREATE or REPLACE PROCEDURE tlf_return(
 )
 Language plpgsql as $$
 begin
-	Delete from OneTimeLoan Where QR_id = qr_id_pc;
-	Update pc set in_stock = true Where QR_ID = qr_id_pc;
-	commit;
+	if ((Select in_stock from pc where qr_id = qr_id_pc) = false) then
+		Delete from OneTimeLoan Where QR_id = qr_id_pc;
+		Update pc set in_stock = true Where QR_ID = qr_id_pc;
+		commit;
+	else
+		raise info 'Computer id er allerde på lager %', now();
+	end if;
 end;$$;
 
 CREATE or REPLACE PROCEDURE _Udlaan(
@@ -75,7 +83,11 @@ CREATE or REPLACE PROCEDURE _aflever(
 )
 language plpgsql as $$
 begin
-	Delete From laaner where QR_ID = qr_id_pc;
-	Update pc set in_stock = true Where QR_ID = qr_id_pc;
-	commit;
+	if ((Select in_stock from pc where qr_id = qr_id_pc) = false) then
+		if((Select laanerid from udlaant where laanerid = laanerID) = laanerID and (Select qr_id from udlaant where qr_id = qr_id_pc) = qr_id_pc) then
+			Delete From laaner where QR_ID = qr_id_pc;
+			Update pc set in_stock = true Where QR_ID = qr_id_pc;
+			commit;
+		end if;
+	end if;
 end;$$;
