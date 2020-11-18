@@ -72,9 +72,17 @@ CREATE or REPLACE PROCEDURE _Udlaan(
 )
 language plpgsql as $$
 begin
-	insert into Udlaant Values (laanerID, qr_id_pc, start_date, end_date);
-	Update pc set in_stock = false Where QR_ID = qr_id_pc;
-	commit;
+	if ((Select in_stock from pc where qr_id = qr_id_pc) = true) then
+		if((Select laanerid from udlaant where laanerid = laanerID) = laanerID and (Select qr_id from udlaant where qr_id = qr_id_pc) = qr_id_pc) then
+			insert into Udlaant Values (laanerID, qr_id_pc, start_date, end_date);
+			Update pc set in_stock = false Where QR_ID = qr_id_pc;
+			commit;
+		else 
+			raise info 'Computer id eller laaner findes ikke i systemet%', now();
+		end if;
+	else
+		raise info 'Computer id er ikke på lager %', now();
+	end if;
 end;$$;
 
 CREATE or REPLACE PROCEDURE _aflever(
