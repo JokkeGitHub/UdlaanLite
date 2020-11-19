@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,9 +28,30 @@ namespace UdlaansSystem
             InitializeComponent();
         }
 
+        public void CreateFoldersPCQR()
+        {
+            // Specify the directory you want to manipulate.
+            string folderPathPC = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesPC";
+
+            try
+            {
+                // Determine whether the directory exists.
+                if (Directory.Exists(folderPathPC))
+                {
+                    return;
+                }
+                // Try to create the directory.
+                DirectoryInfo di = Directory.CreateDirectory(folderPathPC);
+            }
+            catch { }
+            finally { }
+        }
+
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
-
+            // Refer to field check method
         }
+        
+        // Make a mathed which checks if the field is empty
     }
 }
