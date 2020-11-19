@@ -75,7 +75,6 @@
         <TextBox x:Name="DateInput" TextAlignment="Center" FontSize="32" MouseRightButtonDown="DateInput_MouseRightButtonDown" Grid.Row="3" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4">Vælg dato</TextBox>
         
         <!-- QR CODE TEXTBOXES -->
-        <TextBox x:Name="QRScannerUniLogin" TextAlignment="Center" FontSize="50" Grid.Row="17" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4" IsReadOnly="True" KeyDown="QRScannerUniLogin_KeyDown">QR Scanner</TextBox>
         <TextBox x:Name="QRScannerSerialNumber" TextAlignment="Center" FontSize="50" Grid.Row="13" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="12" KeyDown="QRScannerSerialNumber_KeyDown"></TextBox>
 
         <!-- OUTPUT TEXTBOXES -->

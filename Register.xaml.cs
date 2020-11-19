@@ -24,5 +24,10 @@ namespace UdlaansSystem
         {
             InitializeComponent();
         }
+
+        private void BtnRegister_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

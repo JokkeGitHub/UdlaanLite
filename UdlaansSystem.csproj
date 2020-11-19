@@ -62,9 +62,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExportSQLConnections.cs" />
+    <Compile Include="ImportSQLConnection.cs" />
+    <Compile Include="ObjectLoan.cs" />
+    <Compile Include="ObjectLoaner.cs" />
+    <Compile Include="ObjectPC.cs" />
     <Compile Include="Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RegisterSQLConnections.cs" />
     <Page Include="Export.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

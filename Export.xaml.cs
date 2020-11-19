@@ -62,31 +62,6 @@ namespace UdlaansSystem
             finally { }
         }
 
-
-        private void QRScannerUniLogin_KeyDown(object sender, KeyEventArgs e)
-        {
-            string loanerQR = "udlaan" + UniLoginInput.Text;
-
-            if (e.Key == Key.Enter)
-            {
-                try
-                {
-                    QRScannerUniLogin.Text = "Write some data: ";
-                    WebClient client = new WebClient();
-                    client.DownloadFile($@"https://api.qrserver.com/v1/create-qr-code/?color=255-0-0&bgcolor=255-255-255&format=png&data={loanerQR}", $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesLoaner\{loanerQR}.png");
-                }
-                catch (Exception)
-                { }
-                if (File.Exists($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesLoaner\{loanerQR}.png"))
-                {
-                    QRScannerUniLogin.Text = "Success";
-                    Process.Start($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesLoaner\{loanerQR}.png");
-                }
-                else
-                    QRScannerUniLogin.Text = "Failed";
-            }
-        }
-
         private void QRScannerSerialNumber_KeyDown(object sender, KeyEventArgs e)
         {
             string dummySerial = "W5tR213lIm";
