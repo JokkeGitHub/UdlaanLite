@@ -113,5 +113,16 @@ namespace UdlaansSystem
                     QRScannerSerialNumber.Text = "Failed";
             }
         }
+
+        private void DateInput_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true; 
+
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                ContextMenu cm = (ContextMenu)Resources["cmCalendar"];
+                cm.IsOpen = true;
+            }
+        }
     }
 }
