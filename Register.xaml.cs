@@ -49,11 +49,6 @@ namespace UdlaansSystem
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
-            // Refer to field check method
-            //public static string qrID;
-            //public static string serialNumber;
-            //public static string pcModel;
-            //public static bool inStock;
             string qrId = QRIDInput.Text;
             string serialNumber = SerialNumberInput.Text;
             string pcModel = PcModelInput.Text;

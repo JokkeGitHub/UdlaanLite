@@ -21,22 +21,16 @@ namespace UdlaansSystem
             RegisterSQLConnections.CreatePC(addPC.QRID, addPC.SerialNumber, addPC.PCModel, addPC.InStock);
         }
 
-
-        public static string uniLogin;
-        public static string name;
-        public static string phoneNumber;
-        public static bool isStudent;
-
         public static DateTime startDate;
         public static DateTime endDate;
 
-        public static void ExportToLoaner()
+        public static void ExportToLoaner(string uniLogin, string name, string phone, int isStudent)
         {
-            ObjectLoaner addLoaner = new ObjectLoaner(uniLogin, name, phoneNumber, isStudent);
-            ExportSQLConnections.CreateLoaner(addLoaner.UNILogin, addLoaner.Name, addLoaner.PhoneNumber, addLoaner.IsStudent);
+            ObjectLoaner addLoaner = new ObjectLoaner(uniLogin, name, phone, isStudent);
+            ExportSQLConnections.CreateLoaner(addLoaner.UNILogin, addLoaner.Name, addLoaner.Phone, addLoaner.IsStudent);
 
-            ObjectLoan addLoan = new ObjectLoan(startDate, endDate);
-            ExportSQLConnections.CreateLoan(addLoan.StartDate, addLoan.EndDate);
+            //ObjectLoan addLoan = new ObjectLoan(startDate, endDate);
+            //ExportSQLConnections.CreateLoan(addLoan.StartDate, addLoan.EndDate);
         }
     }
 }

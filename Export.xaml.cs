@@ -18,7 +18,6 @@ namespace UdlaansSystem
         public Export()
         {
             InitializeComponent();
-            CreateFolders();
 
         }
         /// <summary>
@@ -27,67 +26,6 @@ namespace UdlaansSystem
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// 
-
-
-        public void CreateFolders()
-        {
-            // Specify the directory you want to manipulate.
-            string folderPathPC = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesPC";
-            string folderPathLoaner = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesLoaner";
-
-            try
-            {
-                // Determine whether the directory exists.
-                if (Directory.Exists(folderPathPC))
-                {
-                    return;
-                }
-                // Try to create the directory.
-                DirectoryInfo di = Directory.CreateDirectory(folderPathPC);
-            }
-            catch { }
-            finally { }
-
-            try
-            {
-                // Determine whether the directory exists.
-                if (Directory.Exists(folderPathLoaner))
-                {
-                    return;
-                }
-                // Try to create the directory.
-                DirectoryInfo di = Directory.CreateDirectory(folderPathLoaner);
-            }
-            catch { }
-            finally { }
-        }
-
-        private void QRScannerSerialNumber_KeyDown(object sender, KeyEventArgs e)
-        {
-            string dummySerial = "W5tR213lIm";
-
-            string computerQR = "SkpRiIt" + dummySerial;
-
-            if (e.Key == Key.Enter)
-            {
-                try
-                {
-                    QRScannerSerialNumber.Text = "Write some data: ";
-                    WebClient client = new WebClient();
-                    client.DownloadFile($@"https://api.qrserver.com/v1/create-qr-code/?color=255-0-0&bgcolor=255-255-255&format=png&data={computerQR}", $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesPC\{computerQR}.png");
-                }
-                catch (Exception)
-                { }
-                if (File.Exists($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesPC\{computerQR}.png"))
-                {
-                    // QRScannerSerialNumber.Text = "Success";
-                    QRScannerSerialNumber.Text = dummySerial;
-                    Process.Start($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesPC\{computerQR}.png");
-                }
-                else
-                    QRScannerSerialNumber.Text = "Failed";
-            }
-        }
 
         private void DateInput_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -98,6 +36,17 @@ namespace UdlaansSystem
                 ContextMenu cm = (ContextMenu)Resources["cmCalendar"];
                 cm.IsOpen = true;
             }
+        }
+
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            string uniLogin = UniLoginInput.Text;
+            string name = NameInput.Text;
+            string phone = PhonenumberInput.Text;
+            int isStudent = 1;
+            // Lav en checkbox til elev
+
+            SQLManager.ExportToLoaner(uniLogin, name, phone, isStudent);
         }
     }
 }

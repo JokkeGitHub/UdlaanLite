@@ -10,8 +10,8 @@ namespace UdlaansSystem
     {
         private string _uniLogin;
         private string _name;
-        private string _phoneNumber;
-        private bool _isStudent;
+        private string _phone;
+        private int _isStudent;
 
         public string UNILogin
         {
@@ -35,19 +35,19 @@ namespace UdlaansSystem
                 this._name = value;
             }
         }
-        public string PhoneNumber
+        public string Phone
         {
             get
             {
-                return this._phoneNumber;
+                return this._phone;
             }
             set
             {
-                this._phoneNumber = value;
+                this._phone = value;
             }
         }
 
-        public bool IsStudent
+        public int IsStudent
         {
             get
             {
@@ -59,11 +59,11 @@ namespace UdlaansSystem
             }
         }
 
-        public ObjectLoaner(string _uniLogin, string _name, string _phonenUmber, bool _isStudent)
+        public ObjectLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
         {
             UNILogin = _uniLogin;
             Name = _name;
-            PhoneNumber = _phoneNumber;
+            Phone = _phone;
             IsStudent = _isStudent;
         }
     }

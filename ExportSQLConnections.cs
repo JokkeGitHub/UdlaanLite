@@ -11,25 +11,29 @@ namespace UdlaansSystem
     class ExportSQLConnections
     {
 
-        public static void CreateLoaner(string _uniLogin, string _name, string _phoneNumber, bool _isStudent)
+        public static void CreateLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
         {
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO laaner(login, name, tlf_Number, is_student) VALUES (@login, @name, @tlf_Number, @is_student)";
+            cmd.CommandText = @"INSERT INTO loaner(login, name, phone, isStudent) VALUES (@login, @name, @phone, @isStudent)";
             cmd.Parameters.AddWithValue("@login", _uniLogin);
             cmd.Parameters.AddWithValue("@name", _name);
-            cmd.Parameters.AddWithValue("@tlf_Number", _phoneNumber);
-            cmd.Parameters.AddWithValue("@is_student", _isStudent);
+            cmd.Parameters.AddWithValue("@phone", _phone);
+            cmd.Parameters.AddWithValue("@isStudent", _isStudent);
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             conn.Close();
         }
+
         public static void CreateLoan(DateTime _startDate, DateTime _endDate)
         {
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlCommand cmd = new SqlCommand();
+
             // Find ud af det med de foreign keys!
             cmd.Connection = conn;
 
