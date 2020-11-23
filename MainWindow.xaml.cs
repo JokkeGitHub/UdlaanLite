@@ -83,6 +83,7 @@ namespace UdlaansSystem
         public MainWindow()
         {
             InitializeComponent();
+            Display.Content = new Export();
         }
     }
 }

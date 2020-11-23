@@ -19,6 +19,8 @@ namespace UdlaansSystem
         {
             InitializeComponent();
 
+            DateInput.Text = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+            DateInput.DisplayDateStart = DateTime.Now.AddDays(1);
         }
         /// <summary>
         /// Scan card click
@@ -40,11 +42,12 @@ namespace UdlaansSystem
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            string uniLogin = UniLoginInput.Text;
+            string uniLogin = UniLoginInput.Text; // Lav automatisk tjekker til UniLogin / Primary key
             string name = NameInput.Text;
             string phone = PhonenumberInput.Text;
             int isStudent = 1;
             // Lav en checkbox til elev
+
 
             SQLManager.ExportToLoaner(uniLogin, name, phone, isStudent);
         }
