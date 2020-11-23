@@ -9,12 +9,12 @@ namespace UdlaansSystem
     class SQLManager
     { 
         // Lav noget der henter værdier fra XAML pages, eller gør det som i landlyst
-        public static string qrID;
-        public static string serialNumber;
-        public static string pcModel;
-        public static bool inStock;
+        //public static string qrID;
+        //public static string serialNumber;
+        //public static string pcModel;
+        //public static bool inStock;
 
-        public static void RegisterPC()
+        public static void RegisterPC(string qrID, string serialNumber, string pcModel, int inStock)
         {
             ObjectPC addPC = new ObjectPC(qrID, serialNumber, pcModel, inStock);
 

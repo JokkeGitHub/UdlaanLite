@@ -10,11 +10,12 @@ namespace UdlaansSystem
 {
     class ExportSQLConnections
     {
-        public static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["INDSÆT-DB-NAVN-HER"].ToString());
-        public static SqlCommand cmd = new SqlCommand();
 
         public static void CreateLoaner(string _uniLogin, string _name, string _phoneNumber, bool _isStudent)
         {
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlCommand cmd = new SqlCommand();
+
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO laaner(login, name, tlf_Number, is_student) VALUES (@login, @name, @tlf_Number, @is_student)";

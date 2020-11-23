@@ -9,19 +9,20 @@ using System.Configuration;
 namespace UdlaansSystem
 {
     class RegisterSQLConnections
-    {
-        public static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["INDSÆT-DB-NAVN-HER"].ToString());
-        public static SqlCommand cmd = new SqlCommand();
 
-        public static void CreatePC(string _qrID, string _serialNumber, string _pcModel, bool _inStock)
+    {
+        public static void CreatePC(string _qrID, string _serialNumber, string _pcModel, int _inStock)
         {
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlCommand cmd = new SqlCommand();
+
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Costumers (QR_ID, loebe_nummer, pc_model, in_stock) VALUES (@QR_ID, @loebe_nummer, @pc_model, @in_stock)";
-            cmd.Parameters.AddWithValue("@QR_ID", _qrID);
-            cmd.Parameters.AddWithValue("@loebe_nummer", _serialNumber);
-            cmd.Parameters.AddWithValue("@pc_model", _pcModel);
-            cmd.Parameters.AddWithValue("@in_stock", _inStock);
+            cmd.CommandText = @"INSERT INTO pc (qrId, serial, model, inStock) VALUES (@qrId, @serial, @model, @inStock)";
+            cmd.Parameters.AddWithValue("@qrId", _qrID);
+            cmd.Parameters.AddWithValue("@serial", _serialNumber);
+            cmd.Parameters.AddWithValue("@model", _pcModel);
+            cmd.Parameters.AddWithValue("@inStock", _inStock);
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();

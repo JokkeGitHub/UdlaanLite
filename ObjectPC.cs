@@ -11,7 +11,7 @@ namespace UdlaansSystem
         private string _qrID;
         private string _serialNumber;
         private string _pcModel;
-        private bool _inStock;
+        private int _inStock;
 
         public string QRID
         {
@@ -49,7 +49,7 @@ namespace UdlaansSystem
             }
         }
 
-        public bool InStock
+        public int InStock
         {
             get
             {
@@ -61,7 +61,7 @@ namespace UdlaansSystem
             }
         }
 
-        public ObjectPC(string _qrID, string _serialNumber, string _pcModel, bool _inStock)
+        public ObjectPC(string _qrID, string _serialNumber, string _pcModel, int _inStock)
         {
             QRID = _qrID;
             SerialNumber = _serialNumber;
