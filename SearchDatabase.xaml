@@ -1,0 +1,72 @@
+﻿<Page x:Class="UdlaansSystem.SearchDatabase"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UdlaansSystem"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SearchDatabase">
+
+    <Grid>
+
+        <!-- 15 COLUMNS-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 20 ROWS -->
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- BUTTONS -->
+        <Button Name="BtnShowLoaners" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis lånere</Button>
+
+        <!-- LABELS -->
+        <Label Name="labelColumn1" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2"></Label>
+        <Label Name="labelColumn2" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="3"></Label>
+        <Label Name="labelColumn3" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="3"></Label>
+        <Label Name="labelColumn4" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="9" Grid.RowSpan="1" Grid.ColumnSpan="3"></Label>
+        <Label Name="labelColumn5" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="3"></Label>
+
+        <!-- LISTBOX -->
+        <ListBox Name="Test" FontSize="22" Grid.Row="4" Grid.Column="1" Grid.RowSpan="15" Grid.ColumnSpan="14"></ListBox>
+
+
+    </Grid>
+</Page>

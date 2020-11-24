@@ -21,6 +21,8 @@ namespace UdlaansSystem
 
             DateInput.Text = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
             DateInput.DisplayDateStart = DateTime.Now.AddDays(1);
+
+            IsStudentCheckBox.IsChecked = true;
         }
         /// <summary>
         /// Scan card click
@@ -42,14 +44,31 @@ namespace UdlaansSystem
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            string uniLogin = UniLoginInput.Text; // Lav automatisk tjekker til UniLogin / Primary key
-            string name = NameInput.Text;
+            string uniLogin = UniLoginInput.Text.ToLower(); // Lav automatisk tjekker til UniLogin / Primary key
+            string name = NameInput.Text.ToLower();
             string phone = PhonenumberInput.Text;
             int isStudent = 1;
             // Lav en checkbox til elev
-
+            // Tjek db om pc er lånt ud
+            // Måske lav db table til lærere, og kør afhængigt af checkbox
 
             SQLManager.ExportToLoaner(uniLogin, name, phone, isStudent);
+        }
+
+        private void IsStudentCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (IsStudentCheckBox.IsChecked == true)
+            {
+                IsTeacherCheckBox.IsChecked = false;
+            }
+        }
+
+        private void IsTeacherCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (IsTeacherCheckBox.IsChecked == true)
+            {
+                IsStudentCheckBox.IsChecked = false;
+            }
         }
     }
 }

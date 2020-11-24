@@ -85,5 +85,10 @@ namespace UdlaansSystem
             InitializeComponent();
             Display.Content = new Export();
         }
+
+        private void SearchDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            Display.Content = new SearchDatabase();
+        }
     }
 }

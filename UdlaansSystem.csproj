@@ -90,6 +90,9 @@
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegisterSQLConnections.cs" />
+    <Compile Include="SearchDatabase.xaml.cs">
+      <DependentUpon>SearchDatabase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SQLManager.cs" />
     <Page Include="Export.xaml">
       <SubType>Designer</SubType>
@@ -118,6 +121,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Register.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchDatabase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
