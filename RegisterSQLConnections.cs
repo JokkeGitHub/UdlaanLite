@@ -11,21 +11,21 @@ namespace UdlaansSystem
     class RegisterSQLConnections
 
     {
-        public static void CreatePC(string _qrID, string _serialNumber, string _pcModel, int _inStock)
+        public static void CreatePC(string _qrID, string _serialNumber, string _pcModel)
         {
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO pc (qrId, serial, model, inStock) VALUES (@qrId, @serial, @model, @inStock)";
+            cmd.CommandText = @"INSERT INTO pc (qrId, serial, model) VALUES (@qrId, @serial, @model)";
             cmd.Parameters.AddWithValue("@qrId", _qrID);
             cmd.Parameters.AddWithValue("@serial", _serialNumber);
             cmd.Parameters.AddWithValue("@model", _pcModel);
-            cmd.Parameters.AddWithValue("@inStock", _inStock);
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
             conn.Close();
         }
     }

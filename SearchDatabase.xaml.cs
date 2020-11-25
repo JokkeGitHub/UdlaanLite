@@ -29,7 +29,7 @@ namespace UdlaansSystem
 
         private void BtnShowLoaners_Click(object sender, RoutedEventArgs e)
         {
-            DoStuff();
+            LoanerColumns();
 
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
 
@@ -46,22 +46,98 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                Test.Items.Add(dataRow["login"].ToString() + ", " + dataRow["name"].ToString() + ", " + dataRow["phone"].ToString() + ", " + dataRow["isStudent"].ToString());
-
-                // if isStudent = true, test += ja osv
+                DataGridView.Items.Add( new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = dataRow["isStudent"].ToString() });
+                 // if isStudent = true, test += ja osv
             }
 
             conn.Close();
         }
 
-        private void DoStuff()
+        private void LoanerColumns()
         {
-            Test.Items.Clear();
+            DataGridView.Items.Clear();
 
-            labelColumn1.Content = "UNI Login:";
-            labelColumn2.Content = "Navn:";
-            labelColumn3.Content = "Telefon:";
-            labelColumn4.Content = "Elev :";
+            ((GridView)DataGridView.View).Columns[0].Header = "UNI Login :";
+            ((GridView)DataGridView.View).Columns[1].Header = "Navn :";
+            ((GridView)DataGridView.View).Columns[2].Header = "Telefon :";
+            ((GridView)DataGridView.View).Columns[3].Header = "Elev :";
+            ((GridView)DataGridView.View).Columns[4].Header = "";
+            //((GridView)Test2.View).Columns[0].Header = "UNI Login:";
+        }
+
+        private void BtnShowPCs_Click(object sender, RoutedEventArgs e)
+        {
+            PCColumns();
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT qrId, serial, model FROM PC";
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["serial"].ToString(), Column3 = dataRow["model"].ToString() });
+            }
+
+            conn.Close();
+        }
+
+        private void PCColumns()
+        {
+            DataGridView.Items.Clear();
+
+            ((GridView)DataGridView.View).Columns[0].Header = "QR ID :";
+            ((GridView)DataGridView.View).Columns[1].Header = "Løbenummer :";
+            ((GridView)DataGridView.View).Columns[2].Header = "Model :";
+            ((GridView)DataGridView.View).Columns[3].Header = "";
+            ((GridView)DataGridView.View).Columns[4].Header = "";
+        }
+
+        private void BtnShowLoans_Click(object sender, RoutedEventArgs e)
+        {
+            LoanColumns();
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT loanId, uniLogin, qrId, endDate FROM Loan";
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["uniLogin"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["endDate"].ToString() });
+            }
+
+            conn.Close();
+
+        }
+
+        private void LoanColumns()
+        {
+            DataGridView.Items.Clear();
+
+            ((GridView)DataGridView.View).Columns[0].Header = "Lån ID :";
+            ((GridView)DataGridView.View).Columns[1].Header = "UNI Login :";
+            ((GridView)DataGridView.View).Columns[2].Header = "QR ID :";
+            ((GridView)DataGridView.View).Columns[3].Header = "Slut Dato";
+            ((GridView)DataGridView.View).Columns[4].Header = "";
+
+            // + Låner navn og telefon, måske model eller istedet for QR ID
         }
     }
 }

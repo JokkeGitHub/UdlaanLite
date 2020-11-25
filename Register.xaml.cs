@@ -52,9 +52,8 @@ namespace UdlaansSystem
             string qrId = QRIDInput.Text;
             string serialNumber = SerialNumberInput.Text;
             string pcModel = PcModelInput.Text;
-            int inStock = 1;
 
-            SQLManager.RegisterPC(qrId, serialNumber, pcModel, inStock);
+            SQLManager.RegisterPC(qrId, serialNumber, pcModel);
         }
         
         // Make a mathed which checks if the field is empty

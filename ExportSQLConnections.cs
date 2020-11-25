@@ -43,6 +43,7 @@ namespace UdlaansSystem
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
             conn.Close();
         }
     }

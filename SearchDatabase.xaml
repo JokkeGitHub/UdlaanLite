@@ -55,17 +55,33 @@
         </Grid.RowDefinitions>
 
         <!-- BUTTONS -->
-        <Button Name="BtnShowLoaners" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis lånere</Button>
+        <Button Name="BtnShowLoaners" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Lånere</Button>
+        <Button Name="BtnShowPCs" FontSize="26" Click="BtnShowPCs_Click" Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis PC'er</Button>
+        <Button Name="BtnShowLoans" FontSize="26" Click="BtnShowLoans_Click" Grid.Row="1" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Udlån</Button>
 
-        <!-- LABELS -->
-        <Label Name="labelColumn1" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2"></Label>
-        <Label Name="labelColumn2" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="3"></Label>
-        <Label Name="labelColumn3" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="3"></Label>
-        <Label Name="labelColumn4" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="9" Grid.RowSpan="1" Grid.ColumnSpan="3"></Label>
-        <Label Name="labelColumn5" Foreground="White" BorderThickness="2" BorderBrush="White" Content="" FontSize="22" Padding="0" Grid.Row="3" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="3"></Label>
+        <!-- LISTVIEW -->
+        <ListView Name="DataGridView" FontSize="22" Grid.Row="3" Grid.Column="1" Grid.RowSpan="16" Grid.ColumnSpan="14">
 
-        <!-- LISTBOX -->
-        <ListBox Name="Test" FontSize="22" Grid.Row="4" Grid.Column="1" Grid.RowSpan="15" Grid.ColumnSpan="14"></ListBox>
+            <ListView.Resources>
+                <DataTemplate x:Key="Template">
+                    <TextBlock HorizontalAlignment="Left" Text="{Binding}"/>
+                </DataTemplate>
+                <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                </Style>
+            </ListView.Resources>
+            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column1}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="250" DisplayMemberBinding="{Binding Column2}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column3}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column4}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column5}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+            
+        </ListView>
 
 
     </Grid>

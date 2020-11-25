@@ -14,11 +14,11 @@ namespace UdlaansSystem
         //public static string pcModel;
         //public static bool inStock;
 
-        public static void RegisterPC(string qrID, string serialNumber, string pcModel, int inStock)
+        public static void RegisterPC(string qrID, string serialNumber, string pcModel)
         {
-            ObjectPC addPC = new ObjectPC(qrID, serialNumber, pcModel, inStock);
+            ObjectPC addPC = new ObjectPC(qrID, serialNumber, pcModel);
 
-            RegisterSQLConnections.CreatePC(addPC.QRID, addPC.SerialNumber, addPC.PCModel, addPC.InStock);
+            RegisterSQLConnections.CreatePC(addPC.QRID, addPC.SerialNumber, addPC.PCModel);
         }
 
         public static DateTime startDate;

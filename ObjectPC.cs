@@ -11,7 +11,6 @@ namespace UdlaansSystem
         private string _qrID;
         private string _serialNumber;
         private string _pcModel;
-        private int _inStock;
 
         public string QRID
         {
@@ -48,25 +47,12 @@ namespace UdlaansSystem
                 this._pcModel = value;
             }
         }
-
-        public int InStock
-        {
-            get
-            {
-                return this._inStock;
-            }
-            set
-            {
-                this._inStock = value;
-            }
-        }
-
-        public ObjectPC(string _qrID, string _serialNumber, string _pcModel, int _inStock)
+        
+        public ObjectPC(string _qrID, string _serialNumber, string _pcModel)
         {
             QRID = _qrID;
             SerialNumber = _serialNumber;
             PCModel = _pcModel;
-            InStock = _inStock;
         }
     }
 }
