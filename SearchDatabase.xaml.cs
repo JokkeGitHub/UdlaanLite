@@ -29,6 +29,7 @@ namespace UdlaansSystem
 
         private void BtnShowLoaners_Click(object sender, RoutedEventArgs e)
         {
+            string title;
             LoanerColumns();
 
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
@@ -46,7 +47,16 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DataGridView.Items.Add( new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = dataRow["isStudent"].ToString() });
+                if (dataRow["isStudent"].ToString() == "True")
+                {
+                    title = "Elev";
+                }
+                else
+                {
+                    title = "Lære";
+                }
+
+                DataGridView.Items.Add( new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = title });
                  // if isStudent = true, test += ja osv
             }
 
@@ -54,13 +64,13 @@ namespace UdlaansSystem
         }
 
         private void LoanerColumns()
-        {
+        {            
             DataGridView.Items.Clear();
 
             ((GridView)DataGridView.View).Columns[0].Header = "UNI Login :";
             ((GridView)DataGridView.View).Columns[1].Header = "Navn :";
             ((GridView)DataGridView.View).Columns[2].Header = "Telefon :";
-            ((GridView)DataGridView.View).Columns[3].Header = "Elev :";
+            ((GridView)DataGridView.View).Columns[3].Header = "Titel :";
             ((GridView)DataGridView.View).Columns[4].Header = "";
             //((GridView)Test2.View).Columns[0].Header = "UNI Login:";
         }

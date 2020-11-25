@@ -33,7 +33,7 @@ namespace UdlaansSystem
 
         private void DateInput_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            e.Handled = true; 
+            e.Handled = true;
 
             if (e.RightButton == MouseButtonState.Pressed)
             {
@@ -45,14 +45,41 @@ namespace UdlaansSystem
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             string uniLogin = UniLoginInput.Text.ToLower(); // Lav automatisk tjekker til UniLogin / Primary key
+            bool uniLoginExists = SQLManager.CheckUniLogin(uniLogin);
+
             string name = NameInput.Text.ToLower();
             string phone = PhonenumberInput.Text;
-            int isStudent = 1;
-            // Lav en checkbox til elev
-            // Tjek db om pc er lånt ud
-            // Måske lav db table til lærere, og kør afhængigt af checkbox
+            int isStudent;
 
-            SQLManager.ExportToLoaner(uniLogin, name, phone, isStudent);
+            if (IsStudentCheckBox.IsChecked == true)
+            {
+                isStudent = 1;
+            }
+            else
+            {
+                isStudent = 0;
+            }
+
+            if (uniLoginExists == false)
+            {
+
+                SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
+            }
+            else
+            {
+                UniLoginInput.Text = "Har aktivt lån";
+            }
+
+            string qrId = QRInput.Text;
+
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateInput.DisplayDate;
+
+            SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
+
+
+            // Tjek db om pc er lånt ud
+
         }
 
         private void IsStudentCheckBox_Checked(object sender, RoutedEventArgs e)
