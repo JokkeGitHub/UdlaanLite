@@ -23,6 +23,8 @@ namespace UdlaansSystem
             DateInput.DisplayDateStart = DateTime.Now.AddDays(1);
 
             IsStudentCheckBox.IsChecked = true;
+
+            //QRInput.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// Scan card click
@@ -87,6 +89,7 @@ namespace UdlaansSystem
             if (IsStudentCheckBox.IsChecked == true)
             {
                 IsTeacherCheckBox.IsChecked = false;
+                QRMultiInput.Visibility = Visibility.Hidden;
             }
         }
 
@@ -95,7 +98,67 @@ namespace UdlaansSystem
             if (IsTeacherCheckBox.IsChecked == true)
             {
                 IsStudentCheckBox.IsChecked = false;
+                QRMultiInput.Visibility = Visibility.Visible;
             }
         }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            QRMultiInput.Items.Add(QRInput.Text + "\n");
+
+            QRInput.Clear();
+        }
+
+        private void QRInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    e.Handled = true; 
+                    
+                    if (IsTeacherCheckBox.IsChecked == true)
+                    {
+                        AddToListBox();
+                    }
+                    else
+                    {
+
+                    }
+                }
+                catch (Exception) { }
+            }            
+        }
+
+        public void AddToListBox()
+        {
+            QRMultiInput.Items.Add(QRInput.Text + "\n");
+
+            QRInput.Clear();
+        }
+
+        private void QRMultiInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete || e.Key == Key.Back)
+            {
+                try
+                {
+                    e.Handled = true;
+                    RemoveCategory(QRMultiInput.SelectedIndex);
+                }
+                catch (Exception) { }
+            }
+        }
+
+        //Category Remove
+        private void RemoveCategory(int _Index)
+        {
+            //Remove category from UI
+            QRMultiInput.Items.RemoveAt(_Index);
+            //Remove category from Backend
+            /* CODE HERE */
+        }
+
     }
+    
 }
