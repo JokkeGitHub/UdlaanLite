@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.Data;
 
 namespace UdlaansSystem
 {
@@ -28,5 +29,37 @@ namespace UdlaansSystem
             reader.Close();
             conn.Close();
         }
+
+        #region CHECKING DATABASE FOR DATA
+        public static bool CheckDatabaseForQR(string qrId)
+        {
+            bool qrIdExists = false;
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT (qrId) FROM PC WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["qrId"].ToString() == qrId)
+                {
+                    qrIdExists = true;
+                }
+            }
+
+            conn.Close();
+            return qrIdExists;
+        }
+        #endregion
     }
 }

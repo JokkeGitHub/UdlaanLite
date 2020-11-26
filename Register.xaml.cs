@@ -49,13 +49,78 @@ namespace UdlaansSystem
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
+            ResetLabelColors();
+
+            bool NoEmptyFields = false;
+            NoEmptyFields = CheckForEmptyFields(NoEmptyFields);
+
+            bool qrIdExists = true;
             string qrId = QRIDInput.Text;
+
             string serialNumber = SerialNumberInput.Text;
             string pcModel = PcModelInput.Text;
 
-            SQLManager.RegisterPC(qrId, serialNumber, pcModel);
+            if (NoEmptyFields == true)
+            {
+                qrIdExists = CheckForExistingPC(qrIdExists, qrId);
+                //PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+            }
+
+            if (qrIdExists == true)
+            {
+                QRIDInput.Text = "ERROR";
+            }
+            else
+            {
+                SQLManager.RegisterPC(qrId, serialNumber, pcModel);
+            }
+
         }
-        
-        // Make a mathed which checks if the field is empty
+
+
+        #region CHECK FOR EMPTY FIELDS
+        public void ResetLabelColors()
+        {
+            QRLabel.Foreground = new SolidColorBrush(Colors.White);
+            SerialLabel.Foreground = new SolidColorBrush(Colors.White);
+            ModelLabel.Foreground = new SolidColorBrush(Colors.White);
+        }
+
+        public bool CheckForEmptyFields(bool NoEmptyFields)
+        {
+            NoEmptyFields = false;
+
+            if (QRIDInput.Text.Length < 11)
+            {
+                QRLabel.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            else if (SerialNumberInput.Text.Length < 4)
+            {
+                SerialLabel.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            else if (PcModelInput.Text == "")
+            {
+                ModelLabel.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                NoEmptyFields = true;
+            }
+
+            return NoEmptyFields;
+        }
+        #endregion
+
+        #region CHECK DATABASE FOR PC
+        public bool CheckForExistingPC(bool qrIdExists, string qrId)
+        {
+            qrIdExists = SQLManager.CheckQR(qrId);
+
+            return qrIdExists;
+        }
+        #endregion
+
+        // Make a method which checks if the field is empty
     }
 }
+

@@ -30,8 +30,14 @@ namespace UdlaansSystem
         #region CHECKING DATABASE FOR DATA
         public static bool CheckUniLogin(string uniLogin)
         {
-            bool uniLoginExists  = ExportSQLConnections.CheckDatabaseForLogin(uniLogin);
+            bool uniLoginExists = ExportSQLConnections.CheckDatabaseForLogin(uniLogin);
             return uniLoginExists;
+        }
+
+        public static bool CheckQR(string qrId)
+        {
+            bool qrIdExists = RegisterSQLConnections.CheckDatabaseForQR(qrId);
+            return qrIdExists;
         }
         #endregion
 
