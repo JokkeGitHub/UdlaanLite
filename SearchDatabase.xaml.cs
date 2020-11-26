@@ -57,7 +57,6 @@ namespace UdlaansSystem
                 }
 
                 DataGridView.Items.Add( new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = title });
-                 // if isStudent = true, test += ja osv
             }
 
             conn.Close();
@@ -72,7 +71,6 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[2].Header = "Telefon :";
             ((GridView)DataGridView.View).Columns[3].Header = "Titel :";
             ((GridView)DataGridView.View).Columns[4].Header = "";
-            //((GridView)Test2.View).Columns[0].Header = "UNI Login:";
         }
 
         private void BtnShowPCs_Click(object sender, RoutedEventArgs e)
@@ -132,6 +130,7 @@ namespace UdlaansSystem
             {
                 DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["uniLogin"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["endDate"].ToString() });
             }
+            // + Låner navn og telefon, måske model eller istedet for QR ID
 
             conn.Close();
 

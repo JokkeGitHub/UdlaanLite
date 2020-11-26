@@ -58,28 +58,31 @@ namespace UdlaansSystem
             string name = NameInput.Text.ToLower();
             string phone = PhonenumberInput.Text;
 
+            bool isTeacher = false;
+
             if (NoEmptyFields == true)
             {
                 uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin);
                 isStudent = StudentOrTeacher(isStudent);
-                PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+                isTeacher = PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
             }
 
             string qrId = QRInput.Text;
-
-
-
+            // Tjek db om pc er lånt ud med boolPcudlånt
 
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateInput.DisplayDate;
 
-            SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
+            if (uniLoginExists == false) // + bool pc udlånt = false
+            {
+                SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
+            }
+            else if (isTeacher == true)
+            {
+                // Multi Udlån
+            }
 
-
-            // Tjek db om pc er lånt ud
-            // Tjek om UNILlogin har aktivt lån, hvis det er en elev
-
-
+            // MessageBox med bekræftelse på udlån
         }
 
         #region CHECK FOR EMPTY FIELDS
@@ -148,22 +151,22 @@ namespace UdlaansSystem
         #region PASS ON LOANER DATA TO DATABASE
         public bool PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent)
         {
-            // Tjek om UNILlogin har aktivt lån, hvis det er en elev
+            bool isTeacher = false;
 
             if (uniLoginExists == false)
             {
                 SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
             }
-            else if(uniLoginExists == true && isStudent == 0)
+            else if (uniLoginExists == true && isStudent == 0)
             {
-                // opret nyt lån
+                isTeacher = true;
             }
             else
             {
                 ActiveLoanMessageBox(uniLogin);
             }
 
-            return uniLoginExists;
+            return isTeacher;
         }
         #endregion
 
@@ -244,7 +247,7 @@ namespace UdlaansSystem
             string activeLoanInfo = "Eleven har aktivt lån!\n";
             activeLoanInfo += SQLManager.GetActiveStudentLoanInfo(uniLogin);
 
-            MessageBox.Show(activeLoanInfo); // Lav en popup box med info på lån hvis eleven har aktivt lån
+            MessageBox.Show(activeLoanInfo);
         }
         #endregion
 
