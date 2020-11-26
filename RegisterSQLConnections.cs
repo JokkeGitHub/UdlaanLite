@@ -61,5 +61,35 @@ namespace UdlaansSystem
             return qrIdExists;
         }
         #endregion
+
+        public static string GetPCInfo(string qrId)
+        {
+            string registeredPCInfo = "";
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT (qrId), serial, model FROM PC WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["qrId"].ToString() == qrId)
+                {
+                    registeredPCInfo = $"QR ID: { dataRow["qrId"] } \nLøbenummer: { dataRow["serial"] } \nModel: { dataRow["model"] }";
+                }
+            }
+
+            conn.Close();
+            return registeredPCInfo;
+        }
     }
 }

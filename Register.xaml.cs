@@ -68,15 +68,15 @@ namespace UdlaansSystem
 
             if (qrIdExists == true)
             {
-                QRIDInput.Text = "ERROR";
+                RegisteredPCMessageBox(qrId);
             }
             else
             {
+                CreateFoldersPCQR();
                 SQLManager.RegisterPC(qrId, serialNumber, pcModel);
             }
 
         }
-
 
         #region CHECK FOR EMPTY FIELDS
         public void ResetLabelColors()
@@ -120,7 +120,15 @@ namespace UdlaansSystem
         }
         #endregion
 
-        // Make a method which checks if the field is empty
+        #region MESSSAGEBOXES
+        public void RegisteredPCMessageBox(string qrId)
+        {
+            string registeredPCInfo = "PC med denne QR kode er allerede registreret!\n";
+            registeredPCInfo += SQLManager.GetRegisteredPCInfo(qrId);
+
+            MessageBox.Show(registeredPCInfo);
+        }
+        #endregion
     }
 }
 

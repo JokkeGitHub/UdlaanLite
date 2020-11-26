@@ -49,5 +49,15 @@ namespace UdlaansSystem
             return activeLoanInfo;
         }
         #endregion
+
+        #region GETTING PC INFO
+        public static string GetRegisteredPCInfo(string qrId)
+        {
+            string registeredPCInfo = RegisterSQLConnections.GetPCInfo(qrId);
+
+            return registeredPCInfo;
+        }
+        #endregion
+
     }
 }
