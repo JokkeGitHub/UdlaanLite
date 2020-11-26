@@ -34,5 +34,14 @@ namespace UdlaansSystem
             return uniLoginExists;
         }
         #endregion
+
+        #region GETTING LOAN INFO
+        public static string GetActiveStudentLoanInfo(string uniLogin)
+        {
+            string activeLoanInfo = ExportSQLConnections.GetLoanInfo(uniLogin);
+
+            return activeLoanInfo;
+        }
+        #endregion
     }
 }

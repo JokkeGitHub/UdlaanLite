@@ -160,13 +160,12 @@ namespace UdlaansSystem
             }
             else
             {
-                UniLoginInput.Text = "Har aktivt lån"; // Lav en popup box
+                ActiveLoanMessageBox(uniLogin);
             }
 
             return uniLoginExists;
         }
         #endregion
-
 
 
         #endregion
@@ -236,6 +235,16 @@ namespace UdlaansSystem
         private void ListBoxRemoveItem(int listBoxIndex)
         {
             QRMultiInput.Items.RemoveAt(listBoxIndex);
+        }
+        #endregion
+
+        #region MESSSAGEBOXES
+        public void ActiveLoanMessageBox(string uniLogin)
+        {
+            string activeLoanInfo = "Eleven har aktivt lån!\n";
+            activeLoanInfo += SQLManager.GetActiveStudentLoanInfo(uniLogin);
+
+            MessageBox.Show(activeLoanInfo); // Lav en popup box med info på lån hvis eleven har aktivt lån
         }
         #endregion
 

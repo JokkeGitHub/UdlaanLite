@@ -33,7 +33,7 @@ namespace UdlaansSystem
         public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate, DateTime _endDate)
         {
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
-            SqlCommand cmd = new SqlCommand();           
+            SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
 
@@ -84,5 +84,35 @@ namespace UdlaansSystem
             return uniLoginExists;
         }
         #endregion
+
+        public static string GetLoanInfo(string uniLogin)
+        {
+            string activeLoanInfo = "";
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT loanId, (uniLogin), qrId, startDate, endDate FROM Loan WHERE (uniLogin) = (@uniLogin);";
+            cmd.Parameters.AddWithValue("@uniLogin", uniLogin);
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["uniLogin"].ToString() == uniLogin.ToLower())
+                {
+                    activeLoanInfo = $"Lån ID:{ dataRow["loanId"] } \nUNI Login:{ dataRow["uniLogin"] } \nQR ID:{ dataRow["qrId"] } \nStart dato:{ dataRow["startDate"] } \nSlut dato: { dataRow["endDate"] }";
+                }
+            }
+
+            conn.Close();
+            return activeLoanInfo;
+        }
     }
 }
