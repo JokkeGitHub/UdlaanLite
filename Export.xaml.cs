@@ -58,14 +58,14 @@ namespace UdlaansSystem
             string name = NameInput.Text.ToLower();
             string phone = PhonenumberInput.Text;
 
-            string qrId = QRInput.Text;
-
             if (NoEmptyFields == true)
             {
-                CheckForExistingUNILogin(uniLoginExists, uniLogin);
+                uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin);
                 isStudent = StudentOrTeacher(isStudent);
                 PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
             }
+
+            string qrId = QRInput.Text;
 
 
 
@@ -154,14 +154,20 @@ namespace UdlaansSystem
             {
                 SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
             }
+            else if(uniLoginExists == true && isStudent == 0)
+            {
+                // opret nyt lån
+            }
             else
             {
-                UniLoginInput.Text = "Har aktivt lån";
+                UniLoginInput.Text = "Har aktivt lån"; // Lav en popup box
             }
 
             return uniLoginExists;
         }
         #endregion
+
+
 
         #endregion
 
