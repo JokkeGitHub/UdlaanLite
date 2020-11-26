@@ -53,7 +53,7 @@ namespace UdlaansSystem
                 }
                 else
                 {
-                    title = "Lære";
+                    title = "Lærer";
                 }
 
                 DataGridView.Items.Add( new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = title });
