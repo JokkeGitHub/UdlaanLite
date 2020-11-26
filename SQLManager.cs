@@ -27,10 +27,12 @@ namespace UdlaansSystem
             ExportSQLConnections.CreateLoan(addLoan.UNILogin, addLoan.QRID, addLoan.StartDate, addLoan.EndDate);
         }
 
+        #region CHECKING DATABASE FOR DATA
         public static bool CheckUniLogin(string uniLogin)
         {
             bool uniLoginExists  = ExportSQLConnections.CheckDatabaseForLogin(uniLogin);
             return uniLoginExists;
         }
+        #endregion
     }
 }

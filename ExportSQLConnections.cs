@@ -35,7 +35,6 @@ namespace UdlaansSystem
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
             SqlCommand cmd = new SqlCommand();           
 
-            // Find ud af det med de foreign keys!
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate, endDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate, @endDate)";
@@ -50,6 +49,7 @@ namespace UdlaansSystem
             conn.Close();
         }
 
+        #region CHECKING DATABASE FOR DATA
         public static bool CheckDatabaseForLogin(string uniLogin)
         {
             bool uniLoginExists = false;
@@ -83,5 +83,6 @@ namespace UdlaansSystem
             conn.Close();
             return uniLoginExists;
         }
+        #endregion
     }
 }
