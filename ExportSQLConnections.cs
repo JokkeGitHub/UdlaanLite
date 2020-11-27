@@ -11,7 +11,7 @@ namespace UdlaansSystem
 {
     class ExportSQLConnections
     {
-
+        // FIX THESE REGIONS
         public static void CreateLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
         {
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
@@ -83,6 +83,39 @@ namespace UdlaansSystem
             conn.Close();
             return uniLoginExists;
         }
+        public static bool CheckDatabaseForQR(string qrId)
+        {
+            bool pcInStock = false;
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT (qrId) FROM Loan WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["qrId"].ToString() == qrId)
+                {
+                    pcInStock = false;
+                }
+                else
+                {
+                    pcInStock = true;
+                }
+            }
+
+            conn.Close();
+            return pcInStock;
+        }
         #endregion
 
         public static string GetLoanInfo(string uniLogin)
@@ -114,6 +147,41 @@ namespace UdlaansSystem
 
             conn.Close();
             return activeLoanInfo;
+        }
+
+        public static string GetPCNotInStockInfo(string qrId)
+        {
+            string pcNotInStockInfo = "";
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT loanId, (qrId) FROM Loan WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["qrId"].ToString() == qrId)
+                {
+                    pcNotInStockInfo = $"PC'en er allerede udlånt! \nLån ID: { dataRow["loanId"] } \nQR ID: { dataRow["qrId"] }";
+                }
+            }
+
+            if (pcNotInStockInfo == "")
+            {
+                pcNotInStockInfo = "PC'en er ikke registreret i databasen!";
+            }
+
+            conn.Close();
+            return pcNotInStockInfo;
         }
     }
 }

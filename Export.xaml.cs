@@ -25,8 +25,6 @@ namespace UdlaansSystem
             DateInput.DisplayDateStart = DateTime.Now.AddDays(1);
 
             IsStudentCheckBox.IsChecked = true;
-
-            //QRInput.Visibility = Visibility.Hidden;
         }
 
         #region DATEPICKER
@@ -60,26 +58,33 @@ namespace UdlaansSystem
 
             bool isTeacher = false;
 
-            if (NoEmptyFields == true)
+            string qrId = QRInput.Text;
+            bool pcInStock = false;
+            pcInStock = CheckForPCInStock(pcInStock, qrId);
+
+            if (pcInStock == false)
+            {
+                PCNotInStockMessageBox(qrId);
+            }
+
+            if (NoEmptyFields == true && pcInStock == true)
             {
                 uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin);
                 isStudent = StudentOrTeacher(isStudent);
                 isTeacher = PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
             }
 
-            string qrId = QRInput.Text;
-            // Tjek db om pc er lånt ud med boolPcudlånt
-
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateInput.DisplayDate;
 
-            if (uniLoginExists == false) // + bool pc udlånt = false
+            if (uniLoginExists == false && pcInStock == true)
             {
                 SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
             }
             else if (isTeacher == true)
             {
                 // Multi Udlån
+                // Check hver pc / qrId
             }
 
             // MessageBox med bekræftelse på udlån
@@ -170,6 +175,14 @@ namespace UdlaansSystem
         }
         #endregion
 
+        #region CHECK DATABASE FOR QRID
+        public bool CheckForPCInStock(bool pcInStock, string qrId)
+        {
+            pcInStock = SQLManager.CheckLoanForQRID(qrId);
+
+            return pcInStock;
+        }
+        #endregion
 
         #endregion
 
@@ -248,6 +261,13 @@ namespace UdlaansSystem
             activeLoanInfo += SQLManager.GetActiveStudentLoanInfo(uniLogin);
 
             MessageBox.Show(activeLoanInfo);
+        }
+        public void PCNotInStockMessageBox(string qrId)
+        {
+            string pcNotInStockInfo = "";
+            pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId);
+
+            MessageBox.Show(pcNotInStockInfo);
         }
         #endregion
 
