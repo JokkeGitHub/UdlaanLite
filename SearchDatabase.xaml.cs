@@ -38,7 +38,7 @@ namespace UdlaansSystem
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT login, name, phone, isStudent FROM Loaner";
+            cmd.CommandText = @"SELECT * FROM Loaner";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -56,14 +56,14 @@ namespace UdlaansSystem
                     title = "Lærer";
                 }
 
-                DataGridView.Items.Add( new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = title });
+                DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = title });
             }
 
             conn.Close();
         }
 
         private void LoanerColumns()
-        {            
+        {
             DataGridView.Items.Clear();
 
             ((GridView)DataGridView.View).Columns[0].Header = "UNI Login :";
@@ -73,6 +73,7 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[4].Header = "";
             ((GridView)DataGridView.View).Columns[5].Header = "";
             ((GridView)DataGridView.View).Columns[6].Header = "";
+            ((GridView)DataGridView.View).Columns[7].Header = "";
         }
 
         private void BtnShowPCs_Click(object sender, RoutedEventArgs e)
@@ -85,7 +86,7 @@ namespace UdlaansSystem
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT qrId, serial, model FROM PC";
+            cmd.CommandText = @"SELECT * FROM PC";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -111,6 +112,7 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[4].Header = "";
             ((GridView)DataGridView.View).Columns[5].Header = "";
             ((GridView)DataGridView.View).Columns[6].Header = "";
+            ((GridView)DataGridView.View).Columns[7].Header = "";
         }
 
         private void BtnShowLoans_Click(object sender, RoutedEventArgs e)
@@ -123,7 +125,7 @@ namespace UdlaansSystem
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT Loan.loanId, Loan.uniLogin, Loan.qrId, Loan.endDate, Loaner.name, Loaner.phone, PC.model FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId)";
+            cmd.CommandText = @"SELECT * FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId)";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -132,12 +134,10 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["endDate"].ToString() , Column5 = dataRow["name"].ToString(), Column6 = dataRow["phone"].ToString(), Column7 = dataRow["uniLogin"].ToString() });
+                DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["startDate"].ToString(), Column5 = dataRow["endDate"].ToString(), Column6 = dataRow["uniLogin"].ToString(), Column7 = dataRow["name"].ToString(), Column8 = dataRow["phone"].ToString() });
             }
-            // + Låner navn og telefon, måske model eller istedet for QR ID
 
             conn.Close();
-
         }
 
         private void LoanColumns()
@@ -147,12 +147,39 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[0].Header = "Lån ID :";
             ((GridView)DataGridView.View).Columns[1].Header = "PC Model :";
             ((GridView)DataGridView.View).Columns[2].Header = "QR ID :";
-            ((GridView)DataGridView.View).Columns[3].Header = "Slut Dato :";
-            ((GridView)DataGridView.View).Columns[4].Header = "Låner Navn :";
-            ((GridView)DataGridView.View).Columns[5].Header = "Telefon :";
-            ((GridView)DataGridView.View).Columns[6].Header = "UNI Login :";
+            ((GridView)DataGridView.View).Columns[3].Header = "Start Dato :";
+            ((GridView)DataGridView.View).Columns[4].Header = "Slut Dato :";
+            ((GridView)DataGridView.View).Columns[5].Header = "UNI Login :";
+            ((GridView)DataGridView.View).Columns[6].Header = "Låner Navn :";
+            ((GridView)DataGridView.View).Columns[7].Header = "Telefon :";
+        }
 
-            // + Låner navn og telefon, måske model eller istedet for QR ID
+        private void BtnShowExpired_Click(object sender, RoutedEventArgs e)
+        {
+            LoanColumns();
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT * FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId)";
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if ((DateTime)dataRow["endDate"] <= DateTime.Now)
+                {
+                    DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["startDate"].ToString(), Column5 = dataRow["endDate"].ToString(), Column6 = dataRow["uniLogin"].ToString(), Column7 = dataRow["name"].ToString(), Column8 = dataRow["phone"].ToString() });
+                }
+            }
+
+            conn.Close();
         }
     }
 }

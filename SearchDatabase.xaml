@@ -58,6 +58,7 @@
         <Button Name="BtnShowLoaners" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Lånere</Button>
         <Button Name="BtnShowPCs" FontSize="26" Click="BtnShowPCs_Click" Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis PC'er</Button>
         <Button Name="BtnShowLoans" FontSize="26" Click="BtnShowLoans_Click" Grid.Row="1" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Udlån</Button>
+        <Button Name="BtnShowExpired" FontSize="26" Click="BtnShowExpired_Click" Grid.Row="1" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2">Udløbne Lån</Button>
 
         <!-- LISTVIEW -->
         <ListView Name="DataGridView" FontSize="22" Grid.Row="3" Grid.Column="1" Grid.RowSpan="16" Grid.ColumnSpan="14">
@@ -77,9 +78,10 @@
                     <GridViewColumn Header="" Width="250" DisplayMemberBinding="{Binding Column2}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
                     <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column3}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
                     <GridViewColumn Header="" Width="130" DisplayMemberBinding="{Binding Column4}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="250" DisplayMemberBinding="{Binding Column5}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="130" DisplayMemberBinding="{Binding Column6}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column7}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="130" DisplayMemberBinding="{Binding Column5}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column6}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="250" DisplayMemberBinding="{Binding Column7}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="135" DisplayMemberBinding="{Binding Column8}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
                 </GridView>
             </ListView.View>
             
