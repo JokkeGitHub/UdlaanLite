@@ -79,7 +79,7 @@ namespace UdlaansSystem
         {
             string tempUniLogin = ImportSQLConnection.GetUniLoginFromLoan(qrId);
             ImportSQLConnection.RemoveLoanFromDatabase(qrId);
-            ImportSQLConnection.RemoveTest(tempUniLogin);
+            ImportSQLConnection.RemoveTest();
         }
         #endregion
 

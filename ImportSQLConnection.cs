@@ -54,7 +54,7 @@ namespace UdlaansSystem
             conn.Close();
         }
 
-        public static void RemoveTest(string login)
+        public static void RemoveTest()
         {
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
 
