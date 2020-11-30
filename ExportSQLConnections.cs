@@ -109,7 +109,6 @@ namespace UdlaansSystem
             {
                 if (dataRow["uniLogin"].ToString() == uniLogin.ToLower())
                 {
-                    // Måske fjern QR ID'et og indsæt i stedet PC model og elev telefonnummer
                     activeLoanInfo = $"Lån ID: { dataRow["loanId"] } \nUNI Login: { dataRow["uniLogin"] } \nQR ID: { dataRow["qrId"] } \nStart dato: { dataRow["startDate"] } \nSlut dato:  { dataRow["endDate"] }";
                 }
             }

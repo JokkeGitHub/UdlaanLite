@@ -48,16 +48,16 @@ namespace UdlaansSystem
             return pcInStock;
         }
 
-        #endregion
-
-        #region FETCHING DATA ABOUT EXISTING LOANS AND LOANERS
-
         public static string GetActiveStudentLoanInfo(string uniLogin)
         {
             string activeLoanInfo = ExportSQLConnections.GetLoanInfo(uniLogin);
 
             return activeLoanInfo;
         }
+
+        #endregion
+
+        #region NEEDS SOME WORK
         public static string GetActivePCNotInStockInfo(string qrId)
         {
             string pcNotInStockInfo = ExportSQLConnections.GetPCNotInStockInfo(qrId);
@@ -75,7 +75,12 @@ namespace UdlaansSystem
         #endregion
 
         #region IMPORT
-
+        public static void DeleteLoanAndLoaner(string qrId)
+        {
+            string tempUniLogin = ImportSQLConnection.GetUniLoginFromLoan(qrId);
+            ImportSQLConnection.RemoveLoanFromDatabase(qrId);
+            ImportSQLConnection.RemoveTest(tempUniLogin);
+        }
         #endregion
 
         #region REGISTER

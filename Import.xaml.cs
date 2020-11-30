@@ -24,5 +24,30 @@ namespace UdlaansSystem
         {
             InitializeComponent();
         }
+
+        private void BtnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            ReturnPC(QRInput.Text);
+        }
+
+        private void QRInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    e.Handled = true;
+                    ReturnPC(QRInput.Text);
+                }
+                catch (Exception)
+                { }
+            }
+        }
+
+        public static void ReturnPC(string qrId)
+        {
+            SQLManager.DeleteLoanAndLoaner(qrId);
+            // Tilføj MessageBox med bekræftelse på aflevering
+        }
     }
 }
