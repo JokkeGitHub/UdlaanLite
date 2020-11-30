@@ -62,23 +62,29 @@ namespace UdlaansSystem
             bool pcInStock = false;
             pcInStock = CheckForPCInStock(pcInStock, qrId);
 
+
+            if (NoEmptyFields == true)
+            {
+                uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin);
+                isStudent = StudentOrTeacher(isStudent);
+            }
+
+            if (isStudent == 0)
+            {
+                isTeacher = true;
+            }
+
             if (pcInStock == false)
             {
                 PCNotInStockMessageBox(qrId);
             }
 
-            if (NoEmptyFields == true && pcInStock == true)
-            {
-                uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin);
-                isStudent = StudentOrTeacher(isStudent);
-                isTeacher = PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
-            }
-
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateInput.DisplayDate;
 
-            if (uniLoginExists == false && pcInStock == true)
+            if (uniLoginExists == false && isTeacher == false && pcInStock == true)
             {
+                PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
                 SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
             }
             else if (isTeacher == true)
@@ -154,31 +160,28 @@ namespace UdlaansSystem
         #endregion
 
         #region PASS ON LOANER DATA TO DATABASE
-        public bool PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent)
+        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent)
         {
-            bool isTeacher = false;
-
             if (uniLoginExists == false)
             {
                 SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
-            }
-            else if (uniLoginExists == true && isStudent == 0)
-            {
-                isTeacher = true;
             }
             else
             {
                 ActiveLoanMessageBox(uniLogin);
             }
-
-            return isTeacher;
         }
         #endregion
 
         #region CHECK DATABASE FOR QRID
         public bool CheckForPCInStock(bool pcInStock, string qrId)
         {
-            pcInStock = SQLManager.CheckLoanForQRID(qrId);
+            pcInStock = SQLManager.CheckLoanTableForQRID(qrId);
+
+            if (pcInStock == true)
+            {
+                pcInStock = SQLManager.CheckPCTableForQRID(qrId);
+            }
 
             return pcInStock;
         }
@@ -265,7 +268,7 @@ namespace UdlaansSystem
         public void PCNotInStockMessageBox(string qrId)
         {
             string pcNotInStockInfo = "";
-            pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId);
+            pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId); // Den her skal fikses
 
             MessageBox.Show(pcNotInStockInfo);
         }

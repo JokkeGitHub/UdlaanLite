@@ -11,7 +11,8 @@ namespace UdlaansSystem
 {
     class ExportSQLConnections
     {
-        // FIX THESE REGIONS
+        #region LOANER TABLE
+
         public static void CreateLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
         {
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
@@ -29,27 +30,6 @@ namespace UdlaansSystem
             SqlDataReader reader = cmd.ExecuteReader();
             conn.Close();
         }
-
-        public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate, DateTime _endDate)
-        {
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.Connection = conn;
-
-            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate, endDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate, @endDate)";
-            cmd.Parameters.AddWithValue("@login", _uniLogin);
-            cmd.Parameters.AddWithValue("@qrId", _qrId);
-            cmd.Parameters.AddWithValue("@startDate", _startDate);
-            cmd.Parameters.AddWithValue("@endDate", _endDate);
-
-            conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            reader.Close();
-            conn.Close();
-        }
-
-        #region CHECKING DATABASE FOR DATA
         public static bool CheckDatabaseForLogin(string uniLogin)
         {
             bool uniLoginExists = false;
@@ -83,40 +63,29 @@ namespace UdlaansSystem
             conn.Close();
             return uniLoginExists;
         }
-        public static bool CheckDatabaseForQR(string qrId)
-        {
-            bool pcInStock = false;
 
+        #endregion
+
+        #region LOAN TABLE
+
+        public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate, DateTime _endDate)
+        {
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate, endDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate, @endDate)";
+            cmd.Parameters.AddWithValue("@login", _uniLogin);
+            cmd.Parameters.AddWithValue("@qrId", _qrId);
+            cmd.Parameters.AddWithValue("@startDate", _startDate);
+            cmd.Parameters.AddWithValue("@endDate", _endDate);
 
             conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT (qrId) FROM Loan WHERE (qrId) = (@qrId);";
-            cmd.Parameters.AddWithValue("@qrId", qrId);
-            cmd.ExecuteNonQuery();
-
-            DataTable dataTable = new DataTable();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-
-            dataAdapter.Fill(dataTable);
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                if (dataRow["qrId"].ToString() == qrId)
-                {
-                    pcInStock = false;
-                }
-                else
-                {
-                    pcInStock = true;
-                }
-            }
-
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
             conn.Close();
-            return pcInStock;
         }
-        #endregion
 
         public static string GetLoanInfo(string uniLogin)
         {
@@ -149,6 +118,38 @@ namespace UdlaansSystem
             return activeLoanInfo;
         }
 
+        public static bool CheckLoanTableForQR(string qrId)
+        {
+            bool pcInStock = true;
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT (qrId) FROM Loan WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["qrId"].ToString() == qrId)
+                {
+                    pcInStock = false;
+                    conn.Close();
+                    return pcInStock;
+                }
+            }
+
+            conn.Close();
+            return pcInStock;
+        }
+
         public static string GetPCNotInStockInfo(string qrId)
         {
             string pcNotInStockInfo = "";
@@ -175,13 +176,46 @@ namespace UdlaansSystem
                 }
             }
 
-            if (pcNotInStockInfo == "")
-            {
-                pcNotInStockInfo = "PC'en er ikke registreret i databasen!";
-            }
-
             conn.Close();
             return pcNotInStockInfo;
         }
+
+        #endregion
+
+        #region PC TABLE
+
+        public static bool CheckPCTableForQR(string qrId)
+        {
+            bool pcInStock = false;
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT (qrId) FROM PC WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["qrId"].ToString() == qrId)
+                {
+                    pcInStock = true;
+                    conn.Close();
+                    return pcInStock;
+                }
+            }
+
+            conn.Close();
+            return pcInStock;
+        }
+
+        #endregion
     }
 }

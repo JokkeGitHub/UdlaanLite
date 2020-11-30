@@ -34,9 +34,17 @@ namespace UdlaansSystem
             return uniLoginExists;
         }
 
-        public static bool CheckLoanForQRID(string qrId)
+        public static bool CheckLoanTableForQRID(string qrId)
         {
-            bool pcInStock = ExportSQLConnections.CheckDatabaseForQR(qrId);
+            bool pcInStock = ExportSQLConnections.CheckLoanTableForQR(qrId);
+
+            return pcInStock;
+        }
+
+        public static bool CheckPCTableForQRID(string qrId)
+        {
+            bool pcInStock = ExportSQLConnections.CheckPCTableForQR(qrId); 
+
             return pcInStock;
         }
 
@@ -53,6 +61,11 @@ namespace UdlaansSystem
         public static string GetActivePCNotInStockInfo(string qrId)
         {
             string pcNotInStockInfo = ExportSQLConnections.GetPCNotInStockInfo(qrId);
+
+            if (pcNotInStockInfo == "")// DEN HER OVER I EN SØGNING GENNEM PC TABLE
+            {
+                pcNotInStockInfo = "PC'en er ikke registreret i databasen!"; // HER TJEK PC TABLE EFTER PC
+            }
 
             return pcNotInStockInfo;
         }
