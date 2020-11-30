@@ -71,6 +71,8 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[2].Header = "Telefon :";
             ((GridView)DataGridView.View).Columns[3].Header = "Titel :";
             ((GridView)DataGridView.View).Columns[4].Header = "";
+            ((GridView)DataGridView.View).Columns[5].Header = "";
+            ((GridView)DataGridView.View).Columns[6].Header = "";
         }
 
         private void BtnShowPCs_Click(object sender, RoutedEventArgs e)
@@ -107,6 +109,8 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[2].Header = "Model :";
             ((GridView)DataGridView.View).Columns[3].Header = "";
             ((GridView)DataGridView.View).Columns[4].Header = "";
+            ((GridView)DataGridView.View).Columns[5].Header = "";
+            ((GridView)DataGridView.View).Columns[6].Header = "";
         }
 
         private void BtnShowLoans_Click(object sender, RoutedEventArgs e)
@@ -119,7 +123,7 @@ namespace UdlaansSystem
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT loanId, uniLogin, qrId, endDate FROM Loan";
+            cmd.CommandText = @"SELECT Loan.loanId, Loan.uniLogin, Loan.qrId, Loan.endDate, Loaner.name, Loaner.phone, PC.model FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId)";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -128,7 +132,7 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["uniLogin"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["endDate"].ToString() });
+                DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["endDate"].ToString() , Column5 = dataRow["name"].ToString(), Column6 = dataRow["phone"].ToString(), Column7 = dataRow["uniLogin"].ToString() });
             }
             // + Låner navn og telefon, måske model eller istedet for QR ID
 
@@ -141,10 +145,12 @@ namespace UdlaansSystem
             DataGridView.Items.Clear();
 
             ((GridView)DataGridView.View).Columns[0].Header = "Lån ID :";
-            ((GridView)DataGridView.View).Columns[1].Header = "UNI Login :";
+            ((GridView)DataGridView.View).Columns[1].Header = "PC Model :";
             ((GridView)DataGridView.View).Columns[2].Header = "QR ID :";
-            ((GridView)DataGridView.View).Columns[3].Header = "Slut Dato";
-            ((GridView)DataGridView.View).Columns[4].Header = "";
+            ((GridView)DataGridView.View).Columns[3].Header = "Slut Dato :";
+            ((GridView)DataGridView.View).Columns[4].Header = "Låner Navn :";
+            ((GridView)DataGridView.View).Columns[5].Header = "Telefon :";
+            ((GridView)DataGridView.View).Columns[6].Header = "UNI Login :";
 
             // + Låner navn og telefon, måske model eller istedet for QR ID
         }

@@ -86,6 +86,7 @@ namespace UdlaansSystem
             {
                 PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
                 SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
+                LoanConfirmationMessageBox();
             }
             else if (isTeacher == true)
             {
@@ -265,12 +266,20 @@ namespace UdlaansSystem
 
             MessageBox.Show(activeLoanInfo);
         }
+
         public void PCNotInStockMessageBox(string qrId)
         {
             string pcNotInStockInfo = "";
             pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId); // Den her skal fikses
 
             MessageBox.Show(pcNotInStockInfo);
+        }
+
+        public void LoanConfirmationMessageBox()
+        {
+            string successMessage = "Lånet blev registreret i databasen!";
+
+            MessageBox.Show(successMessage);
         }
         #endregion
 

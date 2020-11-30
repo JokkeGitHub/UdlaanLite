@@ -74,6 +74,7 @@ namespace UdlaansSystem
             {
                 CreateFoldersPCQR();
                 SQLManager.RegisterPC(qrId, serialNumber, pcModel);
+                SuccessfullyRegisteredPCMessageBox();
             }
 
         }
@@ -127,6 +128,13 @@ namespace UdlaansSystem
             registeredPCInfo += SQLManager.GetRegisteredPCInfo(qrId);
 
             MessageBox.Show(registeredPCInfo);
+        }
+
+        public void SuccessfullyRegisteredPCMessageBox()
+        {
+            string successMessage = "PC'en blev registreret i databasen!";
+
+            MessageBox.Show(successMessage);
         }
         #endregion
     }
