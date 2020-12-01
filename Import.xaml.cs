@@ -44,14 +44,21 @@ namespace UdlaansSystem
             }
         }
 
-        public static void ReturnPC(string qrId)
+        public void ReturnPC(string qrId)
         {
             SQLManager.DeleteLoanAndLoaner(qrId);
+
+            ClearInputField();
 
             ReturnConfirmationMessageBox();
         }
 
-        public static void ReturnConfirmationMessageBox()
+        public void ClearInputField()
+        {
+            QRInput.Clear();
+        }
+
+        public void ReturnConfirmationMessageBox()
         {
             string confirmationMessage = "Afleveringen er accepteret!";
 

@@ -49,6 +49,25 @@ namespace UdlaansSystem
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
+            RegisterPC();
+        }
+
+        private void QRIDInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    e.Handled = true;
+                    RegisterPC();
+                }
+                catch (Exception)
+                { }
+            }
+        }
+
+        public void RegisterPC()
+        {
             ResetLabelColors();
 
             bool NoEmptyFields = false;
@@ -63,7 +82,6 @@ namespace UdlaansSystem
             if (NoEmptyFields == true)
             {
                 qrIdExists = CheckForExistingPC(qrIdExists, qrId);
-                //PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
             }
 
             if (qrIdExists == true)
@@ -76,7 +94,6 @@ namespace UdlaansSystem
                 SQLManager.RegisterPC(qrId, serialNumber, pcModel);
                 SuccessfullyRegisteredPCMessageBox();
             }
-
         }
 
         #region CHECK FOR EMPTY FIELDS
@@ -134,9 +151,19 @@ namespace UdlaansSystem
         {
             string successMessage = "PC'en blev registreret i databasen!";
 
+            ClearInputFields();
+
             MessageBox.Show(successMessage);
         }
         #endregion
+
+        public void ClearInputFields()
+        {
+            QRIDInput.Clear();
+            SerialNumberInput.Clear();
+            PcModelInput.Clear();
+        }
+
     }
 }
 

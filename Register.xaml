@@ -55,14 +55,14 @@
         </Grid.RowDefinitions>
 
         <!-- INPUT TEXTBOXES -->
-        <TextBox x:Name="QRIDInput" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="16"></TextBox>
+        <TextBox x:Name="PcModelInput" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
         <TextBox x:Name="SerialNumberInput" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="16"></TextBox>
-        <TextBox x:Name="PcModelInput" TextAlignment="Center" FontSize="50" Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
+        <TextBox x:Name="QRIDInput" TextAlignment="Center" KeyDown="QRIDInput_KeyDown" FontSize="50" Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="16"></TextBox>
 
         <!-- LABELS -->
-        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="3" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
+        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="3" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="ModelLabel">Indtast PC'ens model</Label>
         <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="7" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="SerialLabel">Indtast PC'ens "løbenummer"</Label>
-        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="11" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="ModelLabel">Indtast PC'ens model</Label>
+        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="11" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
 
         <!-- INTERACTIVE BUTTONS -->
         <Button x:Name="BtnRegister" Content="Registrer" FontSize="32" Click="BtnRegister_Click" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>

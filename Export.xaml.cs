@@ -262,7 +262,7 @@ namespace UdlaansSystem
         public void ActiveLoanMessageBox(string uniLogin)
         {
             string activeLoanInfo = "Eleven har aktivt lån!\n";
-            activeLoanInfo += SQLManager.GetActiveStudentLoanInfo(uniLogin);
+            activeLoanInfo += SQLManager.GetActiveStudentLoanInfo(uniLogin); // Den her skal fikses
 
             MessageBox.Show(activeLoanInfo);
         }
@@ -279,7 +279,20 @@ namespace UdlaansSystem
         {
             string confirmationMessage = "Lånet blev registreret i databasen!";
 
+            ClearInputFields();
+
             MessageBox.Show(confirmationMessage);
+        }
+
+        public void ClearInputFields()
+        {
+            if (IsStudentCheckBox.IsChecked == true)
+            {
+                UniLoginInput.Clear();
+                NameInput.Clear();
+                PhonenumberInput.Clear();
+                QRInput.Clear();
+            }
         }
         #endregion
 
