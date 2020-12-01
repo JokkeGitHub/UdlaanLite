@@ -277,9 +277,9 @@ namespace UdlaansSystem
 
         public void LoanConfirmationMessageBox()
         {
-            string successMessage = "Lånet blev registreret i databasen!";
+            string confirmationMessage = "Lånet blev registreret i databasen!";
 
-            MessageBox.Show(successMessage);
+            MessageBox.Show(confirmationMessage);
         }
         #endregion
 

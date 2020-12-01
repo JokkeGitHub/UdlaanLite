@@ -77,9 +77,9 @@ namespace UdlaansSystem
         #region IMPORT
         public static void DeleteLoanAndLoaner(string qrId)
         {
-            string tempUniLogin = ImportSQLConnection.GetUniLoginFromLoan(qrId);
+            ImportSQLConnection.GetUniLoginFromLoan(qrId);
             ImportSQLConnection.RemoveLoanFromDatabase(qrId);
-            ImportSQLConnection.RemoveTest();
+            ImportSQLConnection.RemoveLoaner();
         }
         #endregion
 

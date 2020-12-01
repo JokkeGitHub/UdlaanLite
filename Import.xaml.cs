@@ -47,7 +47,15 @@ namespace UdlaansSystem
         public static void ReturnPC(string qrId)
         {
             SQLManager.DeleteLoanAndLoaner(qrId);
-            // Tilføj MessageBox med bekræftelse på aflevering
+
+            ReturnConfirmationMessageBox();
+        }
+
+        public static void ReturnConfirmationMessageBox()
+        {
+            string confirmationMessage = "Afleveringen er accepteret!";
+
+            MessageBox.Show(confirmationMessage);
         }
     }
 }
