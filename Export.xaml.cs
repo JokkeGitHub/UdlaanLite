@@ -101,8 +101,6 @@ namespace UdlaansSystem
                     }
                 }
 
-
-
                 if (qrMultiList.Count == 0)
                 {
 
@@ -223,16 +221,6 @@ namespace UdlaansSystem
                 PCNotInStockMessageBox(qrId);
             }
 
-            // pc Table check
-            // if exists
-            // Loan Table check
-            // else
-            // pc doesnt exist
-            // message
-
-
-
-
             return pcInStock;
         }
 
@@ -248,12 +236,6 @@ namespace UdlaansSystem
             {
                 PCNotInStockMessageBox(qrId);
             }
-
-            // if doesnt exists in loan
-            // pc exists
-            // else
-            // pc not in stock
-            // message
 
             return pcInStock;
         }
@@ -368,5 +350,13 @@ namespace UdlaansSystem
         }
         #endregion
 
+        private void BtnClearInput_Click(object sender, RoutedEventArgs e)
+        {
+            UniLoginInput.Clear();
+            NameInput.Clear();
+            PhonenumberInput.Clear();
+            QRInput.Clear();
+            QRMultiInput.Items.Clear();
+        }
     }
 }

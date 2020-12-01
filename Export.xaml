@@ -89,6 +89,7 @@
 
         <!-- INTERACTIVE BUTTONS -->
         <Button x:Name="BtnSubmit" Content="Udlån" FontSize="32" Click="BtnSubmit_Click" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button x:Name="BtnClearInput" Content="Ryd Felter"  FontSize="32" Click="BtnClearInput_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
         <!-- CHECK BOXES -->
         <CheckBox Name="IsStudentCheckBox" Checked="IsStudentCheckBox_Checked" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
