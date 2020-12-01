@@ -101,14 +101,23 @@ namespace UdlaansSystem
                     }
                 }
 
-                PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
 
-                foreach (string qr in qrMultiList)
+
+                if (qrMultiList.Count == 0)
                 {
-                    SQLManager.CreateLoan(uniLogin, qr, startDate, endDate);
-                }
 
-                LoanConfirmationMessageBox();
+                }
+                else
+                {
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+
+                    foreach (string qr in qrMultiList)
+                    {
+                        SQLManager.CreateLoan(uniLogin, qr, startDate, endDate);
+                    }
+
+                    LoanConfirmationMessageBox();
+                }
             }
         }
 
@@ -189,6 +198,10 @@ namespace UdlaansSystem
             {
                 SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
             }
+            else if (uniLoginExists == true && isStudent == 0)
+            {
+
+            }
             else
             {
                 ActiveLoanMessageBox(uniLogin);
@@ -199,11 +212,11 @@ namespace UdlaansSystem
         #region CHECK DATABASE FOR QRID
         public bool CheckForPCInStock(bool pcInStock, string qrId)
         {
-            pcInStock = SQLManager.CheckPCTableForQRID(qrId); // Noget galt her 
+            pcInStock = SQLManager.CheckPCTableForQRID(qrId);
 
             if (pcInStock == true)
             {
-                CheckForPCInLoan(pcInStock, qrId); // Noget galt her
+                CheckForPCInLoan(pcInStock, qrId);
             }
             else
             {
