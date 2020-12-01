@@ -45,8 +45,8 @@ namespace UdlaansSystem
         {
             ResetLabelColors();
 
-            bool NoEmptyFields = false;
-            NoEmptyFields = CheckForEmptyFields(NoEmptyFields);
+            bool noEmptyFields = false;
+            noEmptyFields = CheckForEmptyFields(noEmptyFields);
 
             bool uniLoginExists = true;
             string uniLogin = UniLoginInput.Text.ToLower();
@@ -60,10 +60,9 @@ namespace UdlaansSystem
 
             string qrId = QRInput.Text;
             bool pcInStock = false;
-            pcInStock = CheckForPCInStock(pcInStock, qrId);
 
 
-            if (NoEmptyFields == true)
+            if (noEmptyFields == true)
             {
                 uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin);
                 isStudent = StudentOrTeacher(isStudent);
@@ -74,32 +73,50 @@ namespace UdlaansSystem
                 isTeacher = true;
             }
 
-            if (pcInStock == false)
-            {
-                PCNotInStockMessageBox(qrId);
-            }
-
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateInput.DisplayDate;
 
-            if (uniLoginExists == false && isTeacher == false && pcInStock == true)
+            if (uniLoginExists == false && isTeacher == false)
             {
-                PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
-                SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
-                LoanConfirmationMessageBox();
+                pcInStock = CheckForPCInStock(pcInStock, qrId);
+
+                if (pcInStock == true)
+                {
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+                    SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
+                    LoanConfirmationMessageBox();
+                }
             }
             else if (isTeacher == true)
             {
-                // Multi Udlån
-                // Check hver pc / qrId
-            }
+                List<string> qrMultiList = new List<string>();
 
-            // MessageBox med bekræftelse på udlån
+                foreach (var pc in QRMultiInput.Items)
+                {
+                    pcInStock = CheckForPCInStock(pcInStock, pc.ToString());
+
+                    if (pcInStock == true)
+                    {
+                        qrMultiList.Add(pc.ToString());
+                    }
+                }
+
+                PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+
+                foreach (string qr in qrMultiList)
+                {
+                    SQLManager.CreateLoan(uniLogin, qr, startDate, endDate);
+                }
+
+                LoanConfirmationMessageBox();
+            }
         }
 
         #region CHECK FOR EMPTY FIELDS
         public void ResetLabelColors()
         {
+            StudentCheckBoxLabel.Foreground = new SolidColorBrush(Colors.White);
+            TeacherCheckBoxLabel.Foreground = new SolidColorBrush(Colors.White);
             UNILoginLabel.Foreground = new SolidColorBrush(Colors.White);
             NameLabel.Foreground = new SolidColorBrush(Colors.White);
             PhonenumberLabel.Foreground = new SolidColorBrush(Colors.White);
@@ -110,7 +127,12 @@ namespace UdlaansSystem
         {
             NoEmptyFields = false;
 
-            if (UniLoginInput.Text.Length != 8)
+            if (IsStudentCheckBox.IsChecked == false && IsTeacherCheckBox.IsChecked == false)
+            {
+                StudentCheckBoxLabel.Foreground = new SolidColorBrush(Colors.Red);
+                TeacherCheckBoxLabel.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            else if (UniLoginInput.Text.Length != 8)
             {
                 UNILoginLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
@@ -177,12 +199,48 @@ namespace UdlaansSystem
         #region CHECK DATABASE FOR QRID
         public bool CheckForPCInStock(bool pcInStock, string qrId)
         {
+            pcInStock = SQLManager.CheckPCTableForQRID(qrId); // Noget galt her 
+
+            if (pcInStock == true)
+            {
+                CheckForPCInLoan(pcInStock, qrId); // Noget galt her
+            }
+            else
+            {
+                PCNotInStockMessageBox(qrId);
+            }
+
+            // pc Table check
+            // if exists
+            // Loan Table check
+            // else
+            // pc doesnt exist
+            // message
+
+
+
+
+            return pcInStock;
+        }
+
+        public bool CheckForPCInLoan(bool pcInStock, string qrId)
+        {
             pcInStock = SQLManager.CheckLoanTableForQRID(qrId);
 
             if (pcInStock == true)
             {
-                pcInStock = SQLManager.CheckPCTableForQRID(qrId);
+                return pcInStock;
             }
+            else
+            {
+                PCNotInStockMessageBox(qrId);
+            }
+
+            // if doesnt exists in loan
+            // pc exists
+            // else
+            // pc not in stock
+            // message
 
             return pcInStock;
         }
@@ -196,6 +254,7 @@ namespace UdlaansSystem
             if (IsStudentCheckBox.IsChecked == true)
             {
                 IsTeacherCheckBox.IsChecked = false;
+                QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
                 ListLabel.Visibility = Visibility.Hidden;
             }
