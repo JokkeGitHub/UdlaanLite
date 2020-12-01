@@ -56,12 +56,13 @@
 
         <!-- BUTTONS -->
         <Button Name="BtnShowLoaners" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Lånere</Button>
-        <Button Name="BtnShowPCs" FontSize="26" Click="BtnShowPCs_Click" Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis PC'er</Button>
+        <Button Name="BtnShowPCs" FontSize="26" Click="BtnShowPCs_Click" Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Alle PC'er</Button>
         <Button Name="BtnShowLoans" FontSize="26" Click="BtnShowLoans_Click" Grid.Row="1" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Udlån</Button>
-        <Button Name="BtnShowExpired" FontSize="26" Click="BtnShowExpired_Click" Grid.Row="1" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2">Udløbne Lån</Button>
+        <Button Name="BtnShowExpired" FontSize="26" Click="BtnShowExpired_Click" Grid.Row="3" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Udløbne Lån</Button>
+        <Button Name="BtnShowAvailablePCs" FontSize="26" Click="BtnShowAvailablePCs_Click" Grid.Row="3" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Ledige PC'er</Button>
 
         <!-- LISTVIEW -->
-        <ListView Name="DataGridView" FontSize="22" Grid.Row="3" Grid.Column="1" Grid.RowSpan="16" Grid.ColumnSpan="14">
+        <ListView Name="DataGridView" FontSize="22" Grid.Row="5" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="14">
 
             <ListView.Resources>
                 <DataTemplate x:Key="Template">

@@ -181,5 +181,32 @@ namespace UdlaansSystem
 
             conn.Close();
         }
+
+        private void BtnShowAvailablePCs_Click(object sender, RoutedEventArgs e)
+        {
+            //cmd.CommandText = @"DELETE FROM Loaner WHERE NOT EXISTS (SELECT * FROM Loan WHERE uniLogin = Loaner.login)";
+
+            PCColumns();
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT * FROM PC WHERE NOT EXISTS (SELECT * FROM Loan WHERE qrId = PC.qrId)";
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["serial"].ToString(), Column3 = dataRow["model"].ToString() });
+            }
+
+            conn.Close();
+        }
     }
 }
