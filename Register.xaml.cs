@@ -159,11 +159,23 @@ namespace UdlaansSystem
 
         public void ClearInputFields()
         {
-            QRIDInput.Clear();
-            SerialNumberInput.Clear();
             PcModelInput.Clear();
+            SerialNumberInput.Clear();
+            QRIDInput.Clear();
+        }
+        private void BtnClearInput_Click(object sender, RoutedEventArgs e)
+        {
+            ClearInputFields();
         }
 
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //if (Register.WindowState = WindowState.Maximized)
+            //{
+
+            //}
+            //QRIDInput.FontSize = 10;
+        }
     }
 }
 

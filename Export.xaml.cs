@@ -101,11 +101,7 @@ namespace UdlaansSystem
                     }
                 }
 
-                if (qrMultiList.Count == 0)
-                {
-
-                }
-                else
+                if (qrMultiList.Count != 0)
                 {
                     PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
 
@@ -214,7 +210,7 @@ namespace UdlaansSystem
 
             if (pcInStock == true)
             {
-                CheckForPCInLoan(pcInStock, qrId);
+                pcInStock = CheckForPCInLoan(pcInStock, qrId);
             }
             else
             {
@@ -337,20 +333,23 @@ namespace UdlaansSystem
 
             MessageBox.Show(confirmationMessage);
         }
+        #endregion
 
+        #region CLEAR METHODS
         public void ClearInputFields()
         {
             if (IsStudentCheckBox.IsChecked == true)
             {
-                UniLoginInput.Clear();
-                NameInput.Clear();
-                PhonenumberInput.Clear();
-                QRInput.Clear();
+                Clear();
             }
         }
-        #endregion
 
         private void BtnClearInput_Click(object sender, RoutedEventArgs e)
+        {
+            Clear();
+        }
+
+        public void Clear()
         {
             UniLoginInput.Clear();
             NameInput.Clear();
@@ -358,5 +357,6 @@ namespace UdlaansSystem
             QRInput.Clear();
             QRMultiInput.Items.Clear();
         }
+        #endregion
     }
 }
