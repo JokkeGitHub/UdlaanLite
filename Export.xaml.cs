@@ -66,6 +66,14 @@ namespace UdlaansSystem
             if (noEmptyFields == true)
             {
                 uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin); // Noget her måske ?? 
+            }
+
+            if (uniLoginExists == true)
+            {
+                isStudent = CheckExistingUniLoginForStudentOrTeacher(isStudent, uniLogin);
+            }
+            else
+            {
                 isStudent = StudentOrTeacher(isStudent);
             }
 
@@ -89,9 +97,14 @@ namespace UdlaansSystem
                 }
             }
             else if (isTeacher == true)
-            { 
+            {
                 // Ny metode for de her og henvis til den
                 List<string> qrMultiList = new List<string>();
+
+                if (QRInput.Text != "")
+                {
+                    QRMultiInput.Items.Add(QRInput.Text);
+                }
 
                 foreach (var pc in QRMultiInput.Items)
                 {
@@ -113,6 +126,7 @@ namespace UdlaansSystem
                     }
 
                     LoanConfirmationMessageBox();
+                    qrMultiList.Clear();
                 }
             }
         }
@@ -172,6 +186,14 @@ namespace UdlaansSystem
         #endregion
 
         #region STUDENT OR TEACHER CHECK
+
+        public int CheckExistingUniLoginForStudentOrTeacher(int isStudent, string uniLogin)
+        {
+           isStudent =  SQLManager.CheckIsStudentOrTeacher(isStudent, uniLogin);
+
+            return isStudent;
+        }
+
         public int StudentOrTeacher(int isStudent)
         {
             if (IsStudentCheckBox.IsChecked == true)

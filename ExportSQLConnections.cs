@@ -54,14 +54,38 @@ namespace UdlaansSystem
                 {
                     uniLoginExists = true;
                 }
-                else
-                {
-                    uniLoginExists = false;
-                }
             }
 
             conn.Close();
             return uniLoginExists;
+        }
+
+        public static int CheckDataBaseForIsStudent(int isStudent, string uniLogin)
+        {            
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT (login), isStudent FROM Loaner WHERE (login) = (@login);";
+            cmd.Parameters.AddWithValue("@login", uniLogin);
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["login"].ToString() == uniLogin.ToLower())
+                {
+                    isStudent = Convert.ToInt32(dataRow["isStudent"]);
+                }
+            }
+            
+            conn.Close();
+            return isStudent;
         }
 
         #endregion

@@ -34,6 +34,13 @@ namespace UdlaansSystem
             return uniLoginExists;
         }
 
+        public static int CheckIsStudentOrTeacher(int isStudent, string uniLogin)
+        {
+            isStudent = ExportSQLConnections.CheckDataBaseForIsStudent(isStudent, uniLogin);
+
+            return isStudent;
+        }
+
         public static bool CheckPCTableForQRID(string qrId)
         {
             bool pcInStock = ExportSQLConnections.CheckPCTableForQR(qrId);
@@ -54,10 +61,6 @@ namespace UdlaansSystem
 
             return activeLoanInfo;
         }
-
-        #endregion
-
-        #region NEEDS SOME WORK
         public static string GetActivePCNotInStockInfo(string qrId)
         {
             string pcNotInStockInfo = ExportSQLConnections.GetPCNotInStockInfo(qrId);
