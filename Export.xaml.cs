@@ -43,6 +43,7 @@ namespace UdlaansSystem
         #region SUBMIT
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            // Put hele den her i flere metoder og henvis til en "Submit" metode
             ResetLabelColors();
 
             bool noEmptyFields = false;
@@ -64,7 +65,7 @@ namespace UdlaansSystem
 
             if (noEmptyFields == true)
             {
-                uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin);
+                uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin); // Noget her måske ?? 
                 isStudent = StudentOrTeacher(isStudent);
             }
 
@@ -82,13 +83,14 @@ namespace UdlaansSystem
 
                 if (pcInStock == true)
                 {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent); // Noget her
                     SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
                     LoanConfirmationMessageBox();
                 }
             }
             else if (isTeacher == true)
-            {
+            { 
+                // Ny metode for de her og henvis til den
                 List<string> qrMultiList = new List<string>();
 
                 foreach (var pc in QRMultiInput.Items)
@@ -188,6 +190,8 @@ namespace UdlaansSystem
         #region PASS ON LOANER DATA TO DATABASE
         public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent)
         {
+            // Noget i denne her 
+
             if (uniLoginExists == false)
             {
                 SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
@@ -320,7 +324,12 @@ namespace UdlaansSystem
         public void PCNotInStockMessageBox(string qrId)
         {
             string pcNotInStockInfo = "";
-            pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId); // Den her skal fikses
+            pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId);
+
+            if (pcNotInStockInfo == "")
+            {
+                pcNotInStockInfo = $"PC'en med QR {qrId} er ikke registreret i databasen!";
+            }
 
             MessageBox.Show(pcNotInStockInfo);
         }

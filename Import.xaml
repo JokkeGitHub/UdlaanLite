@@ -62,6 +62,7 @@
 
         <!-- INTERACTIVE BUTTONS -->
         <Button x:Name="BtnReturn" Content="Aflever" Click="BtnReturn_Click" FontSize="32" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button x:Name="BtnClearInput" Content="Ryd Feltet"  FontSize="32" Click="BtnClearInput_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
 
     </Grid>

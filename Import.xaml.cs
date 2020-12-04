@@ -46,11 +46,21 @@ namespace UdlaansSystem
 
         public void ReturnPC(string qrId)
         {
-            SQLManager.DeleteLoanAndLoaner(qrId);
+            string tempUniLogin = SQLManager.GetUniLoginFromLoan(qrId);
+
+            if (tempUniLogin != "")
+            {
+                SQLManager.DeleteLoanAndLoaner(qrId);
+            }
 
             ClearInputField();
 
-            ReturnConfirmationMessageBox();
+            ReturnConfirmationMessageBox(tempUniLogin);
+        }
+
+        public void DeleteLoan(string qrId)
+        {
+            SQLManager.DeleteLoanAndLoaner(qrId);
         }
 
         public void ClearInputField()
@@ -58,11 +68,25 @@ namespace UdlaansSystem
             QRInput.Clear();
         }
 
-        public void ReturnConfirmationMessageBox()
+        public void ReturnConfirmationMessageBox(string tempUniLogin)
         {
-            string confirmationMessage = "Afleveringen er accepteret!";
+            string confirmationMessage = "";
+
+            if (tempUniLogin != "")
+            {
+                confirmationMessage = "Afleveringen er accepteret!";
+            }
+            else
+            {
+                confirmationMessage = "Denne PC er ikke udlånt!";
+            }
 
             MessageBox.Show(confirmationMessage);
+        }
+
+        private void BtnClearInput_Click(object sender, RoutedEventArgs e)
+        {
+            ClearInputField();
         }
     }
 }

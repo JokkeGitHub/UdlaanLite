@@ -168,6 +168,16 @@ namespace UdlaansSystem
             ClearInputFields();
         }
 
+
+
+
+
+
+
+
+
+
+        // Prøv at få det til at virke med FontSize når vinduet bliver mindre
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             //if (Register.WindowState = WindowState.Maximized)

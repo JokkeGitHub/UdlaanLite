@@ -36,14 +36,14 @@ namespace UdlaansSystem
 
         public static bool CheckPCTableForQRID(string qrId)
         {
-            bool pcInStock = ExportSQLConnections.CheckPCTableForQR(qrId);  // Den her
+            bool pcInStock = ExportSQLConnections.CheckPCTableForQR(qrId);
 
             return pcInStock;
         }
 
         public static bool CheckLoanTableForQRID(string qrId)
         {
-            bool pcInStock = ExportSQLConnections.CheckLoanTableForQR(qrId); // Den her
+            bool pcInStock = ExportSQLConnections.CheckLoanTableForQR(qrId);
 
             return pcInStock;
         }
@@ -62,11 +62,6 @@ namespace UdlaansSystem
         {
             string pcNotInStockInfo = ExportSQLConnections.GetPCNotInStockInfo(qrId);
 
-            if (pcNotInStockInfo == "")// DEN HER OVER I EN SØGNING GENNEM PC TABLE
-            {
-                pcNotInStockInfo = $"PC'en med QR {qrId} er ikke registreret i databasen!"; // HER TJEK PC TABLE EFTER PC
-            }
-
             return pcNotInStockInfo;
         }
 
@@ -75,9 +70,15 @@ namespace UdlaansSystem
         #endregion
 
         #region IMPORT
+        public static string GetUniLoginFromLoan(string qrId)
+        {
+            string tempUniLogin = ImportSQLConnection.GetUniLoginFromLoan(qrId);
+
+            return tempUniLogin;
+        }
+
         public static void DeleteLoanAndLoaner(string qrId)
         {
-            ImportSQLConnection.GetUniLoginFromLoan(qrId);
             ImportSQLConnection.RemoveLoanFromDatabase(qrId);
             ImportSQLConnection.RemoveLoaner();
         }
