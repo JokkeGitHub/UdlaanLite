@@ -84,11 +84,11 @@ namespace UdlaansSystem
                 qrIdExists = CheckForExistingPC(qrIdExists, qrId);
             }
 
-            if (qrIdExists == true)
+            if (qrIdExists == true && NoEmptyFields == true)
             {
                 RegisteredPCMessageBox(qrId);
             }
-            else
+            else if (qrIdExists == false && NoEmptyFields == true)
             {
                 CreateFoldersPCQR();
                 SQLManager.RegisterPC(qrId, serialNumber, pcModel);
@@ -99,26 +99,26 @@ namespace UdlaansSystem
         #region CHECK FOR EMPTY FIELDS
         public void ResetLabelColors()
         {
-            QRLabel.Foreground = new SolidColorBrush(Colors.White);
-            SerialLabel.Foreground = new SolidColorBrush(Colors.White);
             ModelLabel.Foreground = new SolidColorBrush(Colors.White);
+            SerialLabel.Foreground = new SolidColorBrush(Colors.White);
+            QRLabel.Foreground = new SolidColorBrush(Colors.White);
         }
 
         public bool CheckForEmptyFields(bool NoEmptyFields)
         {
             NoEmptyFields = false;
 
-            if (QRIDInput.Text.Length < 11)
+            if (PcModelInput.Text == "")
             {
-                QRLabel.Foreground = new SolidColorBrush(Colors.Red);
+                ModelLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
             else if (SerialNumberInput.Text.Length < 4)
             {
                 SerialLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
-            else if (PcModelInput.Text == "")
+            else if (QRIDInput.Text.Length < 11)
             {
-                ModelLabel.Foreground = new SolidColorBrush(Colors.Red);
+                QRLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
             else
             {
