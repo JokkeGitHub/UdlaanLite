@@ -195,7 +195,7 @@ namespace UdlaansSystem
             {
                 if (dataRow["qrId"].ToString() == qrId)
                 {
-                    pcNotInStockInfo = $"PC'en er allerede udlånt! \nLån ID: { dataRow["loanId"] } \nQR ID: { dataRow["qrId"] }";
+                    pcNotInStockInfo = $"PC'en med QR { dataRow["qrId"] } allerede udlånt! \nLån ID: { dataRow["loanId"] }";
                 }
             }
 

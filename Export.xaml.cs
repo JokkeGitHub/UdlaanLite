@@ -65,7 +65,7 @@ namespace UdlaansSystem
 
             if (noEmptyFields == true)
             {
-                uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin); // Noget her måske ?? 
+                uniLoginExists = CheckForExistingUNILogin(uniLoginExists, uniLogin);
             }
 
             if (uniLoginExists == true)
@@ -91,10 +91,23 @@ namespace UdlaansSystem
 
                 if (pcInStock == true)
                 {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent); // Noget her
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
                     SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
                     LoanConfirmationMessageBox();
+                    Clear();
                 }
+            }
+            else if (uniLoginExists == true && isTeacher == false)
+            {
+                ActiveLoanMessageBox(uniLogin);
+            }
+            else if (uniLoginExists == true && isTeacher == false && IsTeacherCheckBox.IsChecked == true)
+            {
+                UniLoginBelongsToStudentMessage();
+            }
+            else if (uniLoginExists == true && isTeacher == true && IsStudentCheckBox.IsChecked == true)
+            {
+                UniLoginBelongsToTeacherMessage();
             }
             else if (isTeacher == true)
             {
@@ -127,6 +140,7 @@ namespace UdlaansSystem
 
                     LoanConfirmationMessageBox();
                     qrMultiList.Clear();
+                    Clear();
                 }
             }
         }
@@ -212,8 +226,6 @@ namespace UdlaansSystem
         #region PASS ON LOANER DATA TO DATABASE
         public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent)
         {
-            // Noget i denne her 
-
             if (uniLoginExists == false)
             {
                 SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
@@ -363,6 +375,19 @@ namespace UdlaansSystem
             ClearInputFields();
 
             MessageBox.Show(confirmationMessage);
+        }
+
+        public void UniLoginBelongsToStudentMessage()
+        {
+            string notTeacherMessage = "Dette UNI Login er tilknyttet en elev!";
+
+            MessageBox.Show(notTeacherMessage);
+        }
+        public void UniLoginBelongsToTeacherMessage()
+        {
+            string notStudentMessage = "Dette UNI Login er tilknyttet en lærer!";
+
+            MessageBox.Show(notStudentMessage);
         }
         #endregion
 
