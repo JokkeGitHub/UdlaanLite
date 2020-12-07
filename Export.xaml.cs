@@ -234,10 +234,6 @@ namespace UdlaansSystem
             {
 
             }
-            else
-            {
-                ActiveLoanMessageBox(uniLogin);
-            }
         }
         #endregion
 
