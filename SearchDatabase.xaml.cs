@@ -27,6 +27,8 @@ namespace UdlaansSystem
             InitializeComponent();
         }
 
+        #region CLICK BUTTON SEARCHES
+
         private void BtnShowLoaners_Click(object sender, RoutedEventArgs e)
         {
             string title;
@@ -62,20 +64,6 @@ namespace UdlaansSystem
             conn.Close();
         }
 
-        private void LoanerColumns()
-        {
-            DataGridView.Items.Clear();
-
-            ((GridView)DataGridView.View).Columns[0].Header = "UNI Login :";
-            ((GridView)DataGridView.View).Columns[1].Header = "Navn :";
-            ((GridView)DataGridView.View).Columns[2].Header = "Telefon :";
-            ((GridView)DataGridView.View).Columns[3].Header = "Titel :";
-            ((GridView)DataGridView.View).Columns[4].Header = "";
-            ((GridView)DataGridView.View).Columns[5].Header = "";
-            ((GridView)DataGridView.View).Columns[6].Header = "";
-            ((GridView)DataGridView.View).Columns[7].Header = "";
-        }
-
         private void BtnShowPCs_Click(object sender, RoutedEventArgs e)
         {
             PCColumns();
@@ -101,20 +89,6 @@ namespace UdlaansSystem
             conn.Close();
         }
 
-        private void PCColumns()
-        {
-            DataGridView.Items.Clear();
-
-            ((GridView)DataGridView.View).Columns[0].Header = "QR ID :";
-            ((GridView)DataGridView.View).Columns[1].Header = "Løbenummer :";
-            ((GridView)DataGridView.View).Columns[2].Header = "Model :";
-            ((GridView)DataGridView.View).Columns[3].Header = "";
-            ((GridView)DataGridView.View).Columns[4].Header = "";
-            ((GridView)DataGridView.View).Columns[5].Header = "";
-            ((GridView)DataGridView.View).Columns[6].Header = "";
-            ((GridView)DataGridView.View).Columns[7].Header = "";
-        }
-
         private void BtnShowLoans_Click(object sender, RoutedEventArgs e)
         {
             LoanColumns();
@@ -138,20 +112,6 @@ namespace UdlaansSystem
             }
 
             conn.Close();
-        }
-
-        private void LoanColumns()
-        {
-            DataGridView.Items.Clear();
-
-            ((GridView)DataGridView.View).Columns[0].Header = "Lån ID :";
-            ((GridView)DataGridView.View).Columns[1].Header = "PC Model :";
-            ((GridView)DataGridView.View).Columns[2].Header = "QR ID :";
-            ((GridView)DataGridView.View).Columns[3].Header = "Start Dato :";
-            ((GridView)DataGridView.View).Columns[4].Header = "Slut Dato :";
-            ((GridView)DataGridView.View).Columns[5].Header = "UNI Login :";
-            ((GridView)DataGridView.View).Columns[6].Header = "Låner Navn :";
-            ((GridView)DataGridView.View).Columns[7].Header = "Telefon :";
         }
 
         private void BtnShowExpired_Click(object sender, RoutedEventArgs e)
@@ -184,8 +144,6 @@ namespace UdlaansSystem
 
         private void BtnShowAvailablePCs_Click(object sender, RoutedEventArgs e)
         {
-            //cmd.CommandText = @"DELETE FROM Loaner WHERE NOT EXISTS (SELECT * FROM Loan WHERE uniLogin = Loaner.login)";
-
             PCColumns();
 
             SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
@@ -208,5 +166,96 @@ namespace UdlaansSystem
 
             conn.Close();
         }
+
+        #endregion
+
+        #region USER INPUT SEARCHES
+
+        private void BtnSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserInputSearch();
+        }
+
+        private void BtnSearchInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            UserInputSearch();
+        }
+
+        public void UserInputSearch()
+        {
+            string input = BtnSearchInput.Text.ToLower();
+            LoanColumns();
+
+            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT * FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId)";
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["loanId"].ToString().ToLower().Contains(input) || dataRow["model"].ToString().ToLower().Contains(input) || dataRow["qrId"].ToString().ToLower().Contains(input) || dataRow["uniLogin"].ToString().ToLower().Contains(input) || dataRow["name"].ToString().ToLower().Contains(input) || dataRow["phone"].ToString().ToLower().Contains(input))
+                {
+                    DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["startDate"].ToString(), Column5 = dataRow["endDate"].ToString(), Column6 = dataRow["uniLogin"].ToString(), Column7 = dataRow["name"].ToString(), Column8 = dataRow["phone"].ToString() });
+                }
+            }
+
+            conn.Close();
+        }
+
+        #endregion
+
+        #region COLUMNS
+
+        private void LoanerColumns()
+        {
+            DataGridView.Items.Clear();
+
+            ((GridView)DataGridView.View).Columns[0].Header = "UNI Login :";
+            ((GridView)DataGridView.View).Columns[1].Header = "Navn :";
+            ((GridView)DataGridView.View).Columns[2].Header = "Telefon :";
+            ((GridView)DataGridView.View).Columns[3].Header = "Titel :";
+            ((GridView)DataGridView.View).Columns[4].Header = "";
+            ((GridView)DataGridView.View).Columns[5].Header = "";
+            ((GridView)DataGridView.View).Columns[6].Header = "";
+            ((GridView)DataGridView.View).Columns[7].Header = "";
+        }
+
+        private void PCColumns()
+        {
+            DataGridView.Items.Clear();
+
+            ((GridView)DataGridView.View).Columns[0].Header = "QR ID :";
+            ((GridView)DataGridView.View).Columns[1].Header = "Løbenummer :";
+            ((GridView)DataGridView.View).Columns[2].Header = "Model :";
+            ((GridView)DataGridView.View).Columns[3].Header = "";
+            ((GridView)DataGridView.View).Columns[4].Header = "";
+            ((GridView)DataGridView.View).Columns[5].Header = "";
+            ((GridView)DataGridView.View).Columns[6].Header = "";
+            ((GridView)DataGridView.View).Columns[7].Header = "";
+        }
+
+        private void LoanColumns()
+        {
+            DataGridView.Items.Clear();
+
+            ((GridView)DataGridView.View).Columns[0].Header = "Lån ID :";
+            ((GridView)DataGridView.View).Columns[1].Header = "PC Model :";
+            ((GridView)DataGridView.View).Columns[2].Header = "QR ID :";
+            ((GridView)DataGridView.View).Columns[3].Header = "Start Dato :";
+            ((GridView)DataGridView.View).Columns[4].Header = "Slut Dato :";
+            ((GridView)DataGridView.View).Columns[5].Header = "UNI Login :";
+            ((GridView)DataGridView.View).Columns[6].Header = "Låner Navn :";
+            ((GridView)DataGridView.View).Columns[7].Header = "Telefon :";
+        }
+
+        #endregion
     }
 }
