@@ -176,8 +176,9 @@ namespace UdlaansSystem
             UserInputSearch();
         }
 
-        private void BtnSearchInput_KeyDown(object sender, KeyEventArgs e)
+        private void BtnSearchInput_KeyUp(object sender, KeyEventArgs e)
         {
+
             UserInputSearch();
         }
 
