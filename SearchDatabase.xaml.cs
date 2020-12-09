@@ -83,7 +83,7 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["serial"].ToString(), Column3 = dataRow["model"].ToString() });
+                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["serial"].ToString() });
             }
 
             conn.Close();
@@ -161,7 +161,7 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["serial"].ToString(), Column3 = dataRow["model"].ToString() });
+                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["serial"].ToString() });
             }
 
             conn.Close();
@@ -205,7 +205,6 @@ namespace UdlaansSystem
                 if (dataRow["loanId"].ToString().ToLower().Contains(input) || dataRow["model"].ToString().ToLower().Contains(input) || dataRow["qrId"].ToString().ToLower().Contains(input) || dataRow["uniLogin"].ToString().ToLower().Contains(input) || dataRow["name"].ToString().ToLower().Contains(input) || dataRow["phone"].ToString().ToLower().Contains(input))
                 {
                     DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8), Column5 = dataRow["endDate"].ToString().Remove(dataRow["endDate"].ToString().Length - 8), Column6 = dataRow["uniLogin"].ToString(), Column7 = dataRow["name"].ToString(), Column8 = dataRow["phone"].ToString() });
-                    //dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8);
                 }
             }
 
@@ -235,8 +234,8 @@ namespace UdlaansSystem
             DataGridView.Items.Clear();
 
             ((GridView)DataGridView.View).Columns[0].Header = "QR ID :";
-            ((GridView)DataGridView.View).Columns[1].Header = "Løbenummer :";
-            ((GridView)DataGridView.View).Columns[2].Header = "Model :";
+            ((GridView)DataGridView.View).Columns[1].Header = "Model :";
+            ((GridView)DataGridView.View).Columns[2].Header = "Løbenummer :";
             ((GridView)DataGridView.View).Columns[3].Header = "";
             ((GridView)DataGridView.View).Columns[4].Header = "";
             ((GridView)DataGridView.View).Columns[5].Header = "";
