@@ -55,37 +55,46 @@
         </Grid.RowDefinitions>
 
         <!-- BUTTONS -->
-        <Button Name="BtnShowLoaners" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Lånere</Button>
-        <Button Name="BtnShowPCs" FontSize="26" Click="BtnShowPCs_Click" Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Alle PC'er</Button>
-        <Button Name="BtnShowLoans" FontSize="26" Click="BtnShowLoans_Click" Grid.Row="1" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Udlån</Button>
-        <Button Name="BtnShowExpired" FontSize="26" Click="BtnShowExpired_Click" Grid.Row="3" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Udløbne Lån</Button>
-        <Button Name="BtnShowAvailablePCs" FontSize="26" Click="BtnShowAvailablePCs_Click" Grid.Row="3" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Ledige PC'er</Button>
+        <Button Name="BtnShowLoaners" BorderBrush="Black" BorderThickness="1" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Lånere</Button>
+        <Button Name="BtnShowPCs" BorderBrush="Black" BorderThickness="1" FontSize="26" Click="BtnShowPCs_Click" Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Alle PC'er</Button>
+        <Button Name="BtnShowLoans" BorderBrush="Black" BorderThickness="1" FontSize="26" Click="BtnShowLoans_Click" Grid.Row="1" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Udlån</Button>
+        <Button Name="BtnShowExpired" BorderBrush="Black" BorderThickness="1" FontSize="26" Click="BtnShowExpired_Click" Grid.Row="3" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Udløbne Lån</Button>
+        <Button Name="BtnShowAvailablePCs" BorderBrush="Black" BorderThickness="1" FontSize="26" Click="BtnShowAvailablePCs_Click" Grid.Row="3" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Vis Ledige PC'er</Button>
 
         <!-- IMAGE BUTTONS -->
-        <Button Name="BtnSearchButton"  Grid.Row="1" Grid.Column="14" Grid.RowSpan="1" Width="50" Click="BtnSearchButton_Click">
+        <Button Name="BtnSearchButton" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="14" Grid.RowSpan="1" Width="50" Click="BtnSearchButton_Click">
             <StackPanel>
                 <Image Source="searchIcon.png" Height="35" Width="35" />
             </StackPanel>
         </Button>
-        
+
         <!-- TEXT BOXES -->
-        <TextBox Name="BtnSearchInput" FontSize="26" Grid.Row="1" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="4" KeyUp="BtnSearchInput_KeyUp"></TextBox>
-        
+        <TextBox Name="BtnSearchInput" BorderBrush="Black" BorderThickness="1" FontSize="26" Grid.Row="1" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="4" KeyUp="BtnSearchInput_KeyUp"></TextBox>
+
         <!-- LABELS -->
         <Label Foreground="White" FontSize="12" Grid.Row="2" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="5" Padding="0">Indtast "søgeord" i feltet</Label>
 
         <!-- LISTVIEW -->
-        <ListView Name="DataGridView" FontSize="22" Grid.Row="5" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="14">
+        <ListView Name="DataGridView" BorderBrush="Black" BorderThickness="1" FontSize="22" Grid.Row="5" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="14">
 
             <ListView.Resources>
                 <DataTemplate x:Key="Template">
                     <TextBlock HorizontalAlignment="Left" Text="{Binding}"/>
                 </DataTemplate>
                 <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader">
-                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+                    <Setter Property="BorderBrush" Value="Black"></Setter>
+                    <Setter Property="BorderThickness" Value="1"></Setter>
                 </Style>
             </ListView.Resources>
-            
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="BorderBrush" Value="Black"></Setter>
+                    <Setter Property="BorderThickness" Value="1"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column1}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
@@ -98,7 +107,7 @@
                     <GridViewColumn Header="" Width="135" DisplayMemberBinding="{Binding Column8}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
                 </GridView>
             </ListView.View>
-            
+
         </ListView>
 
 

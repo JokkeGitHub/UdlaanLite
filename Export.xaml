@@ -69,13 +69,13 @@
         </Grid.RowDefinitions>
         
         <!-- INTERACTIVE DATE PICKER -->
-        <DatePicker x:Name="DateInput" BorderThickness="0" FontSize="24" Grid.Row="4" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="4" SelectedDateFormat="Short" FirstDayOfWeek="Monday" Text="{Binding StringFormat=dd/M/yyyy}"/>
+        <DatePicker x:Name="DateInput"  BorderBrush="Black" BorderThickness="1" FontSize="24" Grid.Row="4" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="4" SelectedDateFormat="Short" FirstDayOfWeek="Monday" Text="{Binding StringFormat=dd/M/yyyy}"/>
 
         <!-- INPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4" MaxLength="8"></TextBox>
-        <TextBox x:Name="NameInput" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
-        <TextBox x:Name="PhonenumberInput" TextAlignment="Center" FontSize="50"  Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="8"></TextBox>
-        <TextBox x:Name="QRInput" TextAlignment="Center" FontSize="50" KeyDown="QRInput_KeyDown" Grid.Row="16" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxLength="16"></TextBox>
+        <TextBox x:Name="UniLoginInput" BorderBrush="Black" BorderThickness="1" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4" MaxLength="8"></TextBox>
+        <TextBox x:Name="NameInput" BorderBrush="Black" BorderThickness="1" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
+        <TextBox x:Name="PhonenumberInput" BorderBrush="Black" BorderThickness="1" TextAlignment="Center" FontSize="50"  Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="8"></TextBox>
+        <TextBox x:Name="QRInput" BorderBrush="Black" BorderThickness="1" TextAlignment="Center" FontSize="50" KeyDown="QRInput_KeyDown" Grid.Row="16" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxLength="16"></TextBox>
 
         <!-- LABELS -->
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="3" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="8">Vælg slut dato for lån</Label>
@@ -88,24 +88,24 @@
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="2" Grid.Column="5" Grid.RowSpan="1" Grid.ColumnSpan="2" Name="TeacherCheckBoxLabel">Lærer</Label>
 
         <!-- INTERACTIVE BUTTONS -->
-        <Button x:Name="BtnSubmit" Content="Udlån" FontSize="32" Click="BtnSubmit_Click" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
-        <Button x:Name="BtnClearInput" Content="Ryd Felter"  FontSize="32" Click="BtnClearInput_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+        <Button x:Name="BtnSubmit" BorderBrush="Black" BorderThickness="1" Content="Udlån" FontSize="32" Click="BtnSubmit_Click" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button x:Name="BtnClearInput" BorderBrush="Black" BorderThickness="1" Content="Ryd Felter"  FontSize="32" Click="BtnClearInput_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
         <!-- CHECK BOXES -->
-        <CheckBox Name="IsStudentCheckBox" Checked="IsStudentCheckBox_Checked" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+        <CheckBox Name="IsStudentCheckBox" BorderBrush="Black" BorderThickness="1" Checked="IsStudentCheckBox_Checked" Margin="50,0,0,0" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="2" ScaleY="2" />
             </CheckBox.LayoutTransform>
         </CheckBox>
-        
-        <CheckBox Name="IsTeacherCheckBox" Checked="IsTeacherCheckBox_Checked" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
+
+        <CheckBox Name="IsTeacherCheckBox" BorderBrush="Black" BorderThickness="1" Checked="IsTeacherCheckBox_Checked" Margin="50,0,0,0" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="2" ScaleY="2" />
             </CheckBox.LayoutTransform>
         </CheckBox>
 
         <!-- LISTBOX -->
-        <ListBox x:Name="QRMultiInput" Background="White" BorderThickness="0" FontSize="20" KeyDown="QRMultiInput_KeyDown" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2">
+        <ListBox x:Name="QRMultiInput" Background="White"  BorderBrush="Black" BorderThickness="1" FontSize="20" KeyDown="QRMultiInput_KeyDown" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Height" Value="30" />

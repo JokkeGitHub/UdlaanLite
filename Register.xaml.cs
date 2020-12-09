@@ -47,6 +47,11 @@ namespace UdlaansSystem
             finally { }
         }
 
+        public void CreateNewQRCodes()
+        {
+
+        }
+
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             RegisterPC();
@@ -166,6 +171,26 @@ namespace UdlaansSystem
         private void BtnClearInput_Click(object sender, RoutedEventArgs e)
         {
             ClearInputFields();
+        }
+
+        private void BtnNewQR_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NewQRSerialInput_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void QRMultiInput_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void NewQRCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
