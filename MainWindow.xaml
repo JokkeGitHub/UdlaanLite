@@ -161,13 +161,18 @@
         <Image Source="logo.png" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
         <TextBlock Text="R.U.S." FontFamily="Roboto" FontSize="15" Foreground="GhostWhite" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" VerticalAlignment="Bottom"/>
         <TextBlock Text="Ringsteds Udlåns System" FontFamily="Roboto" FontSize="12" Foreground="GhostWhite" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"/>
-        <Button Background="Transparent" Content="-" FontSize="18" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="13" Grid.ColumnSpan="1"/>
-        <Button x:Name="resizeButton" Background="Transparent" Content="&gt;" FontSize="18" ToolTip="Resize" Click="Button_Click_Resize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="1"/>
-        <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="15" Grid.ColumnSpan="1"/>
+        <Button Background="Transparent" Content="-" FontSize="18" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="13" Grid.RowSpan="2"  Grid.ColumnSpan="1"/>
+        <Button x:Name="resizeButton" Background="Transparent" Content="&gt;" FontSize="18" ToolTip="Resize" Click="Button_Click_Resize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="14" Grid.RowSpan="2" Grid.ColumnSpan="1"/>
+        <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="15" Grid.RowSpan="2" Grid.ColumnSpan="1"/>
 
         <!-- Navigation -->
-        <Button x:Name="Export" Grid.Row="0" Grid.Column="5" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Udlån" Cursor="Hand" Click="Export_Click" Style="{DynamicResource ButtonStyle1}"/>
-        <Button x:Name="Import" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Aflevering" Cursor="Hand" Click="Import_Click" Style="{DynamicResource ButtonStyle1}"/>
-        <Button x:Name="Register" Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Registrer PC" Cursor="Hand" Click="Register_Click"  Style="{DynamicResource ButtonStyle1}"/>
+        <Button x:Name="Export" Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Udlån" Cursor="Hand" Click="Export_Click" Style="{DynamicResource ButtonStyle1}"/>
+        <Button x:Name="Import" Grid.Row="0" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Aflevering" Cursor="Hand" Click="Import_Click" Style="{DynamicResource ButtonStyle1}"/>
+        <Button x:Name="Register" Grid.Row="0" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Registrer PC" Cursor="Hand" Click="Register_Click"  Style="{DynamicResource ButtonStyle1}"/>
+        <Button x:Name="SearchDatabase" Grid.Row="0" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" FontSize="16" Foreground="GhostWhite" FontWeight="SemiBold" FontFamily="Roboto" Background="Transparent" BorderBrush="Transparent" Content="Søg" Cursor="Hand" Click="SearchDatabase_Click"  Style="{DynamicResource ButtonStyle1}"/>
+    
+    
+        
+        
     </Grid>
 </Window>

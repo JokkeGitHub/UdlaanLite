@@ -10,14 +10,45 @@
 
     <Page.Resources>
 
-        <ContextMenu x:Key="cmCalendar">
-            <MenuItem Header="Vælg dato">
-                <!--<MenuItem.Icon >
-                    <Image Source="resources/calendar.png"/>
-                </MenuItem.Icon>-->
-                <Calendar></Calendar>
-            </MenuItem>
-        </ContextMenu>
+        <Style TargetType="Button" x:Key="RoundButton">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="RoundTextBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style TargetType="CheckBox" x:Key="RoundCheckBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        
+        <Style TargetType="DatePicker" x:Key="RoundDatePicker">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        
+        <Style TargetType="ListBox" x:Key="RoundListBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Style.Resources>
+        </Style>
 
     </Page.Resources>
     
@@ -67,29 +98,60 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
+        <!-- INTERACTIVE DATE PICKER -->
+        <DatePicker Style="{DynamicResource RoundDatePicker}" x:Name="DateInput" BorderBrush="Black" BorderThickness="2" FontSize="24" Grid.Row="4" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="4" SelectedDateFormat="Short" FirstDayOfWeek="Monday" Text="{Binding StringFormat=dd/M/yyyy}"/>
 
         <!-- INPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4">UniLogin</TextBox>
-        <TextBox x:Name="NameInput" TextAlignment="Center" FontSize="50" Grid.Row="7" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="12">Navn</TextBox>
-        <TextBox x:Name="PhonenumberInput" TextAlignment="Center" FontSize="50" Grid.Row="10" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="12">Telefonnummer</TextBox>
-        <TextBox x:Name="DateInput" TextAlignment="Center" FontSize="32" MouseRightButtonDown="DateInput_MouseRightButtonDown" Grid.Row="3" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4">Vælg dato</TextBox>
-        
-        <!-- QR CODE TEXTBOXES -->
-        <TextBox x:Name="QRScannerUniLogin" TextAlignment="Center" FontSize="50" Grid.Row="17" Grid.Column="10" Grid.RowSpan="2" Grid.ColumnSpan="4" IsReadOnly="True" KeyDown="QRScannerUniLogin_KeyDown">QR Scanner</TextBox>
-        <TextBox x:Name="QRScannerSerialNumber" TextAlignment="Center" FontSize="50" Grid.Row="13" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="12" KeyDown="QRScannerSerialNumber_KeyDown"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="UniLoginInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4" MaxLength="8"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="NameInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="PhonenumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50"  Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="8" PreviewTextInput="NumberValidationTextBox"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" KeyDown="QRInput_KeyDown" Grid.Row="16" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxLength="16"></TextBox>
 
-        <!-- OUTPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginStatus" TextAlignment="Center" FontSize="32" Grid.Row="1" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette UniLogin lånt?</TextBox>
-        <TextBox x:Name="CurrentDate" TextAlignment="Center" FontSize="32" Grid.Row="1" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Nuværende dato</TextBox>
-        
+        <!-- LABELS -->
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="3" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="8">Vælg slut dato for lån</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="3" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="UNILoginLabel">Indtast UNI Login</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="NameLabel">Indtast navn</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="11" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="PhonenumberLabel">Indtast telefonnummer</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="15" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="13" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="ListLabel">Skannede PC'er</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="2" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="2" Name="StudentCheckBoxLabel">Elev</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="2" Grid.Column="5" Grid.RowSpan="1" Grid.ColumnSpan="2" Name="TeacherCheckBoxLabel">Lærer</Label>
+
         <!-- INTERACTIVE BUTTONS -->
-        <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4"/>
-        <Button x:Name="BtnSubmit" Content="Udlån" FontSize="32" Grid.Row="17" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button Style="{DynamicResource RoundButton}" x:Name="BtnSubmit" BorderBrush="Black" BorderThickness="2" Content="Udlån" FontSize="32" Click="BtnSubmit_Click" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
 
-        <!--<Viewbox Grid.Row="1" Grid.Column="9" Grid.RowSpan="5" Grid.ColumnSpan="3">
-            <Calendar SelectionMode="SingleRange" />
-        </Viewbox>-->
+        <Button Style="{DynamicResource RoundButton}" x:Name="BtnClearInput" BorderBrush="Black" BorderThickness="2" Content="Ryd Felter"  FontSize="32" Click="BtnClearInput_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
+        <!-- CHECK BOXES -->
+        <CheckBox Style="{DynamicResource RoundCheckBox}" Name="IsStudentCheckBox" BorderBrush="Black" BorderThickness="1" Checked="IsStudentCheckBox_Checked" Margin="50,0,0,0" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+
+        <CheckBox Style="{DynamicResource RoundCheckBox}" Name="IsTeacherCheckBox" BorderBrush="Black" BorderThickness="1" Checked="IsTeacherCheckBox_Checked" Margin="50,0,0,0" Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+
+        <!-- LISTBOX , ListView her istedet måske-->
+        <ListBox Style="{DynamicResource RoundListBox}" x:Name="QRMultiInput" BorderBrush="Black" BorderThickness="2" FontSize="20" KeyDown="QRMultiInput_KeyDown" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Height" Value="30" />
+                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <!-- LISTBOX BORDERS -->
+        <Border Name="OuterBorder" BorderBrush="Gray" BorderThickness="7" CornerRadius="20" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2" Margin="-3">
+        </Border>
+
+        <Border Name="InnerBorder"  BorderBrush="Black" BorderThickness="2" CornerRadius="20" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2" Margin="2">
+        </Border>
 
     </Grid>
 </Page>

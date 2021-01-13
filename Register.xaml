@@ -8,6 +8,42 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Register">
 
+    <Page.Resources>
+
+        <Style TargetType="Button" x:Key="RoundButton">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="RoundTextBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style TargetType="ListBox" x:Key="RoundListBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style TargetType="CheckBox" x:Key="RoundCheckBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+    </Page.Resources>
+
     <Grid>
 
         <!-- 15 COLUMNS-->
@@ -55,15 +91,52 @@
         </Grid.RowDefinitions>
 
         <!-- INPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4">UniLogin</TextBox>
-        <TextBox x:Name="INFO" TextAlignment="Center" FontSize="50" Grid.Row="9" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10">REGISTRER PC HER</TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="PcModelInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="SerialNumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="SerialNumberInput_KeyDown" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="16"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRIDInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="QRIDInput_KeyDown" FontSize="50" Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="16"></TextBox>
 
-        <!-- OUTPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginStatus" TextAlignment="Center" FontSize="32" Grid.Row="2" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette UniLogin lånt?</TextBox>
+        <!-- LABELS -->
+        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="8" Name="ModelLabel">Indtast PC'ens model</Label>
+        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="8" Name="SerialLabel">Indtast PC'ens "løbenummer"</Label>
+        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="13" Grid.ColumnSpan="3" x:Name="ListLabel">Indtastede "løbenumre"</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="1" Grid.Column="9" Grid.ColumnSpan="3" Name="NewQRCheckBoxLabel">Generer nye QR koder</Label>
 
         <!-- INTERACTIVE BUTTONS -->
-        <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="4"/>
-        <Button x:Name="BtnReturn" Content="Aflever" FontSize="32" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
-        
+        <Button Style="{DynamicResource RoundButton}" x:Name="BtnRegister" Content="Registrer" BorderBrush="Black" BorderThickness="2" FontSize="32" Click="BtnRegister_Click" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button Style="{DynamicResource RoundButton}" x:Name="BtnGenerate" Content="Generer" BorderBrush="Black" BorderThickness="2" FontSize="32" Click="BtnGenerate_Click" Grid.Row="16" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button Style="{DynamicResource RoundButton}" x:Name="BtnClearInput" Content="Ryd Felter" BorderBrush="Black" BorderThickness="2"  FontSize="32" Click="BtnClearInput_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+        <!-- LISTBOXES -->
+        <ListBox Style="{DynamicResource RoundListBox}" x:Name="SerialMultiInput" BorderBrush="Black" BorderThickness="2" FontSize="20" KeyDown="SerialMultiInput_KeyDown" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Height" Value="30" />
+                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <!-- IMAGE BUTTONS -->
+        <Button Style="{DynamicResource RoundButton}" Name="BtnAddSerialToList" Click="BtnAddSerialToList_Click" BorderBrush="Black" BorderThickness="2" Grid.Column="12" Grid.Row="8" Grid.RowSpan="2" Width="50" Height="50">
+            <StackPanel>
+                <Image Source="arrow.png" Height="35" Width="35" />
+            </StackPanel>
+        </Button>
+
+        <!-- CHECKBOXES -->
+        <CheckBox Style="{DynamicResource RoundCheckBox}" x:Name="NewQRCheckBox" Checked="NewQRCheckBox_Checked" Unchecked="NewQRCheckBox_Unchecked" BorderBrush="Black" BorderThickness="1" Margin="50,0,0,0" Grid.Row="1" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+
+        <!-- LISTBOX BORDERS -->
+        <Border Name="OuterBorder" BorderBrush="Gray" BorderThickness="7" CornerRadius="20" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2" Margin="-3">
+        </Border>
+
+        <Border Name="InnerBorder" BorderBrush="Black" BorderThickness="2" CornerRadius="20" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2" Margin="2">
+        </Border>
+
     </Grid>
 </Page>

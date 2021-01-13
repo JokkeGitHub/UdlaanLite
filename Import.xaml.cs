@@ -24,5 +24,69 @@ namespace UdlaansSystem
         {
             InitializeComponent();
         }
+
+        private void BtnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            ReturnPC(QRInput.Text);
+        }
+
+        private void QRInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    e.Handled = true;
+                    ReturnPC(QRInput.Text);
+                }
+                catch (Exception)
+                { }
+            }
+        }
+
+        public void ReturnPC(string qrId)
+        {
+            string tempUniLogin = SQLManager.GetUniLoginFromLoan(qrId);
+
+            if (tempUniLogin != "")
+            {
+                SQLManager.DeleteLoanAndLoaner(qrId);
+            }
+
+            ClearInputField();
+
+            ReturnConfirmationMessageBox(tempUniLogin);
+        }
+
+        public void DeleteLoan(string qrId)
+        {
+            SQLManager.DeleteLoanAndLoaner(qrId);
+        }
+
+        public void ClearInputField()
+        {
+            QRInput.Clear();
+        }
+
+        public void ReturnConfirmationMessageBox(string tempUniLogin)
+        {
+            string confirmationMessage = "";
+
+            if (tempUniLogin != "")
+            {
+                confirmationMessage = "Afleveringen er accepteret!";
+            }
+            else
+            {
+                confirmationMessage = "Denne PC er ikke udlånt!";
+            }
+
+            MessageBox.Show(confirmationMessage);
+        }
+
+        private void BtnClearInput_Click(object sender, RoutedEventArgs e)
+        {
+            ClearInputField();
+        }
     }
 }

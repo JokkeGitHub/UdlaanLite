@@ -8,6 +8,26 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Import">
 
+    <Page.Resources>
+
+        <Style TargetType="Button" x:Key="RoundButton">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        
+        <Style TargetType="TextBox" x:Key="RoundTextBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+    </Page.Resources>
+    
     <Grid>
         
         <!-- 15 COLUMNS-->
@@ -55,14 +75,14 @@
         </Grid.RowDefinitions>
 
         <!-- INPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginInput" TextAlignment="Center" FontSize="50" Grid.Row="3" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4">UniLogin</TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="QRInput_KeyDown" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="16"></TextBox>
 
-        <!-- OUTPUT TEXTBOXES -->
-        <TextBox x:Name="UniLoginStatus" TextAlignment="Center" FontSize="32" Grid.Row="2" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="4" IsReadOnly="True">Har dette UniLogin lånt?</TextBox>
+        <!-- LABELS -->
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
 
         <!-- INTERACTIVE BUTTONS -->
-        <Button x:Name="BtnCheckUniLogin" Content="Tjek UniLogin for lån" FontSize="32" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="4"/>
-        <Button x:Name="BtnReturn" Content="Aflever" FontSize="32" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button Style="{DynamicResource RoundButton}" x:Name="BtnReturn" BorderBrush="Black" BorderThickness="2" Content="Aflever" Click="BtnReturn_Click" FontSize="32" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button Style="{DynamicResource RoundButton}" x:Name="BtnClearInput" BorderBrush="Black" BorderThickness="2" Content="Ryd Feltet"  FontSize="32" Click="BtnClearInput_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
 
     </Grid>
