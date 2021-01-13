@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
+using QRCoder;
 
 namespace UdlaansSystem
 {
@@ -26,30 +28,9 @@ namespace UdlaansSystem
         public Register()
         {
             InitializeComponent();
-        }
 
-        public void CreateFoldersPCQR()
-        {
-            // Specify the directory you want to manipulate.
-            string folderPathPC = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\QRcodesPC";
-
-            try
-            {
-                // Determine whether the directory exists.
-                if (Directory.Exists(folderPathPC))
-                {
-                    return;
-                }
-                // Try to create the directory.
-                DirectoryInfo di = Directory.CreateDirectory(folderPathPC);
-            }
-            catch { }
-            finally { }
-        }
-
-        public void CreateNewQRCodes()
-        {
-
+            QRCheckBoxIsNOTChecked();
+            CreateFolderNewQRCodes();
         }
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
@@ -95,7 +76,6 @@ namespace UdlaansSystem
             }
             else if (qrIdExists == false && NoEmptyFields == true)
             {
-                CreateFoldersPCQR();
                 SQLManager.RegisterPC(qrId, serialNumber, pcModel);
                 SuccessfullyRegisteredPCMessageBox();
             }
@@ -162,35 +142,153 @@ namespace UdlaansSystem
         }
         #endregion
 
+        #region CLEAR INPUT
         public void ClearInputFields()
         {
             PcModelInput.Clear();
             SerialNumberInput.Clear();
             QRIDInput.Clear();
+            SerialMultiInput.Items.Clear();
         }
+
         private void BtnClearInput_Click(object sender, RoutedEventArgs e)
         {
             ClearInputFields();
         }
+        #endregion
 
-        private void BtnNewQR_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void NewQRSerialInput_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void QRMultiInput_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
+        #region CHECKBOX
         private void NewQRCheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            if (NewQRCheckBox.IsChecked == true)
+            {
+                ModelLabel.Visibility = Visibility.Hidden;
+                PcModelInput.Visibility = Visibility.Hidden;
+                QRLabel.Visibility = Visibility.Hidden;
+                QRIDInput.Visibility = Visibility.Hidden;
+                BtnRegister.Visibility = Visibility.Hidden;
 
+                BtnGenerate.Visibility = Visibility.Visible;
+                ListLabel.Visibility = Visibility.Visible;
+                BtnAddSerialToList.Visibility = Visibility.Visible;
+                NewQRCheckBoxLabel.Visibility = Visibility.Visible;
+                SerialMultiInput.Visibility = Visibility.Visible;
+                InnerBorder.Visibility = Visibility.Visible;
+                OuterBorder.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void NewQRCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            QRCheckBoxIsNOTChecked();
+        }
+
+        public void QRCheckBoxIsNOTChecked()
+        {
+            if (NewQRCheckBox.IsChecked == false)
+            {
+                ModelLabel.Visibility = Visibility.Visible;
+                PcModelInput.Visibility = Visibility.Visible;
+                QRLabel.Visibility = Visibility.Visible;
+                QRIDInput.Visibility = Visibility.Visible;
+                NewQRCheckBoxLabel.Visibility = Visibility.Visible;
+                BtnGenerate.Visibility = Visibility.Hidden;
+
+                BtnRegister.Visibility = Visibility.Visible;
+                ListLabel.Visibility = Visibility.Hidden;
+                BtnAddSerialToList.Visibility = Visibility.Hidden;
+                SerialMultiInput.Visibility = Visibility.Hidden;
+                InnerBorder.Visibility = Visibility.Hidden;
+                OuterBorder.Visibility = Visibility.Hidden;
+            }
+        }
+        #endregion
+
+        #region LISTBOX
+        private void BtnAddSerialToList_Click(object sender, RoutedEventArgs e)
+        {
+            ListBoxAddItem();
+        }
+
+        private void SerialMultiInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete || e.Key == Key.Back)
+            {
+                try
+                {
+                    e.Handled = true;
+                    ListBoxRemoveItem(SerialMultiInput.SelectedIndex);
+                }
+                catch (Exception) { }
+            }
+        }
+        private void ListBoxRemoveItem(int listBoxIndex)
+        {
+            SerialMultiInput.Items.RemoveAt(listBoxIndex);
+        }
+
+        public void ListBoxAddItem()
+        {
+            if (SerialNumberInput.Text != "")
+            {
+                SerialMultiInput.Items.Add(SerialNumberInput.Text);
+            }
+
+            SerialNumberInput.Clear();
+        }
+        #endregion
+
+        public void CreateFolderNewQRCodes()
+        {
+            // Specify the directory you want to manipulate.
+            string folderPathPC = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\Nye QRkoder";
+
+            try
+            {
+                // Determine whether the directory exists.
+                if (Directory.Exists(folderPathPC))
+                {
+                    return;
+                }
+                // Try to create the directory.
+                DirectoryInfo di = Directory.CreateDirectory(folderPathPC);
+            }
+            catch { }
+            finally { }
+        }
+        private void SerialNumberInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && NewQRCheckBox.IsChecked == true)
+            {
+                try
+                {
+                    e.Handled = true;
+                    ListBoxAddItem();
+                }
+                catch (Exception) { }
+            }
+        }
+
+        private void BtnGenerate_Click(object sender, RoutedEventArgs e)
+        {
+            ListBoxAddItem();
+            CreateNewQRCodes();
+        }
+
+        public void CreateNewQRCodes()
+        {
+            for (int i = 0; i < SerialMultiInput.Items.Count; i++)
+            {
+                string tempSerial = SerialMultiInput.Items[i].ToString();
+
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode("SkpRiIt" + tempSerial, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+
+                Bitmap image = qrCode.GetGraphic(20);
+
+                image.Save($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\Nye QRkoder\{"SkpRiIt" + tempSerial}.png");
+            }
         }
     }
 }

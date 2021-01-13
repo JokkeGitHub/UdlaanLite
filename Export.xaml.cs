@@ -9,6 +9,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Media;
+using System.Text.RegularExpressions;
 
 namespace UdlaansSystem
 {
@@ -40,8 +41,21 @@ namespace UdlaansSystem
         }
         #endregion
 
+        #region PHONENUMBER
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        #endregion
+
         #region SUBMIT
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            Submit();
+        }
+
+        public void Submit()
         {
             // Put hele den her i flere metoder og henvis til en "Submit" metode
             ResetLabelColors();
@@ -282,6 +296,8 @@ namespace UdlaansSystem
                 QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
                 ListLabel.Visibility = Visibility.Hidden;
+                InnerBorder.Visibility = Visibility.Hidden;
+                OuterBorder.Visibility = Visibility.Hidden;
             }
         }
 
@@ -292,6 +308,8 @@ namespace UdlaansSystem
                 IsStudentCheckBox.IsChecked = false;
                 QRMultiInput.Visibility = Visibility.Visible;
                 ListLabel.Visibility = Visibility.Visible;
+                InnerBorder.Visibility = Visibility.Visible;
+                OuterBorder.Visibility = Visibility.Visible;
             }
         }
         #endregion
@@ -310,7 +328,9 @@ namespace UdlaansSystem
                         AddToListBox();
                     }
                     else
-                    { }
+                    {
+                        Submit();
+                    }
                 }
                 catch (Exception) { }
             }

@@ -105,7 +105,7 @@
         <!-- INPUT TEXTBOXES -->
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="UniLoginInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4" MaxLength="8"></TextBox>
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="NameInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
-        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="PhonenumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50"  Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="8"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="PhonenumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50"  Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="8" PreviewTextInput="NumberValidationTextBox"></TextBox>
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" KeyDown="QRInput_KeyDown" Grid.Row="16" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="3" MaxLength="16"></TextBox>
 
         <!-- LABELS -->
@@ -136,15 +136,22 @@
             </CheckBox.LayoutTransform>
         </CheckBox>
 
-        <!-- LISTBOX -->
-        <ListBox Style="{DynamicResource RoundListBox}" x:Name="QRMultiInput" Background="White"  BorderBrush="Black" BorderThickness="2" FontSize="20" KeyDown="QRMultiInput_KeyDown" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2">
+        <!-- LISTBOX , ListView her istedet måske-->
+        <ListBox Style="{DynamicResource RoundListBox}" x:Name="QRMultiInput" BorderBrush="Black" BorderThickness="2" FontSize="20" KeyDown="QRMultiInput_KeyDown" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Height" Value="30" />
                     <Setter Property="VerticalContentAlignment" Value="Top"/>
                 </Style>
             </ListBox.ItemContainerStyle>
-        </ListBox>        
-        
+        </ListBox>
+
+        <!-- LISTBOX BORDERS -->
+        <Border Name="OuterBorder" BorderBrush="Gray" BorderThickness="7" CornerRadius="20" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2" Margin="-3">
+        </Border>
+
+        <Border Name="InnerBorder"  BorderBrush="Black" BorderThickness="2" CornerRadius="20" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2" Margin="2">
+        </Border>
+
     </Grid>
 </Page>

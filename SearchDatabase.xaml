@@ -26,6 +26,15 @@
             </Style.Resources>
         </Style>
 
+        <Style x:Key="BorderedItem" TargetType="ListViewItem">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+
     </Page.Resources>
 
     <Grid>
@@ -89,13 +98,13 @@
         </Button>
 
         <!-- TEXT BOXES -->
-        <TextBox Style="{DynamicResource RoundTextBox}" Name="BtnSearchInput" BorderBrush="Black" BorderThickness="2" FontSize="26" Grid.Row="3" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="4" KeyUp="BtnSearchInput_KeyUp"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" Name="BtnSearchInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="26" Grid.Row="3" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="4" KeyUp="BtnSearchInput_KeyUp"></TextBox>
 
         <!-- LABELS -->
         <Label Foreground="White" FontSize="22" Grid.Row="4" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="5" Padding="0">Indtast søgeord i feltet</Label>
 
         <!-- LISTVIEW -->
-        <ListView Name="DataGridView" BorderThickness="2" FontSize="22" Grid.Row="5" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="14">
+        <ListView ItemContainerStyle="{DynamicResource BorderedItem}"  Name="DataGridView" BorderThickness="2" FontSize="22" Grid.Row="5" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="14">
 
             <ListView.Resources>
                 <DataTemplate x:Key="Template">
