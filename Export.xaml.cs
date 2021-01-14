@@ -36,7 +36,7 @@ namespace UdlaansSystem
             if (e.RightButton == MouseButtonState.Pressed)
             {
                 ContextMenu cm = (ContextMenu)Resources["cmCalendar"];
-                cm.IsOpen = true;
+                cm.IsOpen = true;                
             }
         }
         #endregion
@@ -97,7 +97,7 @@ namespace UdlaansSystem
             }
 
             DateTime startDate = DateTime.Now;
-            DateTime endDate = DateInput.DisplayDate;
+            DateTime endDate = (DateTime)DateInput.SelectedDate;
 
             if (uniLoginExists == false && isTeacher == false)
             {
