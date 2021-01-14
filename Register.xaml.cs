@@ -140,6 +140,15 @@ namespace UdlaansSystem
 
             MessageBox.Show(successMessage);
         }
+
+        public void QRCodeCreationFinishedMessageBox(int numberOfQRcodes)
+        {
+            string qrCodesCreated = $"{numberOfQRcodes} QR koder blev genereret!";
+
+            ClearInputFields();
+
+            MessageBox.Show(qrCodesCreated);
+        }
         #endregion
 
         #region CLEAR INPUT
@@ -289,6 +298,8 @@ namespace UdlaansSystem
 
                 image.Save($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\Nye QRkoder\{"SkpRiIt" + tempSerial}.png");
             }
+
+            QRCodeCreationFinishedMessageBox(SerialMultiInput.Items.Count);
         }
     }
 }
