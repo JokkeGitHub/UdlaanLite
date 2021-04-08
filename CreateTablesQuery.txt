@@ -1,0 +1,25 @@
+CREATE TABLE [dbo].[Loaner] (
+    [login]     VARCHAR (16)  NOT NULL,
+    [name]      VARCHAR (255) NULL,
+    [phone]     VARCHAR (16)  NULL,
+    [isStudent] BIT           NULL,
+    PRIMARY KEY CLUSTERED ([login] ASC)
+);
+
+CREATE TABLE [dbo].[PC] (
+    [qrId]   VARCHAR (23)  NOT NULL,
+    [serial] VARCHAR (16)  NULL,
+    [model]  VARCHAR (255) NULL,
+    PRIMARY KEY CLUSTERED ([qrId] ASC)
+);
+
+CREATE TABLE [dbo].[Loan] (
+    [loanId]    INT          IDENTITY (1, 1) NOT NULL,
+    [uniLogin]  VARCHAR (16) NULL,
+    [qrId]      VARCHAR (23) NULL,
+    [startDate] DATE         NULL,
+    [endDate]   DATE         NULL,
+    PRIMARY KEY CLUSTERED ([loanId] ASC),
+    FOREIGN KEY ([uniLogin]) REFERENCES [dbo].[Loaner] ([login]),
+    FOREIGN KEY ([qrId]) REFERENCES [dbo].[PC] ([qrId])
+);
