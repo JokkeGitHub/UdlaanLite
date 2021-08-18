@@ -120,7 +120,7 @@
         <!-- IMAGE BUTTONS -->
         <Button Style="{DynamicResource RoundButton}" Name="BtnAddSerialToList" Click="BtnAddSerialToList_Click" BorderBrush="Black" BorderThickness="2" Grid.Column="12" Grid.Row="8" Grid.RowSpan="2" Width="50" Height="50">
             <StackPanel>
-                <Image Source="arrow.png" Height="35" Width="35" />
+                <Image Source="resources/arrow.png" Height="35" Width="35" />
             </StackPanel>
         </Button>
 
