@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace UdlaansSystem
         public static string GetUniLoginFromLoan(string qrId)
         {
             string tempUniLogin = "";
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -41,7 +42,7 @@ namespace UdlaansSystem
 
         public static void RemoveLoanFromDatabase(string qrId)
         {
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -56,7 +57,7 @@ namespace UdlaansSystem
 
         public static void RemoveLoaner()
         {
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();

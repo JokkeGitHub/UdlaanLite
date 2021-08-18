@@ -15,7 +15,7 @@ namespace UdlaansSystem
 
         public static void CreateLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
         {
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
@@ -34,7 +34,7 @@ namespace UdlaansSystem
         {
             bool uniLoginExists = false;
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -62,7 +62,7 @@ namespace UdlaansSystem
 
         public static int CheckDataBaseForIsStudent(int isStudent, string uniLogin)
         {            
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -94,7 +94,7 @@ namespace UdlaansSystem
 
         public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate, DateTime _endDate)
         {
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
@@ -115,7 +115,7 @@ namespace UdlaansSystem
         {
             string activeLoanInfo = "";
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -145,7 +145,7 @@ namespace UdlaansSystem
         {
             bool pcInStock = true;
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -177,7 +177,7 @@ namespace UdlaansSystem
         {
             string pcNotInStockInfo = "";
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -211,7 +211,7 @@ namespace UdlaansSystem
         {
             bool pcInStock = false;
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();

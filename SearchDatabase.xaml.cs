@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
 
 namespace UdlaansSystem
 {
@@ -34,7 +35,7 @@ namespace UdlaansSystem
             string title;
             LoanerColumns();
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -68,7 +69,7 @@ namespace UdlaansSystem
         {
             PCColumns();
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -93,7 +94,7 @@ namespace UdlaansSystem
         {
             LoanColumns();
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -118,7 +119,7 @@ namespace UdlaansSystem
         {
             LoanColumns();
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -146,7 +147,7 @@ namespace UdlaansSystem
         {
             PCColumns();
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -187,7 +188,7 @@ namespace UdlaansSystem
             string input = BtnSearchInput.Text.ToLower();
             LoanColumns();
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();

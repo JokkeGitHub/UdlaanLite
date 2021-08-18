@@ -14,7 +14,7 @@ namespace UdlaansSystem
     {
         public static void CreatePC(string _qrID, string _serialNumber, string _pcModel)
         {
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
@@ -35,7 +35,7 @@ namespace UdlaansSystem
         {
             bool qrIdExists = false;
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -66,7 +66,7 @@ namespace UdlaansSystem
         {
             string registeredPCInfo = "";
 
-            SqlConnection conn = new SqlConnection(@"Database=SKPUdlaanDB;Trusted_Connection=Yes;");
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
