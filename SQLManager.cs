@@ -12,9 +12,9 @@ namespace UdlaansSystem
 
         #region CREATING NEW LOANS AND LOANERS
 
-        public static void CreateLoaner(string uniLogin, string name, string phone, int isStudent)
+        public static void CreateLoaner(string uniLogin, string name, string comment, string phone, int isStudent)
         {
-            ObjectLoaner addLoaner = new ObjectLoaner(uniLogin, name, phone, isStudent);
+            ObjectLoaner addLoaner = new ObjectLoaner(uniLogin, name, comment, phone, isStudent);
             ExportSQLConnections.CreateLoaner(addLoaner.UNILogin, addLoaner.Name, addLoaner.Phone, addLoaner.IsStudent);
         }
 
