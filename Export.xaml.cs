@@ -49,6 +49,7 @@ namespace UdlaansSystem
         }
         #endregion
 
+        // Submit region needs clean-up
         #region SUBMIT
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
@@ -362,6 +363,7 @@ namespace UdlaansSystem
         }
         #endregion
 
+        // Fix the error messageboxes
         #region MESSSAGEBOXES
         public void ActiveLoanMessageBox(string uniLogin)
         {
