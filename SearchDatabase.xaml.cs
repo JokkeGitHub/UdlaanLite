@@ -59,7 +59,7 @@ namespace UdlaansSystem
                     title = "Lærer";
                 }
 
-                DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = title });
+                DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column4 = dataRow["phone"].ToString(), Column5 = title });
             }
 
             conn.Close();
@@ -171,7 +171,6 @@ namespace UdlaansSystem
         #endregion
 
         #region USER INPUT SEARCHES
-
         private void BtnSearchButton_Click(object sender, RoutedEventArgs e)
         {
             UserInputSearch();
@@ -179,7 +178,6 @@ namespace UdlaansSystem
 
         private void BtnSearchInput_KeyUp(object sender, KeyEventArgs e)
         {
-
             UserInputSearch();
         }
 
@@ -211,20 +209,18 @@ namespace UdlaansSystem
 
             conn.Close();
         }
-
         #endregion
 
         #region COLUMNS
-
         private void LoanerColumns()
         {
             DataGridView.Items.Clear();
 
             ((GridView)DataGridView.View).Columns[0].Header = "UNI Login :";
             ((GridView)DataGridView.View).Columns[1].Header = "Navn :";
-            ((GridView)DataGridView.View).Columns[2].Header = "Telefon :";
-            ((GridView)DataGridView.View).Columns[3].Header = "Titel :";
-            ((GridView)DataGridView.View).Columns[4].Header = "";
+            ((GridView)DataGridView.View).Columns[2].Header = "Kommentar";
+            ((GridView)DataGridView.View).Columns[3].Header = "Telefon :";
+            ((GridView)DataGridView.View).Columns[4].Header = "Titel :";
             ((GridView)DataGridView.View).Columns[5].Header = "";
             ((GridView)DataGridView.View).Columns[6].Header = "";
             ((GridView)DataGridView.View).Columns[7].Header = "";
@@ -257,7 +253,6 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[6].Header = "Låner Navn :";
             ((GridView)DataGridView.View).Columns[7].Header = "Telefon :";
         }
-
         #endregion
     }
 }
