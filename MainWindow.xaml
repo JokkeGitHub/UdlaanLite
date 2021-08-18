@@ -158,7 +158,7 @@
         <!-- Custom header -->
         <Frame x:Name="Display" Margin="0" Grid.Row="2" Grid.ColumnSpan="16" Grid.RowSpan="18" NavigationUIVisibility="Hidden"/>
         <TextBlock Background="#1c1b1b" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="16" Grid.RowSpan="2"/>
-        <Image Source="logo.png" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <Image Source="resources/logo.png" MouseLeftButtonDown="WindowHeader_Mousedown" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
         <Button Background="Transparent" Content="-" FontSize="18" ToolTip="Minimize" Click="Button_Click_Minimize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="13" Grid.RowSpan="2"  Grid.ColumnSpan="1"/>
         <Button x:Name="resizeButton" Background="Transparent" Content="&gt;" FontSize="18" ToolTip="Resize" Click="Button_Click_Resize" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource NavButtons}" Grid.Row="0" Grid.Column="14" Grid.RowSpan="2" Grid.ColumnSpan="1"/>
         <Button Background="Transparent" Content="&#10006;" ToolTip="Close" Click="Button_Click_Close" Foreground="GhostWhite" BorderBrush="Transparent" Cursor="Hand" Style="{DynamicResource CloseBtn}" Grid.Row="0" Grid.Column="15" Grid.RowSpan="2" Grid.ColumnSpan="1"/>
