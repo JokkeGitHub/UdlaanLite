@@ -303,13 +303,13 @@ namespace UdlaansSystem
 
                 NameLabel.Visibility = Visibility.Visible;
                 NameInput.Visibility = Visibility.Visible;
-                UNILoginLabel.Visibility = Visibility.Visible;
-                UniLoginInput.Visibility = Visibility.Visible;
                 PhonenumberLabel.Visibility = Visibility.Visible;
                 PhonenumberInput.Visibility = Visibility.Visible;
 
                 CommentLabel.Visibility = Visibility.Hidden;
                 CommentInput.Visibility = Visibility.Hidden;
+
+                UniLoginInput.Text = "";
             }
         }
 
@@ -326,13 +326,13 @@ namespace UdlaansSystem
 
                 NameLabel.Visibility = Visibility.Visible;
                 NameInput.Visibility = Visibility.Visible;
-                UNILoginLabel.Visibility = Visibility.Visible;
-                UniLoginInput.Visibility = Visibility.Visible;
                 PhonenumberLabel.Visibility = Visibility.Visible;
                 PhonenumberInput.Visibility = Visibility.Visible;
 
                 CommentLabel.Visibility = Visibility.Hidden;
                 CommentInput.Visibility = Visibility.Hidden;
+
+                UniLoginInput.Text = "";
 
             }
         }
@@ -350,13 +350,13 @@ namespace UdlaansSystem
 
                 NameLabel.Visibility = Visibility.Hidden;
                 NameInput.Visibility = Visibility.Hidden;
-                UNILoginLabel.Visibility = Visibility.Hidden;
-                UniLoginInput.Visibility = Visibility.Hidden;
                 PhonenumberLabel.Visibility = Visibility.Hidden;
                 PhonenumberInput.Visibility = Visibility.Hidden;
 
                 CommentLabel.Visibility = Visibility.Visible;
                 CommentInput.Visibility = Visibility.Visible;
+
+                UniLoginInput.Text = "Service";
             }
         }
         #endregion
