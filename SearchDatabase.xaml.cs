@@ -171,7 +171,6 @@ namespace UdlaansSystem
         #endregion
 
         #region USER INPUT SEARCHES
-
         private void BtnSearchButton_Click(object sender, RoutedEventArgs e)
         {
             UserInputSearch();
@@ -179,7 +178,6 @@ namespace UdlaansSystem
 
         private void BtnSearchInput_KeyUp(object sender, KeyEventArgs e)
         {
-
             UserInputSearch();
         }
 
@@ -211,11 +209,9 @@ namespace UdlaansSystem
 
             conn.Close();
         }
-
         #endregion
 
         #region COLUMNS
-
         private void LoanerColumns()
         {
             DataGridView.Items.Clear();
@@ -257,7 +253,6 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[6].Header = "Låner Navn :";
             ((GridView)DataGridView.View).Columns[7].Header = "Telefon :";
         }
-
         #endregion
     }
 }
