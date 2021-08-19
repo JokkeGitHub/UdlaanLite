@@ -15,7 +15,7 @@ namespace UdlaansSystem
         public static void CreateLoaner(string uniLogin, string name, string comment, string phone, int isStudent)
         {
             ObjectLoaner addLoaner = new ObjectLoaner(uniLogin, name, comment, phone, isStudent);
-            ExportSQLConnections.CreateLoaner(addLoaner.UNILogin, addLoaner.Name, addLoaner.Phone, addLoaner.IsStudent);
+            ExportSQLConnections.CreateLoaner(addLoaner.UNILogin, addLoaner.Name, addLoaner.Comment, addLoaner.Phone, addLoaner.IsStudent);
         }
 
         public static void CreateLoan(string uniLogin, string qrId, DateTime startDate, DateTime endDate)
