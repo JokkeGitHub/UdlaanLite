@@ -61,8 +61,8 @@ namespace UdlaansSystem
             // Put hele den her i flere metoder og henvis til en "Submit" metode
             ResetLabelColors();
 
-            bool noEmptyFields = false;
-            noEmptyFields = CheckForEmptyFields(noEmptyFields);
+            bool noEmptyFields = true;
+            //noEmptyFields = CheckForEmptyFields(noEmptyFields);
 
             bool uniLoginExists = true;
             string uniLogin = UniLoginInput.Text.ToLower();
@@ -71,6 +71,7 @@ namespace UdlaansSystem
 
             string name = NameInput.Text.ToLower();
             string phone = PhonenumberInput.Text;
+            string comment = CommentInput.Text;
 
             bool isTeacher = false;
 
@@ -106,7 +107,7 @@ namespace UdlaansSystem
 
                 if (pcInStock == true)
                 {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, comment, phone, isStudent);
                     SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
                     LoanConfirmationMessageBox();
                     Clear();
@@ -146,7 +147,7 @@ namespace UdlaansSystem
 
                 if (qrMultiList.Count != 0)
                 {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, comment, phone, isStudent);
 
                     foreach (string qr in qrMultiList)
                     {
@@ -239,11 +240,11 @@ namespace UdlaansSystem
         #endregion
 
         #region PASS ON LOANER DATA TO DATABASE
-        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent)
+        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string comment, string phone, int isStudent)
         {
             if (uniLoginExists == false)
             {
-                SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
+                SQLManager.CreateLoaner(uniLogin, name, comment, phone, isStudent);
             }
             else if (uniLoginExists == true && isStudent == 0)
             {
@@ -293,12 +294,23 @@ namespace UdlaansSystem
         {
             if (IsStudentCheckBox.IsChecked == true)
             {
+                ToServiceCheckBox.IsChecked = false;
                 IsTeacherCheckBox.IsChecked = false;
                 QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
                 ListLabel.Visibility = Visibility.Hidden;
                 InnerBorder.Visibility = Visibility.Hidden;
                 OuterBorder.Visibility = Visibility.Hidden;
+
+                NameLabel.Visibility = Visibility.Visible;
+                NameInput.Visibility = Visibility.Visible;
+                PhonenumberLabel.Visibility = Visibility.Visible;
+                PhonenumberInput.Visibility = Visibility.Visible;
+
+                CommentLabel.Visibility = Visibility.Hidden;
+                CommentInput.Visibility = Visibility.Hidden;
+
+                UniLoginInput.Text = "";
             }
         }
 
@@ -306,11 +318,46 @@ namespace UdlaansSystem
         {
             if (IsTeacherCheckBox.IsChecked == true)
             {
+                ToServiceCheckBox.IsChecked = false;
                 IsStudentCheckBox.IsChecked = false;
                 QRMultiInput.Visibility = Visibility.Visible;
                 ListLabel.Visibility = Visibility.Visible;
                 InnerBorder.Visibility = Visibility.Visible;
                 OuterBorder.Visibility = Visibility.Visible;
+
+                NameLabel.Visibility = Visibility.Visible;
+                NameInput.Visibility = Visibility.Visible;
+                PhonenumberLabel.Visibility = Visibility.Visible;
+                PhonenumberInput.Visibility = Visibility.Visible;
+
+                CommentLabel.Visibility = Visibility.Hidden;
+                CommentInput.Visibility = Visibility.Hidden;
+
+                UniLoginInput.Text = "";
+
+            }
+        }
+        private void ToServiceCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ToServiceCheckBox.IsChecked == true)
+            {
+                IsTeacherCheckBox.IsChecked = false;
+                IsStudentCheckBox.IsChecked = false;
+                QRMultiInput.Items.Clear();
+                QRMultiInput.Visibility = Visibility.Hidden;
+                ListLabel.Visibility = Visibility.Hidden;
+                InnerBorder.Visibility = Visibility.Hidden;
+                OuterBorder.Visibility = Visibility.Hidden;
+
+                NameLabel.Visibility = Visibility.Hidden;
+                NameInput.Visibility = Visibility.Hidden;
+                PhonenumberLabel.Visibility = Visibility.Hidden;
+                PhonenumberInput.Visibility = Visibility.Hidden;
+
+                CommentLabel.Visibility = Visibility.Visible;
+                CommentInput.Visibility = Visibility.Visible;
+
+                UniLoginInput.Text = "Service";
             }
         }
         #endregion

@@ -59,7 +59,7 @@ namespace UdlaansSystem
                     title = "Lærer";
                 }
 
-                DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column4 = dataRow["phone"].ToString(), Column5 = title });
+                DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString(), Column4 = title, Column5 = dataRow["comment"].ToString() });
             }
 
             conn.Close();
@@ -75,7 +75,7 @@ namespace UdlaansSystem
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT * FROM PC";
+            cmd.CommandText = @"SELECT * FROM PC CROSS JOIN Loaner";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -84,7 +84,7 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["serial"].ToString() });
+                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["serial"].ToString(), Column4 = dataRow["login"].ToString() });
             }
 
             conn.Close();
@@ -218,9 +218,9 @@ namespace UdlaansSystem
 
             ((GridView)DataGridView.View).Columns[0].Header = "UNI Login :";
             ((GridView)DataGridView.View).Columns[1].Header = "Navn :";
-            ((GridView)DataGridView.View).Columns[2].Header = "Kommentar";
-            ((GridView)DataGridView.View).Columns[3].Header = "Telefon :";
-            ((GridView)DataGridView.View).Columns[4].Header = "Titel :";
+            ((GridView)DataGridView.View).Columns[2].Header = "Telefon :";
+            ((GridView)DataGridView.View).Columns[3].Header = "Titel :";
+            ((GridView)DataGridView.View).Columns[4].Header = "Kommentar";
             ((GridView)DataGridView.View).Columns[5].Header = "";
             ((GridView)DataGridView.View).Columns[6].Header = "";
             ((GridView)DataGridView.View).Columns[7].Header = "";
@@ -233,7 +233,7 @@ namespace UdlaansSystem
             ((GridView)DataGridView.View).Columns[0].Header = "QR ID :";
             ((GridView)DataGridView.View).Columns[1].Header = "Model :";
             ((GridView)DataGridView.View).Columns[2].Header = "Løbenummer :";
-            ((GridView)DataGridView.View).Columns[3].Header = "";
+            ((GridView)DataGridView.View).Columns[3].Header = "Lokation";
             ((GridView)DataGridView.View).Columns[4].Header = "";
             ((GridView)DataGridView.View).Columns[5].Header = "";
             ((GridView)DataGridView.View).Columns[6].Header = "";
