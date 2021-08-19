@@ -13,16 +13,17 @@ namespace UdlaansSystem
     {
         #region LOANER TABLE
 
-        public static void CreateLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
+        public static void CreateLoaner(string _uniLogin, string _name, string _comment, string _phone, int _isStudent)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Loaner(login, name, phone, isStudent) VALUES (@login, @name, @phone, @isStudent)";
+            cmd.CommandText = @"INSERT INTO Loaner(login, name, comment, phone, isStudent) VALUES (@login, @name, @comment, @phone, @isStudent)";
             cmd.Parameters.AddWithValue("@login", _uniLogin);
             cmd.Parameters.AddWithValue("@name", _name);
+            cmd.Parameters.AddWithValue("@comment", _comment);
             cmd.Parameters.AddWithValue("@phone", _phone);
             cmd.Parameters.AddWithValue("@isStudent", _isStudent);
 
