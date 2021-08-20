@@ -170,7 +170,7 @@ namespace UdlaansSystem
             {
                 if (dataRow["uniLogin"].ToString() == uniLogin.ToLower())
                 {
-                    activeLoanInfo = $"Lån ID: { dataRow["loanId"] } \nUNI Login: { dataRow["uniLogin"] } \nQR ID: { dataRow["qrId"] } \nStart dato: { dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8) } \nSlut dato:  { dataRow["endDate"].ToString().Remove(dataRow["endDate"].ToString().Length - 8) }";
+                    activeLoanInfo = $"Lån ID: { dataRow["loanId"] } \nUNI Login: { dataRow["uniLogin"] } \nQR ID: { dataRow["qrId"] } \nStart dato: { dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8) }";
                 }
             }
 
