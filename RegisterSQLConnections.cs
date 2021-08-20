@@ -50,13 +50,26 @@ namespace UdlaansSystem
 
         public static void DeletePc(string _qrID)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+            DeletePcLocation(_qrID);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"DELETE FROM pc WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", _qrID);
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public static void DeletePcLocation(string _qrID)
+        {
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"DELETE FROM Locations WHERE (qrId) = (@qrId);";
             cmd.Parameters.AddWithValue("@qrId", _qrID);
             cmd.ExecuteNonQuery();
 
