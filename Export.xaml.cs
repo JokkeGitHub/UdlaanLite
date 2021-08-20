@@ -22,13 +22,14 @@ namespace UdlaansSystem
         {
             InitializeComponent();
 
-            DateInput.Text = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
-            DateInput.DisplayDateStart = DateTime.Now.AddDays(1);
+            //DateInput.Text = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+            //DateInput.DisplayDateStart = DateTime.Now.AddDays(1);
 
             IsStudentCheckBox.IsChecked = true;
         }
 
         #region DATEPICKER
+        /*
         private void DateInput_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
@@ -39,6 +40,7 @@ namespace UdlaansSystem
                 cm.IsOpen = true;                
             }
         }
+        */
         #endregion
 
         #region PHONENUMBER
@@ -99,7 +101,7 @@ namespace UdlaansSystem
             }
 
             DateTime startDate = DateTime.Now;
-            DateTime endDate = (DateTime)DateInput.SelectedDate;
+            //DateTime endDate = (DateTime)DateInput.SelectedDate;
 
             if (uniLoginExists == false && isTeacher == false)
             {
@@ -108,7 +110,7 @@ namespace UdlaansSystem
                 if (pcInStock == true)
                 {
                     PassOnLoanerData(uniLoginExists, uniLogin, name, comment, phone, isStudent);
-                    SQLManager.CreateLoan(uniLogin, qrId, startDate, endDate);
+                    SQLManager.CreateLoan(uniLogin, qrId, startDate);
                     LoanConfirmationMessageBox();
                     Clear();
                 }
@@ -116,11 +118,11 @@ namespace UdlaansSystem
             else if (uniLoginExists == true && isTeacher == false)
             {
                 ActiveLoanMessageBox(uniLogin);
-            }
+            }/*
             else if (uniLoginExists == true && isTeacher == false && IsTeacherCheckBox.IsChecked == true)
             {
                 UniLoginBelongsToStudentMessage();
-            }
+            }*/
             else if (uniLoginExists == true && isTeacher == true && IsStudentCheckBox.IsChecked == true)
             {
                 UniLoginBelongsToTeacherMessage();
@@ -151,7 +153,7 @@ namespace UdlaansSystem
 
                     foreach (string qr in qrMultiList)
                     {
-                        SQLManager.CreateLoan(uniLogin, qr, startDate, endDate);
+                        SQLManager.CreateLoan(uniLogin, qr, startDate);
                     }
 
                     LoanConfirmationMessageBox();
@@ -165,13 +167,12 @@ namespace UdlaansSystem
         public void ResetLabelColors()
         {
             StudentCheckBoxLabel.Foreground = new SolidColorBrush(Colors.White);
-            TeacherCheckBoxLabel.Foreground = new SolidColorBrush(Colors.White);
             UNILoginLabel.Foreground = new SolidColorBrush(Colors.White);
             NameLabel.Foreground = new SolidColorBrush(Colors.White);
             PhonenumberLabel.Foreground = new SolidColorBrush(Colors.White);
             QRLabel.Foreground = new SolidColorBrush(Colors.White);
         }
-
+        /*
         public bool CheckForEmptyFields(bool NoEmptyFields)
         {
             NoEmptyFields = false;
@@ -179,7 +180,6 @@ namespace UdlaansSystem
             if (IsStudentCheckBox.IsChecked == false && IsTeacherCheckBox.IsChecked == false)
             {
                 StudentCheckBoxLabel.Foreground = new SolidColorBrush(Colors.Red);
-                TeacherCheckBoxLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
             else if (UniLoginInput.Text.Length != 8)
             {
@@ -204,6 +204,7 @@ namespace UdlaansSystem
 
             return NoEmptyFields;
         }
+        */
         #endregion
 
         #region CHECK DATABASE FOR UNILOGIN
@@ -295,7 +296,6 @@ namespace UdlaansSystem
             if (IsStudentCheckBox.IsChecked == true)
             {
                 ToServiceCheckBox.IsChecked = false;
-                IsTeacherCheckBox.IsChecked = false;
                 QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
                 ListLabel.Visibility = Visibility.Hidden;
@@ -313,35 +313,11 @@ namespace UdlaansSystem
                 UniLoginInput.Text = "";
             }
         }
-
-        private void IsTeacherCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (IsTeacherCheckBox.IsChecked == true)
-            {
-                ToServiceCheckBox.IsChecked = false;
-                IsStudentCheckBox.IsChecked = false;
-                QRMultiInput.Visibility = Visibility.Visible;
-                ListLabel.Visibility = Visibility.Visible;
-                InnerBorder.Visibility = Visibility.Visible;
-                OuterBorder.Visibility = Visibility.Visible;
-
-                NameLabel.Visibility = Visibility.Visible;
-                NameInput.Visibility = Visibility.Visible;
-                PhonenumberLabel.Visibility = Visibility.Visible;
-                PhonenumberInput.Visibility = Visibility.Visible;
-
-                CommentLabel.Visibility = Visibility.Hidden;
-                CommentInput.Visibility = Visibility.Hidden;
-
-                UniLoginInput.Text = "";
-
-            }
-        }
+        
         private void ToServiceCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (ToServiceCheckBox.IsChecked == true)
             {
-                IsTeacherCheckBox.IsChecked = false;
                 IsStudentCheckBox.IsChecked = false;
                 QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
@@ -371,14 +347,8 @@ namespace UdlaansSystem
                 {
                     e.Handled = true;
 
-                    if (IsTeacherCheckBox.IsChecked == true)
-                    {
-                        AddToListBox();
-                    }
-                    else
-                    {
-                        Submit();
-                    }
+                    Submit();
+                    
                 }
                 catch (Exception) { }
             }

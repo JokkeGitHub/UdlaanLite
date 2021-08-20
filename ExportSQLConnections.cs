@@ -11,13 +11,13 @@ namespace UdlaansSystem
 {
     class ExportSQLConnections
     {
-        static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
         #region LOANER TABLE
-        public static void CreateLoaner(string _uniLogin, string _name, string _comment, string _phone, int _isStudent)
 
+        public static void CreateLoaner(string _uniLogin, string _name, string _comment, string _phone, int _isStudent)
         {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
+
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO Loaner(login, name, comment, phone, isStudent) VALUES (@login, @name, @comment, @phone, @isStudent)";
@@ -31,13 +31,14 @@ namespace UdlaansSystem
             SqlDataReader reader = cmd.ExecuteReader();
             conn.Close();
         }
-
         public static bool CheckDatabaseForLogin(string uniLogin)
         {
             bool uniLoginExists = false;
 
-            SqlCommand cmd = conn.CreateCommand();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (login) FROM Loaner WHERE (login) = (@login);";
@@ -61,9 +62,11 @@ namespace UdlaansSystem
         }
 
         public static int CheckDataBaseForIsStudent(int isStudent, string uniLogin)
-        {    
-            SqlCommand cmd = conn.CreateCommand();
+        {            
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (login), isStudent FROM Loaner WHERE (login) = (@login);";
@@ -85,19 +88,22 @@ namespace UdlaansSystem
             conn.Close();
             return isStudent;
         }
+
         #endregion
 
         #region LOAN TABLE
-        public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate, DateTime _endDate)
+
+        public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate)
         {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
+
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate, endDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate, @endDate)";
+            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate)";
             cmd.Parameters.AddWithValue("@login", _uniLogin);
             cmd.Parameters.AddWithValue("@qrId", _qrId);
             cmd.Parameters.AddWithValue("@startDate", _startDate);
-            cmd.Parameters.AddWithValue("@endDate", _endDate);
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -109,6 +115,8 @@ namespace UdlaansSystem
 
         public static void RemovePCFromLocation(string _qrId, string _uniLogin)
         {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
@@ -125,6 +133,8 @@ namespace UdlaansSystem
 
         public static void AddPCToLocation(string _qrId, string _uniLogin)
         {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
@@ -142,8 +152,10 @@ namespace UdlaansSystem
         {
             string activeLoanInfo = "";
 
-            SqlCommand cmd = conn.CreateCommand();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT loanId, (uniLogin), qrId, startDate, endDate FROM Loan WHERE (uniLogin) = (@uniLogin);";
@@ -158,7 +170,7 @@ namespace UdlaansSystem
             {
                 if (dataRow["uniLogin"].ToString() == uniLogin.ToLower())
                 {
-                    activeLoanInfo = $"Lån ID: { dataRow["loanId"] } \nUNI Login: { dataRow["uniLogin"] } \nQR ID: { dataRow["qrId"] } \nStart dato: { dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8) } \nSlut dato:  { dataRow["endDate"].ToString().Remove(dataRow["endDate"].ToString().Length - 8) }";
+                    activeLoanInfo = $"Lån ID: { dataRow["loanId"] } \nUNI Login: { dataRow["uniLogin"] } \nQR ID: { dataRow["qrId"] } \nStart dato: { dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8) }";
                 }
             }
 
@@ -170,8 +182,10 @@ namespace UdlaansSystem
         {
             bool pcInStock = true;
 
-            SqlCommand cmd = conn.CreateCommand();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (qrId) FROM Loan WHERE (qrId) = (@qrId);";
@@ -200,8 +214,10 @@ namespace UdlaansSystem
         {
             string pcNotInStockInfo = "";
 
-            SqlCommand cmd = conn.CreateCommand();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT loanId, (qrId) FROM Loan WHERE (qrId) = (@qrId);";
@@ -223,15 +239,19 @@ namespace UdlaansSystem
             conn.Close();
             return pcNotInStockInfo;
         }
+
         #endregion
 
         #region PC TABLE
+
         public static bool CheckPCTableForQR(string qrId)
         {
             bool pcInStock = false;
 
-            SqlCommand cmd = conn.CreateCommand();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (qrId) FROM PC WHERE (qrId) = (@qrId);";
@@ -255,6 +275,7 @@ namespace UdlaansSystem
             conn.Close();
             return pcInStock;
         }
+
         #endregion
     }
 }

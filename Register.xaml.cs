@@ -29,10 +29,11 @@ namespace UdlaansSystem
         {
             InitializeComponent();
 
-            QRCheckBoxIsNOTChecked();
-            CreateFolderNewQRCodes();
+            DeletePcCheckBoxNOTChecked();
+            //CreateFolderNewQRCodes();
         }
 
+        #region REGISTER
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             RegisterPC();
@@ -80,6 +81,7 @@ namespace UdlaansSystem
                 SuccessfullyRegisteredPCMessageBox();
             }
         }
+        #endregion
 
         #region CHECK FOR EMPTY FIELDS
         public void ResetLabelColors()
@@ -151,6 +153,31 @@ namespace UdlaansSystem
         }
         #endregion
 
+        #region DELETE
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Delete();
+        }
+        private void Delete()
+        {
+            string pcDeleted = "PC'en er blevet slettet fra databasen.";
+            string pcNotFound = "PC'en kunne ikke findes i databasen.";
+            string deleteQR = QRIDInput.Text;
+
+            if (CheckForExistingPC(true, QRIDInput.Text) != true)
+            {
+                MessageBox.Show(pcNotFound);
+            }
+            else if(CheckForExistingPC(true, QRIDInput.Text) == true)
+            {
+                SQLManager.DeletePC(deleteQR);   
+                MessageBox.Show(pcDeleted);
+            }
+
+
+        }
+        #endregion
+
         #region CLEAR INPUT
         public void ClearInputFields()
         {
@@ -167,6 +194,7 @@ namespace UdlaansSystem
         #endregion
 
         #region CHECKBOX
+        /*
         private void NewQRCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (NewQRCheckBox.IsChecked == true)
@@ -186,29 +214,51 @@ namespace UdlaansSystem
                 OuterBorder.Visibility = Visibility.Visible;
             }
         }
-
-        private void NewQRCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        */
+        private void DeletePcCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            QRCheckBoxIsNOTChecked();
+            if (DeletePcCheckBox.IsChecked == true)
+            {
+                QRLabel.Visibility = Visibility.Visible;
+                QRIDInput.Visibility = Visibility.Visible;
+                BtnDelete.Visibility = Visibility.Visible;
+
+                ModelLabel.Visibility = Visibility.Hidden;
+                PcModelInput.Visibility = Visibility.Hidden;
+                BtnRegister.Visibility = Visibility.Hidden;
+                BtnAddSerialToList.Visibility = Visibility.Hidden;
+                ListLabel.Visibility = Visibility.Hidden;
+                SerialMultiInput.Visibility = Visibility.Hidden;
+                InnerBorder.Visibility = Visibility.Hidden;
+                OuterBorder.Visibility = Visibility.Hidden;
+                SerialLabel.Visibility = Visibility.Hidden;
+                SerialNumberInput.Visibility = Visibility.Hidden;
+            }
         }
 
-        public void QRCheckBoxIsNOTChecked()
+        private void DeletePcCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (NewQRCheckBox.IsChecked == false)
+            DeletePcCheckBoxNOTChecked();
+        }
+
+        public void DeletePcCheckBoxNOTChecked()
+        {
+            if (DeletePcCheckBox.IsChecked == false)
             {
                 ModelLabel.Visibility = Visibility.Visible;
                 PcModelInput.Visibility = Visibility.Visible;
                 QRLabel.Visibility = Visibility.Visible;
                 QRIDInput.Visibility = Visibility.Visible;
-                NewQRCheckBoxLabel.Visibility = Visibility.Visible;
-                BtnGenerate.Visibility = Visibility.Hidden;
-
+                SerialLabel.Visibility = Visibility.Visible;
+                SerialNumberInput.Visibility = Visibility.Visible;
                 BtnRegister.Visibility = Visibility.Visible;
+                
                 ListLabel.Visibility = Visibility.Hidden;
                 BtnAddSerialToList.Visibility = Visibility.Hidden;
                 SerialMultiInput.Visibility = Visibility.Hidden;
                 InnerBorder.Visibility = Visibility.Hidden;
                 OuterBorder.Visibility = Visibility.Hidden;
+                BtnDelete.Visibility = Visibility.Hidden;
             }
         }
         #endregion
@@ -218,7 +268,18 @@ namespace UdlaansSystem
         {
             ListBoxAddItem();
         }
-
+        private void SerialNumberInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && DeletePcCheckBox.IsChecked == true)
+            {
+                try
+                {
+                    e.Handled = true;
+                    ListBoxAddItem();
+                }
+                catch (Exception) { }
+            }
+        }
         private void SerialMultiInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete || e.Key == Key.Back)
@@ -246,7 +307,7 @@ namespace UdlaansSystem
             SerialNumberInput.Clear();
         }
         #endregion
-
+        /*
         public void CreateFolderNewQRCodes()
         {
             // Specify the directory you want to manipulate.
@@ -265,18 +326,7 @@ namespace UdlaansSystem
             catch { }
             finally { }
         }
-        private void SerialNumberInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter && NewQRCheckBox.IsChecked == true)
-            {
-                try
-                {
-                    e.Handled = true;
-                    ListBoxAddItem();
-                }
-                catch (Exception) { }
-            }
-        }
+        
 
         private void BtnGenerate_Click(object sender, RoutedEventArgs e)
         {
@@ -301,6 +351,7 @@ namespace UdlaansSystem
 
             QRCodeCreationFinishedMessageBox(SerialMultiInput.Items.Count);
         }
+        */
     }
 }
 

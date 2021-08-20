@@ -100,11 +100,11 @@
         <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="8" Name="SerialLabel">Indtast PC'ens "løbenummer"</Label>
         <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="13" Grid.ColumnSpan="3" x:Name="ListLabel">Indtastede "løbenumre"</Label>
-        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="1" Grid.Column="9" Grid.ColumnSpan="3" Name="NewQRCheckBoxLabel">Generer nye QR koder</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Name="DeletePcCheckBoxLabel">Slet en PC</Label>
 
         <!-- INTERACTIVE BUTTONS -->
         <Button Style="{DynamicResource RoundButton}" x:Name="BtnRegister" Content="Registrer" BorderBrush="Black" BorderThickness="2" FontSize="32" Click="BtnRegister_Click" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
-        <Button Style="{DynamicResource RoundButton}" x:Name="BtnGenerate" Content="Generer" BorderBrush="Black" BorderThickness="2" FontSize="32" Click="BtnGenerate_Click" Grid.Row="16" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
+        <Button Style="{DynamicResource RoundButton}" x:Name="BtnDelete" Content="Slet PC" BorderBrush="Black" BorderThickness="2" FontSize="32" Click="BtnDelete_Click" Grid.Row="16" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"/>
         <Button Style="{DynamicResource RoundButton}" x:Name="BtnClearInput" Content="Ryd Felter" BorderBrush="Black" BorderThickness="2"  FontSize="32" Click="BtnClearInput_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
         <!-- LISTBOXES -->
@@ -124,12 +124,21 @@
             </StackPanel>
         </Button>
 
-        <!-- CHECKBOXES -->
+        <!-- CHECKBOXES 
         <CheckBox Style="{DynamicResource RoundCheckBox}" x:Name="NewQRCheckBox" Checked="NewQRCheckBox_Checked" Unchecked="NewQRCheckBox_Unchecked" BorderBrush="Black" BorderThickness="1" Margin="50,0,0,0" Grid.Row="1" Grid.Column="8" Grid.RowSpan="2" Grid.ColumnSpan="3">
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="2" ScaleY="2" />
             </CheckBox.LayoutTransform>
         </CheckBox>
+        -->
+
+        <CheckBox Style="{DynamicResource RoundCheckBox}" x:Name="DeletePcCheckBox" Checked="DeletePcCheckBox_Checked" Unchecked="DeletePcCheckBox_Unchecked" BorderBrush="Black" BorderThickness="1" Margin="50,0,0,0" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2" />
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+
+
 
         <!-- LISTBOX BORDERS -->
         <Border Name="OuterBorder" BorderBrush="Gray" BorderThickness="7" CornerRadius="20" Grid.Row="8" Grid.Column="13" Grid.RowSpan="10" Grid.ColumnSpan="2" Margin="-3">
