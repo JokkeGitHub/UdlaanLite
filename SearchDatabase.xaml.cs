@@ -102,35 +102,6 @@ namespace UdlaansSystem
             conn.Close();
         }
 
-
-
-        //REMOVE
-        private void BtnShowExpired_Click(object sender, RoutedEventArgs e)
-        {
-            LoanColumns();
-
-            SqlCommand cmd = conn.CreateCommand();
-            conn.Open();
-
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT * FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId)";
-            cmd.ExecuteNonQuery();
-
-            DataTable dataTable = new DataTable();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-
-            dataAdapter.Fill(dataTable);
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                if ((DateTime)dataRow["endDate"] <= DateTime.Now)
-                {
-                    DataGridView.Items.Add(new { Column1 = dataRow["loanId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["qrId"].ToString(), Column4 = dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8), Column5 = dataRow["endDate"].ToString().Remove(dataRow["endDate"].ToString().Length - 8), Column6 = dataRow["uniLogin"].ToString(), Column7 = dataRow["name"].ToString(), Column8 = dataRow["phone"].ToString() });
-                }
-            }
-
-            conn.Close();
-        }
-
         private void BtnShowAvailablePCs_Click(object sender, RoutedEventArgs e)
         {
             string location = "Hjemme";
