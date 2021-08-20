@@ -115,6 +115,8 @@ namespace UdlaansSystem
 
         public static void RemovePCFromLocation(string _qrId, string _uniLogin)
         {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
@@ -131,6 +133,8 @@ namespace UdlaansSystem
 
         public static void AddPCToLocation(string _qrId, string _uniLogin)
         {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
