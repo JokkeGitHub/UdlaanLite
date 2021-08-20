@@ -75,7 +75,7 @@ namespace UdlaansSystem
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT * FROM PC CROSS JOIN Loaner";
+            cmd.CommandText = @"SELECT * FROM PC";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -84,7 +84,7 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["serial"].ToString(), Column4 = dataRow["login"].ToString() });
+                DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["serial"].ToString()});
             }
 
             conn.Close();

@@ -103,6 +103,39 @@ namespace UdlaansSystem
             SqlDataReader reader = cmd.ExecuteReader();
             reader.Close();
             conn.Close();
+
+            RemovePCFromLocation(_qrId, _uniLogin);
+        }
+
+        public static void RemovePCFromLocation(string _qrId, string _uniLogin)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"DELETE FROM Locations WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", _qrId);
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
+            conn.Close();
+
+            AddPCToLocation(_qrId, _uniLogin);
+        }
+
+        public static void AddPCToLocation(string _qrId, string _uniLogin)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"INSERT INTO locations (location, qrId) VALUES (@location, @qrId)";
+            cmd.Parameters.AddWithValue("@location", _uniLogin);
+            cmd.Parameters.AddWithValue("@qrId", _qrId);
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
+            conn.Close();
         }
 
         public static string GetLoanInfo(string uniLogin)
