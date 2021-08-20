@@ -13,17 +13,16 @@ namespace UdlaansSystem
     {
         #region LOANER TABLE
 
-        public static void CreateLoaner(string _uniLogin, string _name, string _comment, string _phone, int _isStudent)
+        public static void CreateLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Loaner(login, name, comment, phone, isStudent) VALUES (@login, @name, @comment, @phone, @isStudent)";
+            cmd.CommandText = @"INSERT INTO Loaner(login, name, phone, isStudent) VALUES (@login, @name, @phone, @isStudent)";
             cmd.Parameters.AddWithValue("@login", _uniLogin);
             cmd.Parameters.AddWithValue("@name", _name);
-            cmd.Parameters.AddWithValue("@comment", _comment);
             cmd.Parameters.AddWithValue("@phone", _phone);
             cmd.Parameters.AddWithValue("@isStudent", _isStudent);
 
@@ -93,16 +92,17 @@ namespace UdlaansSystem
 
         #region LOAN TABLE
 
-        public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate)
+        public static void CreateLoan(string _uniLogin, string _qrId, string comment, DateTime _startDate)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate)";
+            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, comment, startDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate), @comment";
             cmd.Parameters.AddWithValue("@login", _uniLogin);
             cmd.Parameters.AddWithValue("@qrId", _qrId);
+            cmd.Parameters.AddWithValue("@comment", comment);
             cmd.Parameters.AddWithValue("@startDate", _startDate);
 
             conn.Open();

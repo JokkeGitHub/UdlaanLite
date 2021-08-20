@@ -109,8 +109,8 @@ namespace UdlaansSystem
 
                 if (pcInStock == true)
                 {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, comment, phone, isStudent);
-                    SQLManager.CreateLoan(uniLogin, qrId, startDate);
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
+                    SQLManager.CreateLoan(uniLogin, qrId, comment, startDate);
                     LoanConfirmationMessageBox();
                     Clear();
                 }
@@ -149,11 +149,11 @@ namespace UdlaansSystem
 
                 if (qrMultiList.Count != 0)
                 {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, comment, phone, isStudent);
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
 
                     foreach (string qr in qrMultiList)
                     {
-                        SQLManager.CreateLoan(uniLogin, qr, startDate);
+                        SQLManager.CreateLoan(uniLogin, qr, comment, startDate);
                     }
 
                     LoanConfirmationMessageBox();
@@ -241,11 +241,11 @@ namespace UdlaansSystem
         #endregion
 
         #region PASS ON LOANER DATA TO DATABASE
-        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string comment, string phone, int isStudent)
+        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent)
         {
             if (uniLoginExists == false)
             {
-                SQLManager.CreateLoaner(uniLogin, name, comment, phone, isStudent);
+                SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
             }
             else if (uniLoginExists == true && isStudent == 0)
             {

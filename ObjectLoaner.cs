@@ -10,7 +10,6 @@ namespace UdlaansSystem
     {
         private string _uniLogin;
         private string _name;
-        private string _comment;
         private string _phone;
         private int _isStudent;
 
@@ -34,17 +33,6 @@ namespace UdlaansSystem
             set
             {
                 this._name = value;
-            }
-        }
-        public string Comment
-        {
-            get
-            {
-                return this._comment;
-            }
-            set
-            {
-                this._comment = value;
             }
         }
         public string Phone
@@ -71,11 +59,10 @@ namespace UdlaansSystem
             }
         }
 
-        public ObjectLoaner(string _uniLogin, string _name, string _comment, string _phone, int _isStudent)
+        public ObjectLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
         {
             UNILogin = _uniLogin;
             Name = _name;
-            Comment = _comment;
             Phone = _phone;
             IsStudent = _isStudent;
         }
