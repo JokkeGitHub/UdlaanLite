@@ -248,14 +248,14 @@ namespace UdlaansSystem
         {
             DataGridView.Items.Clear();
 
-            ((GridView)DataGridView.View).Columns[0].Header = "Lån ID :";
+            ((GridView)DataGridView.View).Columns[0].Header = "Lån Nummer :";
             ((GridView)DataGridView.View).Columns[1].Header = "PC Model :";
             ((GridView)DataGridView.View).Columns[2].Header = "QR ID :";
             ((GridView)DataGridView.View).Columns[3].Header = "Start Dato :";
-            ((GridView)DataGridView.View).Columns[4].Header = "Slut Dato :";
-            ((GridView)DataGridView.View).Columns[5].Header = "UNI Login :";
-            ((GridView)DataGridView.View).Columns[6].Header = "Låner Navn :";
-            ((GridView)DataGridView.View).Columns[7].Header = "Telefon :";
+            ((GridView)DataGridView.View).Columns[4].Header = "UNI Login :";
+            ((GridView)DataGridView.View).Columns[5].Header = "Låner Navn :";
+            ((GridView)DataGridView.View).Columns[6].Header = "Telefon :";
+            ((GridView)DataGridView.View).Columns[7].Header = "";
         }
 
         #endregion

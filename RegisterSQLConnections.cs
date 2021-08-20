@@ -30,6 +30,21 @@ namespace UdlaansSystem
             conn.Close();
         }
 
+        public static void DeletePc(string _qrID)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"DELETE FROM pc WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", _qrID);
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
         #region CHECKING DATABASE FOR DATA
         public static bool CheckDatabaseForQR(string qrId)
         {

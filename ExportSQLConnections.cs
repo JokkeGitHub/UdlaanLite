@@ -93,18 +93,17 @@ namespace UdlaansSystem
 
         #region LOAN TABLE
 
-        public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate, DateTime _endDate)
+        public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate, endDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate, @endDate)";
+            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate)";
             cmd.Parameters.AddWithValue("@login", _uniLogin);
             cmd.Parameters.AddWithValue("@qrId", _qrId);
             cmd.Parameters.AddWithValue("@startDate", _startDate);
-            cmd.Parameters.AddWithValue("@endDate", _endDate);
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
