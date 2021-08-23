@@ -29,8 +29,6 @@ namespace UdlaansSystem
             conn.Close();
         }
 
-        #region CHECKING DATABASE FOR DATA
-
         public static void DeletePc(string _qrID)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
@@ -46,11 +44,8 @@ namespace UdlaansSystem
             conn.Close();
         }
 
-<<<<<<< Updated upstream
         #region CHECKING DATABASE FOR DATA
-=======
-        
->>>>>>> Stashed changes
+
         public static bool CheckDatabaseForQR(string qrId)
         {
             bool qrIdExists = false;
