@@ -99,7 +99,7 @@ namespace UdlaansSystem
 
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, comment, startDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate), @comment";
+            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, comment, startDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @comment, @startDate)";
             cmd.Parameters.AddWithValue("@login", _uniLogin);
             cmd.Parameters.AddWithValue("@qrId", _qrId);
             cmd.Parameters.AddWithValue("@comment", comment);
@@ -158,7 +158,7 @@ namespace UdlaansSystem
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT loanId, (uniLogin), qrId, startDate, endDate FROM Loan WHERE (uniLogin) = (@uniLogin);";
+            cmd.CommandText = @"SELECT loanId, (uniLogin), qrId, startDate FROM Loan WHERE (uniLogin) = (@uniLogin);";
             cmd.Parameters.AddWithValue("@uniLogin", uniLogin);
             cmd.ExecuteNonQuery();
 
