@@ -170,16 +170,26 @@ namespace UdlaansSystem
         {
             string pcDeleted = "PC'en er blevet slettet fra databasen.";
             string pcNotFound = "PC'en kunne ikke findes i databasen.";
+            string pcIsLoaned = "PC'en kunne ikke slettes fordi den er lånt ud.";
             string deleteQR = QRIDInput.Text;
 
             if (CheckForExistingPC(true, QRIDInput.Text) != true)
             {
                 MessageBox.Show(pcNotFound);
             }
-            else if (CheckForExistingPC(true, QRIDInput.Text) == true)
+            else if (CheckForExistingPC(true, QRIDInput.Text) == true && SQLManager.CheckLoanTableForQRID(QRIDInput.Text) == true)
+            {
+                MessageBox.Show(pcIsLoaned);
+
+            }
+            else if (CheckForExistingPC(true, QRIDInput.Text) == true && SQLManager.CheckLoanTableForQRID(QRIDInput.Text) == false)
             {
                 SQLManager.DeletePC(deleteQR);
                 MessageBox.Show(pcDeleted);
+            }
+            else
+            {
+                MessageBox.Show("Noget gik galt");
             }
 
 
