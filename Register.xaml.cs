@@ -131,6 +131,12 @@ namespace UdlaansSystem
 
             return qrIdExists;
         }
+        public bool CheckForExistingLoan(bool qrIdExists, string qrId)
+        {
+            qrIdExists = SQLManager.CheckLoanTableForQRID(qrId);
+
+            return qrIdExists;
+        }
         #endregion
 
         #region MESSSAGEBOXES
@@ -170,18 +176,33 @@ namespace UdlaansSystem
         {
             string pcDeleted = "PC'en er blevet slettet fra databasen.";
             string pcNotFound = "PC'en kunne ikke findes i databasen.";
+            string pcActiveLoan = "Det er ikke muligt at slette udlånte PC'er!";
             string deleteQR = QRIDInput.Text;
 
-            if (CheckForExistingPC(true, QRIDInput.Text) != true)
-            {
-                MessageBox.Show(pcNotFound);
-            }
-            else if (CheckForExistingPC(true, QRIDInput.Text) == true)
-            {
-                SQLManager.DeletePC(deleteQR);
-                MessageBox.Show(pcDeleted);
-            }
+            bool pcIsHome = true;
 
+            pcIsHome = CheckForExistingLoan(pcIsHome, deleteQR);
+
+            if (pcIsHome == true)
+            {
+                if (CheckForExistingPC(true, QRIDInput.Text) != true)
+                {
+                    MessageBox.Show(pcNotFound);
+                }
+                else if (CheckForExistingPC(true, QRIDInput.Text) == true) // || loan exists == false
+                {
+                    SQLManager.DeletePC(deleteQR);
+                    MessageBox.Show(pcDeleted);
+                }
+            }
+            else
+            {
+                MessageBox.Show(pcActiveLoan);
+            }
+        }
+
+        private void CheckLoanTableForQR(string qrId)
+        {
 
         }
         #endregion
