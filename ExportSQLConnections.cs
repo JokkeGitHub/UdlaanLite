@@ -92,18 +92,55 @@ namespace UdlaansSystem
 
         #region LOAN TABLE
 
-        public static void CreateLoan(string _uniLogin, string _qrId, DateTime _startDate, DateTime _endDate)
+        public static void CreateLoan(string _uniLogin, string _qrId, string comment, DateTime _startDate)
         {
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
 
-            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, startDate, endDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @startDate, @endDate)";
+            cmd.CommandText = @"INSERT INTO Loan(uniLogin, qrId, comment, startDate) VALUES ((SELECT login FROM Loaner WHERE login = @login), (SELECT qrId FROM PC WHERE qrId = @qrId), @comment, @startDate)";
             cmd.Parameters.AddWithValue("@login", _uniLogin);
             cmd.Parameters.AddWithValue("@qrId", _qrId);
+            cmd.Parameters.AddWithValue("@comment", comment);
             cmd.Parameters.AddWithValue("@startDate", _startDate);
-            cmd.Parameters.AddWithValue("@endDate", _endDate);
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
+            conn.Close();
+
+            RemovePCFromLocation(_qrId, _uniLogin);
+        }
+
+        public static void RemovePCFromLocation(string _qrId, string _uniLogin)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"DELETE FROM Locations WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", _qrId);
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
+            conn.Close();
+
+            AddPCToLocation(_qrId, _uniLogin);
+        }
+
+        public static void AddPCToLocation(string _qrId, string _uniLogin)
+        {
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"INSERT INTO locations (location, qrId) VALUES (@location, @qrId)";
+            cmd.Parameters.AddWithValue("@location", _uniLogin);
+            cmd.Parameters.AddWithValue("@qrId", _qrId);
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -121,7 +158,7 @@ namespace UdlaansSystem
             SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT loanId, (uniLogin), qrId, startDate, endDate FROM Loan WHERE (uniLogin) = (@uniLogin);";
+            cmd.CommandText = @"SELECT loanId, (uniLogin), qrId, startDate FROM Loan WHERE (uniLogin) = (@uniLogin);";
             cmd.Parameters.AddWithValue("@uniLogin", uniLogin);
             cmd.ExecuteNonQuery();
 
@@ -133,7 +170,7 @@ namespace UdlaansSystem
             {
                 if (dataRow["uniLogin"].ToString() == uniLogin.ToLower())
                 {
-                    activeLoanInfo = $"Lån ID: { dataRow["loanId"] } \nUNI Login: { dataRow["uniLogin"] } \nQR ID: { dataRow["qrId"] } \nStart dato: { dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8) } \nSlut dato:  { dataRow["endDate"].ToString().Remove(dataRow["endDate"].ToString().Length - 8) }";
+                    activeLoanInfo = $"Lån ID: { dataRow["loanId"] } \nUNI Login: { dataRow["uniLogin"] } \nQR ID: { dataRow["qrId"] } \nStart dato: { dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8) }";
                 }
             }
 

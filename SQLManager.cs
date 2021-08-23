@@ -18,10 +18,10 @@ namespace UdlaansSystem
             ExportSQLConnections.CreateLoaner(addLoaner.UNILogin, addLoaner.Name, addLoaner.Phone, addLoaner.IsStudent);
         }
 
-        public static void CreateLoan(string uniLogin, string qrId, DateTime startDate, DateTime endDate)
+        public static void CreateLoan(string uniLogin, string qrId, string comment, DateTime startDate)
         {
-            ObjectLoan addLoan = new ObjectLoan(uniLogin, qrId, startDate, endDate);
-            ExportSQLConnections.CreateLoan(addLoan.UNILogin, addLoan.QRID, addLoan.StartDate, addLoan.EndDate);
+            ObjectLoan addLoan = new ObjectLoan(uniLogin, qrId, comment, startDate);
+            ExportSQLConnections.CreateLoan(addLoan.UNILogin, addLoan.QRID, addLoan.Comment, addLoan.StartDate);
         }
 
         #endregion
@@ -94,6 +94,11 @@ namespace UdlaansSystem
             ObjectPC addPC = new ObjectPC(qrID, serialNumber, pcModel);
 
             RegisterSQLConnections.CreatePC(addPC.QRID, addPC.SerialNumber, addPC.PCModel);
+        }
+
+        public static void DeletePC(string qrID)
+        {
+            RegisterSQLConnections.DeletePc(qrID);
         }
 
         public static bool CheckQR(string qrId)

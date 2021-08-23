@@ -10,13 +10,12 @@ using System.Data;
 namespace UdlaansSystem
 {
     class RegisterSQLConnections
-
     {
+        static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
         public static void CreatePC(string _qrID, string _serialNumber, string _pcModel)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
-
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO pc (qrId, serial, model) VALUES (@qrId, @serial, @model)";
@@ -28,6 +27,53 @@ namespace UdlaansSystem
             SqlDataReader reader = cmd.ExecuteReader();
             reader.Close();
             conn.Close();
+
+            AddPCLocation(_qrID);
+        }
+
+        public static void AddPCLocation(string _qrId)
+        {
+            string location = "Hjemme";
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"INSERT INTO locations (location, qrId) VALUES (@location, @qrId)";
+            cmd.Parameters.AddWithValue("@location", location);
+            cmd.Parameters.AddWithValue("@qrId", _qrId);
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
+            conn.Close();
+        }
+
+        public static void DeletePc(string _qrID)
+        {
+            DeletePcLocation(_qrID);
+
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"DELETE FROM pc WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", _qrID);
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+        }
+
+        public static void DeletePcLocation(string _qrID)
+        {
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"DELETE FROM Locations WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", _qrID);
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
         }
 
         #region CHECKING DATABASE FOR DATA
@@ -35,10 +81,8 @@ namespace UdlaansSystem
         {
             bool qrIdExists = false;
 
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
-            conn.Open();
             SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (qrId) FROM PC WHERE (qrId) = (@qrId);";
@@ -66,10 +110,8 @@ namespace UdlaansSystem
         {
             string registeredPCInfo = "";
 
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
-            conn.Open();
             SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (qrId), serial, model FROM PC WHERE (qrId) = (@qrId);";

@@ -11,13 +11,14 @@ namespace UdlaansSystem
 {
     class ImportSQLConnection
     {
+        static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
         public static string GetUniLoginFromLoan(string qrId)
         {
             string tempUniLogin = "";
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
-            conn.Open();
             SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT qrId, uniLogin FROM Loan WHERE (qrId) = (@qrId);";
@@ -42,10 +43,8 @@ namespace UdlaansSystem
 
         public static void RemoveLoanFromDatabase(string qrId)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
-            conn.Open();
             SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"DELETE FROM Loan WHERE (qrId) = (@qrId);";
@@ -53,14 +52,47 @@ namespace UdlaansSystem
             cmd.ExecuteNonQuery();
 
             conn.Close();
+
+            RemovePCFromLocation(qrId);
+        }
+
+        public static void RemovePCFromLocation(string _qrId)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"DELETE FROM Locations WHERE (qrId) = (@qrId);";
+            cmd.Parameters.AddWithValue("@qrId", _qrId);
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
+            conn.Close();
+
+            AddPCToLocation(_qrId);
+        }
+
+        public static void AddPCToLocation(string _qrId)
+        {
+            string location = "Hjemme";
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = @"INSERT INTO locations (location, qrId) VALUES (@location, @qrId)";
+            cmd.Parameters.AddWithValue("@location", location);
+            cmd.Parameters.AddWithValue("@qrId", _qrId);
+
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            reader.Close();
+            conn.Close();
         }
 
         public static void RemoveLoaner()
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
-            conn.Open();
             SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"DELETE FROM Loaner WHERE NOT EXISTS (SELECT * FROM Loan WHERE uniLogin = Loaner.login)";
