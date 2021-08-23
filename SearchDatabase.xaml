@@ -126,13 +126,13 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column1}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="250" DisplayMemberBinding="{Binding Column2}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column3}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column2}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="175" DisplayMemberBinding="{Binding Column3}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
                     <GridViewColumn Header="" Width="130" DisplayMemberBinding="{Binding Column4}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="130" DisplayMemberBinding="{Binding Column5}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column6}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="250" DisplayMemberBinding="{Binding Column7}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="135" DisplayMemberBinding="{Binding Column8}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="110" DisplayMemberBinding="{Binding Column5}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="110" DisplayMemberBinding="{Binding Column6}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="515" DisplayMemberBinding="{Binding Column7}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="0" DisplayMemberBinding="{Binding Column8}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
                 </GridView>
             </ListView.View>
 

@@ -46,7 +46,15 @@ namespace UdlaansSystem
                 try
                 {
                     e.Handled = true;
-                    RegisterPC();
+
+                    if (DeletePcCheckBox.IsChecked == false)
+                    {
+                        RegisterPC();
+                    }
+                    else if (DeletePcCheckBox.IsChecked == true)
+                    {
+                        Delete();
+                    }
                 }
                 catch (Exception)
                 { }
@@ -103,7 +111,7 @@ namespace UdlaansSystem
             {
                 SerialLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
-            else if (QRIDInput.Text.Length < 11)
+            else if (QRIDInput.Text.Length < 6)
             {
                 QRLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
@@ -168,9 +176,9 @@ namespace UdlaansSystem
             {
                 MessageBox.Show(pcNotFound);
             }
-            else if(CheckForExistingPC(true, QRIDInput.Text) == true)
+            else if (CheckForExistingPC(true, QRIDInput.Text) == true)
             {
-                SQLManager.DeletePC(deleteQR);   
+                SQLManager.DeletePC(deleteQR);
                 MessageBox.Show(pcDeleted);
             }
 
@@ -252,7 +260,7 @@ namespace UdlaansSystem
                 SerialLabel.Visibility = Visibility.Visible;
                 SerialNumberInput.Visibility = Visibility.Visible;
                 BtnRegister.Visibility = Visibility.Visible;
-                
+
                 ListLabel.Visibility = Visibility.Hidden;
                 BtnAddSerialToList.Visibility = Visibility.Hidden;
                 SerialMultiInput.Visibility = Visibility.Hidden;

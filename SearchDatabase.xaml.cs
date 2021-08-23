@@ -50,7 +50,12 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString() });
+                if (dataRow["login"].ToString().ToLower() == "service")
+                {}
+                else
+                {
+                    DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString() });
+                }
             }
 
             conn.Close();
@@ -163,7 +168,7 @@ namespace UdlaansSystem
                 {
                     DataGridView.Items.Add(new { Column1 = dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8), Column2 = dataRow["qrId"].ToString(), Column3 = dataRow["model"].ToString(), Column4 = dataRow["name"].ToString(), Column5 = dataRow["phone"].ToString(), Column6 = dataRow["location"].ToString(), Column7 = dataRow["comment"].ToString() });
                 }
-            }            
+            }
 
             conn.Close();
         }
