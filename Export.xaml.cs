@@ -220,7 +220,7 @@ namespace UdlaansSystem
 
         public int CheckExistingUniLoginForStudentOrTeacher(int isStudent, string uniLogin)
         {
-           isStudent =  SQLManager.CheckIsStudentOrTeacher(isStudent, uniLogin);
+            isStudent = SQLManager.CheckIsStudentOrTeacher(isStudent, uniLogin);
 
             return isStudent;
         }
@@ -313,7 +313,7 @@ namespace UdlaansSystem
                 UniLoginInput.Text = "";
             }
         }
-        
+
         private void ToServiceCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (ToServiceCheckBox.IsChecked == true)
@@ -348,7 +348,7 @@ namespace UdlaansSystem
                     e.Handled = true;
 
                     Submit();
-                    
+
                 }
                 catch (Exception) { }
             }
@@ -442,9 +442,13 @@ namespace UdlaansSystem
 
         public void Clear()
         {
-            UniLoginInput.Clear();
+            if (UniLoginInput.Text != "Service")
+            {
+                UniLoginInput.Clear();
+            }
             NameInput.Clear();
             PhonenumberInput.Clear();
+            CommentInput.Clear();
             QRInput.Clear();
             QRMultiInput.Items.Clear();
         }
