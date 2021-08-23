@@ -12,35 +12,16 @@ namespace UdlaansSystem
     class RegisterSQLConnections
     {
         static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
         public static void CreatePC(string _qrID, string _serialNumber, string _pcModel)
         {
             SqlCommand cmd = new SqlCommand();
+
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO pc (qrId, serial, model) VALUES (@qrId, @serial, @model)";
             cmd.Parameters.AddWithValue("@qrId", _qrID);
             cmd.Parameters.AddWithValue("@serial", _serialNumber);
             cmd.Parameters.AddWithValue("@model", _pcModel);
-
-            conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            reader.Close();
-            conn.Close();
-
-            AddPCLocation(_qrID);
-        }
-
-        public static void AddPCLocation(string _qrId)
-        {
-            string location = "Hjemme";
-
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
-
-            cmd.CommandText = @"INSERT INTO locations (location, qrId) VALUES (@location, @qrId)";
-            cmd.Parameters.AddWithValue("@location", location);
-            cmd.Parameters.AddWithValue("@qrId", _qrId);
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -77,6 +58,7 @@ namespace UdlaansSystem
         }
 
         #region CHECKING DATABASE FOR DATA
+
         public static bool CheckDatabaseForQR(string qrId)
         {
             bool qrIdExists = false;
@@ -110,8 +92,10 @@ namespace UdlaansSystem
         {
             string registeredPCInfo = "";
 
-            SqlCommand cmd = conn.CreateCommand();
+            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
             conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (qrId), serial, model FROM PC WHERE (qrId) = (@qrId);";
