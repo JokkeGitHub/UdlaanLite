@@ -466,6 +466,7 @@ namespace UdlaansSystem
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex(@"[^0-9]+$");
+            regex.Replace(" ", "");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -474,6 +475,15 @@ namespace UdlaansSystem
         {
             Regex regex = new Regex(@"[^a-zA-Z0-9]+$");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        //No spaces allowed
+        private void spacekey_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
         #endregion
 
