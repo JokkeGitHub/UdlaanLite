@@ -462,15 +462,15 @@ namespace UdlaansSystem
 
         #region REGEX INPUT FIELDS
 
-        //Phonenumber
+        //Numbers Only
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex(@"[^0-9]+$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        // QR Input
-        private void QRInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        //Letters & Numbers
+        private void LetterAndNumberPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex(@"[^a-zA-Z0-9]+$");
             e.Handled = regex.IsMatch(e.Text);
