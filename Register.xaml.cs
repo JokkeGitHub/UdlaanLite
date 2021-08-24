@@ -352,6 +352,14 @@ namespace UdlaansSystem
             Regex regex = new Regex(@"[^a-zA-Z0-9]+$");
             e.Handled = regex.IsMatch(e.Text);
         }
+        //No spaces allowed
+        private void spacekey_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
         #endregion
 
         /*
