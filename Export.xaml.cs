@@ -47,7 +47,19 @@ namespace UdlaansSystem
         #region SUBMIT
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            Submit();
+            LoginCheck();
+        }
+
+        public void LoginCheck()
+        {
+            if (UniLoginInput.Text == "")
+            {
+                MessageBox.Show("Udfyld UNI Login");
+            }
+            else
+            {
+                Submit();
+            }
         }
 
         public void Submit()
@@ -107,8 +119,8 @@ namespace UdlaansSystem
                 string message = "Denne besked er opstaet ved en fejl";
                 pcInStock = CheckForPCInStock(pcInStock, qrId);
 
-                    pcInLoan = CheckForPCInLoan(pcInLoan, qrId);
-                
+                pcInLoan = CheckForPCInLoan(pcInLoan, qrId);
+
 
                 if (pcInStock == false)
                 {
@@ -319,7 +331,7 @@ namespace UdlaansSystem
                 {
                     e.Handled = true;
 
-                    Submit();
+                    LoginCheck();
 
                 }
                 catch (Exception) { }
