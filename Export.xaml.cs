@@ -311,6 +311,8 @@ namespace UdlaansSystem
                 CommentInput.Visibility = Visibility.Hidden;
 
                 UniLoginInput.Text = "";
+
+                BtnSubmit.Content = "Registrere Udlån";
             }
         }
 
@@ -336,6 +338,8 @@ namespace UdlaansSystem
                 CommentInput.Visibility = Visibility.Visible;
 
                 UniLoginInput.Text = "Service";
+
+                BtnSubmit.Content = "Registrere Service";
             }
         }
         #endregion
