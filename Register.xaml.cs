@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
 using QRCoder;
+using System.Text.RegularExpressions;
 
 namespace UdlaansSystem
 {
@@ -336,6 +337,23 @@ namespace UdlaansSystem
             SerialNumberInput.Clear();
         }
         #endregion
+
+        #region REGEX
+
+        //Numbers Only
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^0-9]+$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        //Letters & Numbers
+        private void LetterAndNumberPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^a-zA-Z0-9]+$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        #endregion
+
         /*
         public void CreateFolderNewQRCodes()
         {

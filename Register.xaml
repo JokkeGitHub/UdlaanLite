@@ -92,8 +92,8 @@
 
         <!-- INPUT TEXTBOXES -->
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="PcModelInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
-        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="SerialNumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="SerialNumberInput_KeyDown" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="50"></TextBox>
-        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRIDInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="QRIDInput_KeyDown" FontSize="50" Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="23"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="SerialNumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="SerialNumberInput_KeyDown" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="50" PreviewTextInput="NumberValidationTextBox"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRIDInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="QRIDInput_KeyDown" FontSize="50" Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="23" PreviewTextInput="LetterAndNumberPreviewTextInput"></TextBox>
 
         <!-- LABELS -->
         <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="8" Name="ModelLabel">Indtast PC'ens model</Label>
