@@ -126,7 +126,7 @@ namespace UdlaansSystem
             conn.Open();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT * FROM PC WHERE NOT EXISTS (SELECT * FROM Loan WHERE qrId = PC.qrId)";
+            cmd.CommandText = @"SELECT * FROM PC WHERE NOT EXISTS (SELECT * FROM Loan WHERE qrId = PC.qrId);";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -237,13 +237,15 @@ namespace UdlaansSystem
         public void UserInputSearchPcsHome()
         {
             string input = BtnSearchInput.Text.ToLower();
-            LoanColumns();
+            string location = "Hjemme";
+
+            PCColumns();
 
             SqlCommand cmd = conn.CreateCommand();
             conn.Open();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT * FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId INNER JOIN Locations ON PC.qrId = Locations.qrId);";
+            cmd.CommandText = @"SELECT * FROM PC WHERE NOT EXISTS (SELECT * FROM Loan WHERE qrId = PC.qrId);";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -252,9 +254,9 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                if (dataRow["loanId"].ToString().ToLower().Contains(input) || dataRow["model"].ToString().ToLower().Contains(input) || dataRow["qrId"].ToString().ToLower().Contains(input) || dataRow["uniLogin"].ToString().ToLower().Contains(input) || dataRow["name"].ToString().ToLower().Contains(input) || dataRow["phone"].ToString().ToLower().Contains(input) || dataRow["location"].ToString().ToLower().Contains(input) || dataRow["comment"].ToString().ToLower().Contains(input))
+                if (dataRow["model"].ToString().ToLower().Contains(input) || dataRow["serial"].ToString().ToLower().Contains(input) || dataRow["qrId"].ToString().ToLower().Contains(input) || location.ToLower().Contains(input))
                 {
-                    DataGridView.Items.Add(new { Column1 = dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8), Column2 = dataRow["qrId"].ToString(), Column3 = dataRow["model"].ToString(), Column4 = dataRow["name"].ToString(), Column5 = dataRow["phone"].ToString(), Column6 = dataRow["location"].ToString(), Column7 = dataRow["comment"].ToString() });
+                    DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["serial"].ToString(), Column4 = location });
                 }
             }
 
@@ -265,13 +267,13 @@ namespace UdlaansSystem
         public void UserInputSearchPcsOut()
         {
             string input = BtnSearchInput.Text.ToLower();
-            LoanColumns();
+            PCColumns();
 
             SqlCommand cmd = conn.CreateCommand();
             conn.Open();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT * FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId INNER JOIN Locations ON PC.qrId = Locations.qrId);";
+            cmd.CommandText = @"SELECT * FROM PC INNER JOIN Locations ON PC.qrId = Locations.qrId;";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -280,9 +282,9 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                if (dataRow["loanId"].ToString().ToLower().Contains(input) || dataRow["model"].ToString().ToLower().Contains(input) || dataRow["qrId"].ToString().ToLower().Contains(input) || dataRow["uniLogin"].ToString().ToLower().Contains(input) || dataRow["name"].ToString().ToLower().Contains(input) || dataRow["phone"].ToString().ToLower().Contains(input) || dataRow["location"].ToString().ToLower().Contains(input) || dataRow["comment"].ToString().ToLower().Contains(input))
+                if (dataRow["model"].ToString().ToLower().Contains(input) || dataRow["qrId"].ToString().ToLower().Contains(input) || dataRow["location"].ToString().ToLower().Contains(input))
                 {
-                    DataGridView.Items.Add(new { Column1 = dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8), Column2 = dataRow["qrId"].ToString(), Column3 = dataRow["model"].ToString(), Column4 = dataRow["name"].ToString(), Column5 = dataRow["phone"].ToString(), Column6 = dataRow["location"].ToString(), Column7 = dataRow["comment"].ToString() });
+                    DataGridView.Items.Add(new { Column1 = dataRow["qrId"].ToString(), Column2 = dataRow["model"].ToString(), Column3 = dataRow["serial"].ToString(), Column4 = dataRow["location"].ToString() });
                 }
             }
 
