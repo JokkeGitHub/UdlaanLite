@@ -39,7 +39,7 @@
     <StartupObject>UdlaansSystem.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <ApplicationIcon>resources\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="QRCoder, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -160,19 +160,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo.png" />
+    <Resource Include="resources\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo.ico" />
+    <Resource Include="resources\logo.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="resources\searchIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="resources\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="searchIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="arrow.png" />
+    <Resource Include="resources\arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
