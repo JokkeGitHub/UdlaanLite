@@ -37,6 +37,7 @@ namespace UdlaansSystem
         private void BtnShowLoaners_Click(object sender, RoutedEventArgs e)
         {
             TableToSearch = "Loaner";
+            SerachLabel.Content = "Søg i 'Lånere'";
 
             LoanerColumns();
 
@@ -67,6 +68,7 @@ namespace UdlaansSystem
         private void BtnShowPCs_Click(object sender, RoutedEventArgs e)
         {
             TableToSearch = "PcsOut";
+            SerachLabel.Content = "Søg i 'Alle PC'er'";
 
             PCColumns();
 
@@ -92,6 +94,7 @@ namespace UdlaansSystem
         private void BtnShowLoans_Click(object sender, RoutedEventArgs e)
         {
             TableToSearch = "Loan";
+            SerachLabel.Content = "Søg i 'Lån og Service'";
 
             LoanColumns();
 
@@ -117,6 +120,7 @@ namespace UdlaansSystem
         private void BtnShowAvailablePCs_Click(object sender, RoutedEventArgs e)
         {
             TableToSearch = "PcsHome";
+            SerachLabel.Content = "Søg i 'Ledige PC'er'";
 
             string location = "Hjemme";
 
