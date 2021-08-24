@@ -101,63 +101,39 @@ namespace UdlaansSystem
             DateTime startDate = DateTime.Now;
             //DateTime endDate = (DateTime)DateInput.SelectedDate;
 
-            if (uniLoginExists == false && isTeacher == false)
+            if (uniLoginExists == false)
             {
+                bool pcInLoan = true;
+                string message = "Denne besked er opstaet ved en fejl";
                 pcInStock = CheckForPCInStock(pcInStock, qrId);
 
-                if (pcInStock == true)
+                    pcInLoan = CheckForPCInLoan(pcInLoan, qrId);
+                
+
+                if (pcInStock == false)
+                {
+                    message = $"PC'en med ID {qrId} er ikke registreret i databasen!";
+                }
+                else if (pcInLoan == true)
+                {
+                    message = SQLManager.GetActivePCNotInStockInfo(qrId);
+                }
+
+                if (pcInStock == true && pcInLoan == false)
                 {
                     PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
                     SQLManager.CreateLoan(uniLogin, qrId, comment, startDate);
                     LoanConfirmationMessageBox();
                     Clear();
                 }
+                else
+                {
+                    PCNotInStockMessageBox(message);
+                }
             }
             else if (uniLoginExists == true && isTeacher == false)
             {
                 ActiveLoanMessageBox(uniLogin);
-            }/*
-            else if (uniLoginExists == true && isTeacher == false && IsTeacherCheckBox.IsChecked == true)
-            {
-                UniLoginBelongsToStudentMessage();
-            }*/
-            else if (uniLoginExists == true && isTeacher == true && IsStudentCheckBox.IsChecked == true)
-            {
-                UniLoginBelongsToTeacherMessage();
-            }
-            else if (isTeacher == true)
-            {
-                // Ny metode for de her og henvis til den
-                List<string> qrMultiList = new List<string>();
-
-                if (QRInput.Text != "")
-                {
-                    QRMultiInput.Items.Add(QRInput.Text);
-                }
-
-                foreach (var pc in QRMultiInput.Items)
-                {
-                    pcInStock = CheckForPCInStock(pcInStock, pc.ToString());
-
-                    if (pcInStock == true)
-                    {
-                        qrMultiList.Add(pc.ToString());
-                    }
-                }
-
-                if (qrMultiList.Count != 0)
-                {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
-
-                    foreach (string qr in qrMultiList)
-                    {
-                        SQLManager.CreateLoan(uniLogin, qr, comment, startDate);
-                    }
-
-                    LoanConfirmationMessageBox();
-                    qrMultiList.Clear();
-                    Clear();
-                }
             }
         }
 
@@ -218,7 +194,14 @@ namespace UdlaansSystem
 
         public int CheckExistingUniLoginForStudentOrTeacher(int isStudent, string uniLogin)
         {
-            isStudent = SQLManager.CheckIsStudentOrTeacher(isStudent, uniLogin);
+            if (uniLogin == "service")
+            {
+                isStudent = 1;
+            }
+            else
+            {
+                isStudent = SQLManager.CheckIsStudentOrTeacher(isStudent, uniLogin);
+            }
 
             return isStudent;
         }
@@ -257,32 +240,15 @@ namespace UdlaansSystem
         {
             pcInStock = SQLManager.CheckPCTableForQRID(qrId);
 
-            if (pcInStock == true)
-            {
-                pcInStock = CheckForPCInLoan(pcInStock, qrId);
-            }
-            else
-            {
-                PCNotInStockMessageBox(qrId);
-            }
 
             return pcInStock;
         }
 
-        public bool CheckForPCInLoan(bool pcInStock, string qrId)
+        public bool CheckForPCInLoan(bool pcInLoan, string qrId)
         {
-            pcInStock = SQLManager.CheckLoanTableForQRID(qrId);
+            pcInLoan = SQLManager.CheckLoanTableForQRID(qrId);
 
-            if (pcInStock == true)
-            {
-                return pcInStock;
-            }
-            else
-            {
-                PCNotInStockMessageBox(qrId);
-            }
-
-            return pcInStock;
+            return pcInLoan;
         }
         #endregion
 
@@ -396,17 +362,17 @@ namespace UdlaansSystem
             MessageBox.Show(activeLoanInfo);
         }
 
-        public void PCNotInStockMessageBox(string qrId)
+        public void PCNotInStockMessageBox(string message)
         {
+            //string pcNotInStockInfo = $"PC'en med ID {qrId} er ikke registreret i databasen!";
+            MessageBox.Show(message);
+            /*
             string pcNotInStockInfo = "";
-            pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId);
+            pcNotInStockInfo = SQLManager.GetActivePCNotInStockInfo(qrId);
 
             if (pcNotInStockInfo != "")
             {
-                pcNotInStockInfo = $"PC'en med QR {qrId} er ikke registreret i databasen!";
-            }
-
-            MessageBox.Show(pcNotInStockInfo);
+            }*/
         }
 
         public void LoanConfirmationMessageBox()

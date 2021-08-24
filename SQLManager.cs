@@ -50,9 +50,9 @@ namespace UdlaansSystem
 
         public static bool CheckLoanTableForQRID(string qrId)
         {
-            bool pcInStock = ExportSQLConnections.CheckLoanTableForQR(qrId);
+            bool pcInLoan = ExportSQLConnections.CheckLoanTableForQR(qrId);
 
-            return pcInStock;
+            return pcInLoan;
         }
 
         public static string GetActiveStudentLoanInfo(string uniLogin)

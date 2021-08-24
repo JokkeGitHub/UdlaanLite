@@ -13,9 +13,10 @@ namespace UdlaansSystem
     {
         #region LOANER TABLE
 
+        static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+
         public static void CreateLoaner(string _uniLogin, string _name, string _phone, int _isStudent)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
@@ -33,8 +34,6 @@ namespace UdlaansSystem
         public static bool CheckDatabaseForLogin(string uniLogin)
         {
             bool uniLoginExists = false;
-
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -54,16 +53,19 @@ namespace UdlaansSystem
                 {
                     uniLoginExists = true;
                 }
-            }
+
+                if (dataRow["login"].ToString() == "service")
+                {
+                    uniLoginExists = false;
+                }
+            }            
 
             conn.Close();
             return uniLoginExists;
         }
 
         public static int CheckDataBaseForIsStudent(int isStudent, string uniLogin)
-        {            
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
+        {
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
 
@@ -94,7 +96,6 @@ namespace UdlaansSystem
 
         public static void CreateLoan(string _uniLogin, string _qrId, string comment, DateTime _startDate)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
             SqlCommand cmd = new SqlCommand();
 
             cmd.Connection = conn;
@@ -115,8 +116,6 @@ namespace UdlaansSystem
 
         public static void RemovePCFromLocation(string _qrId, string _uniLogin)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
@@ -133,8 +132,6 @@ namespace UdlaansSystem
 
         public static void AddPCToLocation(string _qrId, string _uniLogin)
         {
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
-
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
@@ -151,8 +148,6 @@ namespace UdlaansSystem
         public static string GetLoanInfo(string uniLogin)
         {
             string activeLoanInfo = "";
-
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -180,9 +175,7 @@ namespace UdlaansSystem
 
         public static bool CheckLoanTableForQR(string qrId)
         {
-            bool pcInStock = true;
-
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+            bool pcInLoan = false;
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -200,21 +193,19 @@ namespace UdlaansSystem
             {
                 if (dataRow["qrId"].ToString() == qrId)
                 {
-                    pcInStock = false;
+                    pcInLoan = true;
                     conn.Close();
-                    return pcInStock;
+                    return pcInLoan;
                 }
             }
 
             conn.Close();
-            return pcInStock;
+            return pcInLoan;
         }
 
         public static string GetPCNotInStockInfo(string qrId)
         {
             string pcNotInStockInfo = "";
-
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
@@ -232,7 +223,7 @@ namespace UdlaansSystem
             {
                 if (dataRow["qrId"].ToString() == qrId)
                 {
-                    pcNotInStockInfo = $"PC'en med QR { dataRow["qrId"] } allerede udlånt! \nLån ID: { dataRow["loanId"] }";
+                    pcNotInStockInfo = $"PC'en med ID { dataRow["qrId"] } allerede udlånt!";
                 }
             }
 
@@ -247,8 +238,6 @@ namespace UdlaansSystem
         public static bool CheckPCTableForQR(string qrId)
         {
             bool pcInStock = false;
-
-            SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
 
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
