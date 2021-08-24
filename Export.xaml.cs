@@ -43,14 +43,6 @@ namespace UdlaansSystem
         */
         #endregion
 
-        #region PHONENUMBER
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-        #endregion
-
         // Submit region needs clean-up
         #region SUBMIT
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
@@ -71,13 +63,19 @@ namespace UdlaansSystem
 
             int isStudent = 1;
 
+            /*
+            string nameTemp = NameInput.Text.ToLower();
+            string phoneTemp = PhonenumberInput.Text;
+            string commentTemp = CommentInput.Text.ToLower();
+            string qrIdTemp = QRInput.Text.ToLower();*/
+
             string name = NameInput.Text.ToLower();
             string phone = PhonenumberInput.Text;
-            string comment = CommentInput.Text;
+            string comment = CommentInput.Text.ToLower();
+            string qrId = QRInput.Text.ToLower();
 
             bool isTeacher = false;
 
-            string qrId = QRInput.Text;
             bool pcInStock = false;
 
 
@@ -295,6 +293,8 @@ namespace UdlaansSystem
         {
             if (IsStudentCheckBox.IsChecked == true)
             {
+                UniLoginInput.IsReadOnly = false;
+
                 ToServiceCheckBox.IsChecked = false;
                 QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
@@ -318,6 +318,8 @@ namespace UdlaansSystem
         {
             if (ToServiceCheckBox.IsChecked == true)
             {
+                UniLoginInput.IsReadOnly = true;
+
                 IsStudentCheckBox.IsChecked = false;
                 QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
@@ -395,7 +397,7 @@ namespace UdlaansSystem
             string pcNotInStockInfo = "";
             pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId);
 
-            if (pcNotInStockInfo == "")
+            if (pcNotInStockInfo != "")
             {
                 pcNotInStockInfo = $"PC'en med QR {qrId} er ikke registreret i databasen!";
             }
@@ -453,5 +455,23 @@ namespace UdlaansSystem
             QRMultiInput.Items.Clear();
         }
         #endregion
+
+        #region REGEX INPUT FIELDS
+
+        //Phonenumber
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^0-9]+$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        // QR Input
+        private void QRInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^a-zA-Z0-9]+$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        #endregion
+
     }
 }
