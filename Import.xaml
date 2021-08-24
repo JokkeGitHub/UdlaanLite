@@ -75,7 +75,7 @@
         </Grid.RowDefinitions>
 
         <!-- INPUT TEXTBOXES -->
-        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="QRInput_KeyDown" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="23"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="QRInput_KeyDown" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="23" PreviewTextInput="LetterAndNumberPreviewTextInput"></TextBox>
 
         <!-- LABELS -->
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
