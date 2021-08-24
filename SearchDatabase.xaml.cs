@@ -25,6 +25,7 @@ namespace UdlaansSystem
     {
 
         SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["UdlaanLite"].ConnectionString);
+        public string TableToSearch = "";
 
         public SearchDatabase()
         {
@@ -35,13 +36,15 @@ namespace UdlaansSystem
 
         private void BtnShowLoaners_Click(object sender, RoutedEventArgs e)
         {
+            TableToSearch = "Loaner";
+
             LoanerColumns();
 
             SqlCommand cmd = conn.CreateCommand();
             conn.Open();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = @"SELECT * FROM Loaner";
+            cmd.CommandText = @"SELECT * FROM Loaner;";
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -51,7 +54,7 @@ namespace UdlaansSystem
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 if (dataRow["login"].ToString().ToLower() == "service")
-                {}
+                { }
                 else
                 {
                     DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString() });
@@ -63,6 +66,8 @@ namespace UdlaansSystem
 
         private void BtnShowPCs_Click(object sender, RoutedEventArgs e)
         {
+            TableToSearch = "PcsOut";
+
             PCColumns();
 
             SqlCommand cmd = conn.CreateCommand();
@@ -86,6 +91,8 @@ namespace UdlaansSystem
 
         private void BtnShowLoans_Click(object sender, RoutedEventArgs e)
         {
+            TableToSearch = "Loan";
+
             LoanColumns();
 
             SqlCommand cmd = conn.CreateCommand();
@@ -109,6 +116,8 @@ namespace UdlaansSystem
 
         private void BtnShowAvailablePCs_Click(object sender, RoutedEventArgs e)
         {
+            TableToSearch = "PcsHome";
+
             string location = "Hjemme";
 
             PCColumns();
@@ -148,6 +157,27 @@ namespace UdlaansSystem
 
         public void UserInputSearch()
         {
+            if (TableToSearch == "Loan")
+            {
+                UserInputSearchLoan();
+            }
+            else if (TableToSearch == "Loaner")
+            {
+                UserInputSearchLoaner();
+            }
+            else if (TableToSearch == "PcsHome")
+            {
+                UserInputSearchPcsHome();
+            }
+            else if (TableToSearch == "PcsOut")
+            {
+                UserInputSearchPcsOut();
+            }
+        }
+
+        #region LOAN
+        public void UserInputSearchLoan()
+        {
             string input = BtnSearchInput.Text.ToLower();
             LoanColumns();
 
@@ -172,6 +202,93 @@ namespace UdlaansSystem
 
             conn.Close();
         }
+        #endregion 
+        #region LOANER
+        public void UserInputSearchLoaner()
+        {
+            string input = BtnSearchInput.Text.ToLower();
+            LoanerColumns();
+
+            SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT * FROM Loaner;";
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["login"].ToString().ToLower() == "service")
+                { }
+                else if (dataRow["login"].ToString().ToLower().Contains(input) || dataRow["name"].ToString().ToLower().Contains(input) || dataRow["phone"].ToString().ToLower().Contains(input))
+                {
+                    DataGridView.Items.Add(new { Column1 = dataRow["login"].ToString(), Column2 = dataRow["name"].ToString(), Column3 = dataRow["phone"].ToString() });
+                }
+            }
+
+            conn.Close();
+        }
+        #endregion  
+        #region PCS HOME
+        public void UserInputSearchPcsHome()
+        {
+            string input = BtnSearchInput.Text.ToLower();
+            LoanColumns();
+
+            SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT * FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId INNER JOIN Locations ON PC.qrId = Locations.qrId);";
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["loanId"].ToString().ToLower().Contains(input) || dataRow["model"].ToString().ToLower().Contains(input) || dataRow["qrId"].ToString().ToLower().Contains(input) || dataRow["uniLogin"].ToString().ToLower().Contains(input) || dataRow["name"].ToString().ToLower().Contains(input) || dataRow["phone"].ToString().ToLower().Contains(input) || dataRow["location"].ToString().ToLower().Contains(input) || dataRow["comment"].ToString().ToLower().Contains(input))
+                {
+                    DataGridView.Items.Add(new { Column1 = dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8), Column2 = dataRow["qrId"].ToString(), Column3 = dataRow["model"].ToString(), Column4 = dataRow["name"].ToString(), Column5 = dataRow["phone"].ToString(), Column6 = dataRow["location"].ToString(), Column7 = dataRow["comment"].ToString() });
+                }
+            }
+
+            conn.Close();
+        }
+        #endregion
+        #region PCS OUT
+        public void UserInputSearchPcsOut()
+        {
+            string input = BtnSearchInput.Text.ToLower();
+            LoanColumns();
+
+            SqlCommand cmd = conn.CreateCommand();
+            conn.Open();
+
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = @"SELECT * FROM ((Loan INNER JOIN Loaner ON Loan.uniLogin = Loaner.login) INNER JOIN PC ON Loan.qrId = PC.qrId INNER JOIN Locations ON PC.qrId = Locations.qrId);";
+            cmd.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+
+            dataAdapter.Fill(dataTable);
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if (dataRow["loanId"].ToString().ToLower().Contains(input) || dataRow["model"].ToString().ToLower().Contains(input) || dataRow["qrId"].ToString().ToLower().Contains(input) || dataRow["uniLogin"].ToString().ToLower().Contains(input) || dataRow["name"].ToString().ToLower().Contains(input) || dataRow["phone"].ToString().ToLower().Contains(input) || dataRow["location"].ToString().ToLower().Contains(input) || dataRow["comment"].ToString().ToLower().Contains(input))
+                {
+                    DataGridView.Items.Add(new { Column1 = dataRow["startDate"].ToString().Remove(dataRow["startDate"].ToString().Length - 8), Column2 = dataRow["qrId"].ToString(), Column3 = dataRow["model"].ToString(), Column4 = dataRow["name"].ToString(), Column5 = dataRow["phone"].ToString(), Column6 = dataRow["location"].ToString(), Column7 = dataRow["comment"].ToString() });
+                }
+            }
+
+            conn.Close();
+        }
+        #endregion
         #endregion
 
         #region COLUMNS
