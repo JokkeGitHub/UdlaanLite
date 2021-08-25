@@ -340,12 +340,6 @@ namespace UdlaansSystem
 
         #region REGEX
 
-        //Numbers Only
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex(@"[^0-9]+$");
-            e.Handled = regex.IsMatch(e.Text);
-        }
         //Letters & Numbers
         private void LetterAndNumberPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
