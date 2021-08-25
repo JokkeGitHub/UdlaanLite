@@ -22,7 +22,7 @@ namespace UdlaansSystem
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT qrId, uniLogin FROM Loan WHERE (qrId) = (@qrId);";
-            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.Parameters.AddWithValue("@qrId", qrId.ToLower());
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -48,7 +48,7 @@ namespace UdlaansSystem
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"DELETE FROM Loan WHERE (qrId) = (@qrId);";
-            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.Parameters.AddWithValue("@qrId", qrId.ToLower());
             cmd.ExecuteNonQuery();
 
             conn.Close();
@@ -62,7 +62,7 @@ namespace UdlaansSystem
             cmd.Connection = conn;
 
             cmd.CommandText = @"DELETE FROM Locations WHERE (qrId) = (@qrId);";
-            cmd.Parameters.AddWithValue("@qrId", _qrId);
+            cmd.Parameters.AddWithValue("@qrId", _qrId.ToLower());
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -80,8 +80,8 @@ namespace UdlaansSystem
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO locations (location, qrId) VALUES (@location, @qrId)";
-            cmd.Parameters.AddWithValue("@location", location);
-            cmd.Parameters.AddWithValue("@qrId", _qrId);
+            cmd.Parameters.AddWithValue("@location", location.ToLower());
+            cmd.Parameters.AddWithValue("@qrId", _qrId.ToLower());
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();

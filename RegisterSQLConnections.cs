@@ -19,9 +19,9 @@ namespace UdlaansSystem
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO pc (qrId, serial, model) VALUES (@qrId, @serial, @model)";
-            cmd.Parameters.AddWithValue("@qrId", _qrID);
+            cmd.Parameters.AddWithValue("@qrId", _qrID.ToLower());
             cmd.Parameters.AddWithValue("@serial", _serialNumber);
-            cmd.Parameters.AddWithValue("@model", _pcModel);
+            cmd.Parameters.AddWithValue("@model", _pcModel.ToLower());
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -39,8 +39,8 @@ namespace UdlaansSystem
             cmd.Connection = conn;
 
             cmd.CommandText = @"INSERT INTO locations (location, qrId) VALUES (@location, @qrId)";
-            cmd.Parameters.AddWithValue("@location", location);
-            cmd.Parameters.AddWithValue("@qrId", _qrId);
+            cmd.Parameters.AddWithValue("@location", location.ToLower());
+            cmd.Parameters.AddWithValue("@qrId", _qrId.ToLower());
 
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
@@ -57,7 +57,7 @@ namespace UdlaansSystem
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"DELETE FROM pc WHERE (qrId) = (@qrId);";
-            cmd.Parameters.AddWithValue("@qrId", _qrID);
+            cmd.Parameters.AddWithValue("@qrId", _qrID.ToLower());
             cmd.ExecuteNonQuery();
 
             conn.Close();
@@ -70,7 +70,7 @@ namespace UdlaansSystem
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"DELETE FROM Locations WHERE (qrId) = (@qrId);";
-            cmd.Parameters.AddWithValue("@qrId", _qrID);
+            cmd.Parameters.AddWithValue("@qrId", _qrID.ToLower());
             cmd.ExecuteNonQuery();
 
             conn.Close();
@@ -86,7 +86,7 @@ namespace UdlaansSystem
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (qrId) FROM PC WHERE (qrId) = (@qrId);";
-            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.Parameters.AddWithValue("@qrId", qrId.ToLower());
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -115,7 +115,7 @@ namespace UdlaansSystem
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (qrId), serial, model FROM PC WHERE (qrId) = (@qrId);";
-            cmd.Parameters.AddWithValue("@qrId", qrId);
+            cmd.Parameters.AddWithValue("@qrId", qrId.ToLower());
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();

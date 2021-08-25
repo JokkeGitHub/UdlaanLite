@@ -47,11 +47,11 @@ namespace UdlaansSystem
 
         public void ReturnPC(string qrId)
         {
-            string tempUniLogin = SQLManager.GetUniLoginFromLoan(qrId);
+            string tempUniLogin = SQLManager.GetUniLoginFromLoan(qrId.ToLower());
 
             if (tempUniLogin != "")
             {
-                SQLManager.DeleteLoanAndLoaner(qrId);
+                SQLManager.DeleteLoanAndLoaner(qrId.ToLower());
             }
 
             ClearInputField();
@@ -61,7 +61,7 @@ namespace UdlaansSystem
 
         public void DeleteLoan(string qrId)
         {
-            SQLManager.DeleteLoanAndLoaner(qrId);
+            SQLManager.DeleteLoanAndLoaner(qrId.ToLower());
         }
 
         public void ClearInputField()
