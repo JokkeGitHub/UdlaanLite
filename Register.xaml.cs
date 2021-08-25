@@ -70,10 +70,10 @@ namespace UdlaansSystem
             NoEmptyFields = CheckForEmptyFields(NoEmptyFields);
 
             bool qrIdExists = true;
-            string qrId = QRIDInput.Text;
+            string qrId = QRIDInput.Text.ToLower();
 
-            string serialNumber = SerialNumberInput.Text;
-            string pcModel = PcModelInput.Text;
+            string serialNumber = SerialNumberInput.Text.ToLower();
+            string pcModel = PcModelInput.Text.ToLower();
 
             if (NoEmptyFields == true)
             {
@@ -134,7 +134,7 @@ namespace UdlaansSystem
         }
         public bool CheckForExistingLoan(bool qrIdExists, string qrId)
         {
-            qrIdExists = SQLManager.CheckLoanTableForQRID(qrId);
+            qrIdExists = SQLManager.CheckLoanTableForQRID(qrId.ToLower());
 
             return qrIdExists;
         }
@@ -144,7 +144,7 @@ namespace UdlaansSystem
         public void RegisteredPCMessageBox(string qrId)
         {
             string registeredPCInfo = "PC med denne QR kode er allerede registreret!\n";
-            registeredPCInfo += SQLManager.GetRegisteredPCInfo(qrId);
+            registeredPCInfo += SQLManager.GetRegisteredPCInfo(qrId.ToLower());
 
             MessageBox.Show(registeredPCInfo);
         }
@@ -178,21 +178,21 @@ namespace UdlaansSystem
             string pcDeleted = "PC'en er blevet slettet fra databasen.";
             string pcNotFound = "PC'en kunne ikke findes i databasen.";
             string pcActiveLoan = "Det er ikke muligt at slette udlånte PC'er!";
-            string deleteQR = QRIDInput.Text;
+            string deleteQR = QRIDInput.Text.ToLower();
 
-            bool pcIsHome = true;
+            bool pcInLoan = true;
 
-            pcIsHome = CheckForExistingLoan(pcIsHome, deleteQR);
+            pcInLoan = CheckForExistingLoan(pcInLoan, deleteQR.ToLower());
 
-            if (pcIsHome == true)
+            if (pcInLoan == false)
             {
-                if (CheckForExistingPC(true, QRIDInput.Text) != true)
+                if (CheckForExistingPC(true, QRIDInput.Text.ToLower()) != true)
                 {
                     MessageBox.Show(pcNotFound);
                 }
-                else if (CheckForExistingPC(true, QRIDInput.Text) == true) // || loan exists == false
+                else if (CheckForExistingPC(true, QRIDInput.Text.ToLower()) == true) // || loan exists == false
                 {
-                    SQLManager.DeletePC(deleteQR);
+                    SQLManager.DeletePC(deleteQR.ToLower());
                     MessageBox.Show(pcDeleted);
                 }
             }

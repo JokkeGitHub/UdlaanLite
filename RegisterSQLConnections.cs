@@ -20,7 +20,7 @@ namespace UdlaansSystem
 
             cmd.CommandText = @"INSERT INTO pc (qrId, serial, model) VALUES (@qrId, @serial, @model)";
             cmd.Parameters.AddWithValue("@qrId", _qrID.ToLower());
-            cmd.Parameters.AddWithValue("@serial", _serialNumber);
+            cmd.Parameters.AddWithValue("@serial", _serialNumber.ToLower());
             cmd.Parameters.AddWithValue("@model", _pcModel.ToLower());
 
             conn.Open();
@@ -95,7 +95,7 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                if (dataRow["qrId"].ToString() == qrId)
+                if (dataRow["qrId"].ToString() == qrId.ToLower())
                 {
                     qrIdExists = true;
                 }
@@ -124,7 +124,7 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                if (dataRow["qrId"].ToString() == qrId)
+                if (dataRow["qrId"].ToString() == qrId.ToLower())
                 {
                     registeredPCInfo = $"QR ID: { dataRow["qrId"] } \nLøbenummer: { dataRow["serial"] } \nModel: { dataRow["model"] }";
                 }

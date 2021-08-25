@@ -31,7 +31,7 @@ namespace UdlaansSystem
             dataAdapter.Fill(dataTable);
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                if (dataRow["qrId"].ToString() == qrId)
+                if (dataRow["qrId"].ToString() == qrId.ToLower())
                 {
                     tempUniLogin = dataRow["uniLogin"].ToString();
                 }
@@ -96,6 +96,7 @@ namespace UdlaansSystem
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"DELETE FROM Loaner WHERE NOT EXISTS (SELECT * FROM Loan WHERE uniLogin = Loaner.login)";
+            //cmd.CommandText = @"SELECT * FROM PC WHERE NOT EXISTS (SELECT * FROM Loan WHERE qrId = PC.qrId);";
             cmd.ExecuteNonQuery();
 
             conn.Close();
