@@ -113,14 +113,13 @@ namespace UdlaansSystem
             DateTime startDate = DateTime.Now;
             //DateTime endDate = (DateTime)DateInput.SelectedDate;
 
-            if (uniLoginExists == false)
+            if (uniLoginExists == false || isTeacher == true)
             {
                 bool pcInLoan = true;
                 string message = "Denne besked er opstaet ved en fejl";
+
                 pcInStock = CheckForPCInStock(pcInStock, qrId);
-
                 pcInLoan = CheckForPCInLoan(pcInLoan, qrId);
-
 
                 if (pcInStock == false)
                 {
@@ -133,8 +132,7 @@ namespace UdlaansSystem
 
                 if (pcInStock == true && pcInLoan == false)
                 {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent);
-                    SQLManager.CreateLoan(uniLogin, qrId, comment, startDate);
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent, qrId, comment, startDate);
                     LoanConfirmationMessageBox();
                     Clear();
                 }
@@ -208,7 +206,7 @@ namespace UdlaansSystem
         {
             if (uniLogin == "service")
             {
-                isStudent = 1;
+                isStudent = 0;
             }
             else
             {
@@ -234,15 +232,16 @@ namespace UdlaansSystem
         #endregion
 
         #region PASS ON LOANER DATA TO DATABASE
-        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent)
+        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent, string qrId, string comment, DateTime startDate)
         {
             if (uniLoginExists == false)
             {
                 SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
+                SQLManager.CreateLoan(uniLogin, qrId, comment, startDate);
             }
             else if (uniLoginExists == true && isStudent == 0)
             {
-
+                SQLManager.CreateLoan(uniLogin, qrId, comment, startDate);
             }
         }
         #endregion

@@ -40,7 +40,7 @@ namespace UdlaansSystem
 
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = @"SELECT (login) FROM Loaner WHERE (login) = (@login);";
-            cmd.Parameters.AddWithValue("@login", uniLogin);
+            cmd.Parameters.AddWithValue("@login", uniLogin.ToLower());
             cmd.ExecuteNonQuery();
 
             DataTable dataTable = new DataTable();
@@ -53,14 +53,10 @@ namespace UdlaansSystem
                 {
                     uniLoginExists = true;
                 }
-
-                if (dataRow["login"].ToString() == "service")
-                {
-                    uniLoginExists = false;
-                }
             }            
 
             conn.Close();
+
             return uniLoginExists;
         }
 
