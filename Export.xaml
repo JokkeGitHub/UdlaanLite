@@ -116,17 +116,17 @@
 
             <!-- INPUT TEXTBOXES -->
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="UniLoginInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4" MaxLength="8" PreviewTextInput="LetterAndNumberPreviewTextInput" PreviewKeyDown="spacekey_PreviewKeyDown"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" KeyDown="QRInput_KeyDown" Grid.Row="4" Grid.Column="7" Grid.RowSpan="2" Grid.ColumnSpan="5" MaxLength="23" PreviewTextInput="LetterAndNumberPreviewTextInput" PreviewKeyDown="spacekey_PreviewKeyDown"></TextBox>
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="NameInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="CommentInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="PhonenumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50"  Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="8" PreviewTextInput="NumberValidationTextBox" PreviewKeyDown="spacekey_PreviewKeyDown"></TextBox>
-        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" KeyDown="QRInput_KeyDown" Grid.Row="16" Grid.Column="7" Grid.RowSpan="2" Grid.ColumnSpan="5" MaxLength="23" PreviewTextInput="LetterAndNumberPreviewTextInput" PreviewKeyDown="spacekey_PreviewKeyDown"></TextBox>
 
         <!-- LABELS -->
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="3" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="UNILoginLabel">UNI Login/ Service</Label>
+        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="3" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="NameLabel">Indtast navn</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="CommentLabel">Kommentar / Begrundelse</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="11" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="PhonenumberLabel">Indtast telefonnummer</Label>
-        <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="15" Grid.Column="8" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="13" Grid.RowSpan="1" Grid.ColumnSpan="8" Name="ListLabel">Skannede PC'er</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="2" Grid.Column="3" Grid.RowSpan="1" Grid.ColumnSpan="2" Name="StudentCheckBoxLabel">Udlån</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="2" Grid.Column="5" Grid.RowSpan="1" Grid.ColumnSpan="2" Name="ServiceCheckBoxLabel">Service</Label>
