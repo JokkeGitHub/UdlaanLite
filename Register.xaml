@@ -92,12 +92,12 @@
 
         <!-- INPUT TEXTBOXES -->
         <TextBox Style="{DynamicResource RoundTextBox}" x:Name="PcModelInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="50" Grid.Row="4" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="255"></TextBox>
-        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="SerialNumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="SerialNumberInput_KeyDown" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="16"></TextBox>
-        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRIDInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="QRIDInput_KeyDown" FontSize="50" Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="23"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="SerialNumberInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="SerialNumberInput_KeyDown" FontSize="50" Grid.Row="8" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="50" PreviewTextInput="LetterAndNumberPreviewTextInput" PreviewKeyDown="spacekey_PreviewKeyDown"></TextBox>
+        <TextBox Style="{DynamicResource RoundTextBox}" x:Name="QRIDInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" KeyDown="QRIDInput_KeyDown" FontSize="50" Grid.Row="12" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="10" MaxLength="23" PreviewTextInput="LetterAndNumberPreviewTextInput" PreviewKeyDown="spacekey_PreviewKeyDown"></TextBox>
 
         <!-- LABELS -->
         <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="8" Name="ModelLabel">Indtast PC'ens model</Label>
-        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="8" Name="SerialLabel">Indtast PC'ens "løbenummer"</Label>
+        <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="8" Name="SerialLabel">Indtast PC'ens serienummer</Label>
         <Label Foreground="White" Padding="0" FontSize="26" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="8" Name="QRLabel">Tryk på feltet og skan QR kode</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="7" Grid.Column="13" Grid.ColumnSpan="3" x:Name="ListLabel">Indtastede "løbenumre"</Label>
         <Label Foreground="White" FontSize="26" Padding="0" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Name="DeletePcCheckBoxLabel">Slet en PC</Label>

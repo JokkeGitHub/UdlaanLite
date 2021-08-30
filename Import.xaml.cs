@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,11 +47,11 @@ namespace UdlaansSystem
 
         public void ReturnPC(string qrId)
         {
-            string tempUniLogin = SQLManager.GetUniLoginFromLoan(qrId);
+            string tempUniLogin = SQLManager.GetUniLoginFromLoan(qrId.ToLower());
 
             if (tempUniLogin != "")
             {
-                SQLManager.DeleteLoanAndLoaner(qrId);
+                SQLManager.DeleteLoanAndLoaner(qrId.ToLower());
             }
 
             ClearInputField();
@@ -60,7 +61,7 @@ namespace UdlaansSystem
 
         public void DeleteLoan(string qrId)
         {
-            SQLManager.DeleteLoanAndLoaner(qrId);
+            SQLManager.DeleteLoanAndLoaner(qrId.ToLower());
         }
 
         public void ClearInputField()
@@ -87,6 +88,22 @@ namespace UdlaansSystem
         private void BtnClearInput_Click(object sender, RoutedEventArgs e)
         {
             ClearInputField();
+        }
+
+        //Letters & Numbers
+        private void LetterAndNumberPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^a-zA-Z0-9]+$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        //No spaces allowed
+        private void spacekey_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

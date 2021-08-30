@@ -84,10 +84,10 @@
         </Grid.RowDefinitions>
 
         <!-- BUTTONS -->
-        <Button Style="{DynamicResource RoundButton}" Name="BtnShowLoaners" BorderBrush="Black" BorderThickness="2" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2">Lånere</Button>
-        <Button Style="{DynamicResource RoundButton}" Name="BtnShowPCs" BorderBrush="Black" BorderThickness="2" FontSize="26" Click="BtnShowPCs_Click" Grid.Row="1" Grid.Column="4" Grid.RowSpan="1" Grid.ColumnSpan="2">Alle PC'er</Button>
-        <Button Style="{DynamicResource RoundButton}" Name="BtnShowAvailablePCs" BorderBrush="Black" BorderThickness="2" Padding="0" FontSize="26" Click="BtnShowAvailablePCs_Click" Grid.Row="1" Grid.Column="7" Grid.RowSpan="1" Grid.ColumnSpan="2">Ledige PC'er</Button>
-        <Button Style="{DynamicResource RoundButton}" Name="BtnShowLoans" BorderBrush="Black" BorderThickness="2" FontSize="26" Click="BtnShowLoans_Click" Grid.Row="1" Grid.Column="10" Grid.RowSpan="1" Grid.ColumnSpan="2">Aktive Lån</Button>
+        <Button Style="{DynamicResource RoundButton}" Name="BtnShowLoaners" BorderBrush="Black" BorderThickness="2" FontSize="26" Click="BtnShowLoaners_Click" Grid.Row="1" Grid.Column="12" Grid.RowSpan="1" Grid.ColumnSpan="2">Lånere</Button>
+        <Button Style="{DynamicResource RoundButton}" Name="BtnShowPCs" BorderBrush="Black" BorderThickness="2" FontSize="26" Click="BtnShowPCs_Click" Grid.Row="1" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2">Alle PC'er</Button>
+        <Button Style="{DynamicResource RoundButton}" Name="BtnShowAvailablePCs" BorderBrush="Black" BorderThickness="2" Padding="0" FontSize="26" Click="BtnShowAvailablePCs_Click" Grid.Row="1" Grid.Column="5" Grid.RowSpan="1" Grid.ColumnSpan="2">Ledige PC'er</Button>
+        <Button Style="{DynamicResource RoundButton}" Name="BtnShowLoans" BorderBrush="Black" BorderThickness="2" Padding="0" FontSize="26" Click="BtnShowLoans_Click" Grid.Row="1" Grid.Column="9" Grid.RowSpan="1" Grid.ColumnSpan="2">Lån og Service</Button>
         <!--<Button Style="{DynamicResource RoundButton}" Name="BtnShowExpired" BorderBrush="Black" BorderThickness="2" FontSize="26" Click="BtnShowExpired_Click" Grid.Row="1" Grid.Column="13" Grid.RowSpan="1" Grid.ColumnSpan="2">Udløbne Lån</Button>
         -->
         
@@ -102,7 +102,7 @@
         <TextBox Style="{DynamicResource RoundTextBox}" Name="BtnSearchInput" BorderBrush="Black" BorderThickness="2" TextAlignment="Center" FontSize="26" Grid.Row="3" Grid.Column="6" Grid.RowSpan="1" Grid.ColumnSpan="4" KeyUp="BtnSearchInput_KeyUp"></TextBox>
 
         <!-- LABELS -->
-        <Label Foreground="White" FontSize="22" Grid.Row="4" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="5" Padding="0">Indtast søgeord i feltet</Label>
+        <Label Name="SerachLabel" Foreground="White" FontSize="22" Grid.Row="4" Grid.Column="6" Grid.RowSpan="2" Grid.ColumnSpan="5" Padding="0">Vælg kategori og søg</Label>
 
         <!-- LISTVIEW -->
         <ListView ItemContainerStyle="{DynamicResource BorderedItem}"  Name="DataGridView" BorderThickness="2" FontSize="22" Grid.Row="5" Grid.Column="1" Grid.RowSpan="14" Grid.ColumnSpan="14">
@@ -126,13 +126,13 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column1}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="250" DisplayMemberBinding="{Binding Column2}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column3}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column2}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="175" DisplayMemberBinding="{Binding Column3}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
                     <GridViewColumn Header="" Width="130" DisplayMemberBinding="{Binding Column4}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="130" DisplayMemberBinding="{Binding Column5}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="150" DisplayMemberBinding="{Binding Column6}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="250" DisplayMemberBinding="{Binding Column7}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
-                    <GridViewColumn Header="" Width="135" DisplayMemberBinding="{Binding Column8}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="110" DisplayMemberBinding="{Binding Column5}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="110" DisplayMemberBinding="{Binding Column6}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="515" DisplayMemberBinding="{Binding Column7}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
+                    <GridViewColumn Header="" Width="0" DisplayMemberBinding="{Binding Column8}" HeaderContainerStyle="{StaticResource HeaderStyle}"></GridViewColumn>
                 </GridView>
             </ListView.View>
 

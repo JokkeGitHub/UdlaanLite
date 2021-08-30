@@ -12,16 +12,16 @@ namespace UdlaansSystem
 
         #region CREATING NEW LOANS AND LOANERS
 
-        public static void CreateLoaner(string uniLogin, string name, string comment, string phone, int isStudent)
+        public static void CreateLoaner(string uniLogin, string name, string phone, int isStudent)
         {
-            ObjectLoaner addLoaner = new ObjectLoaner(uniLogin, name, comment, phone, isStudent);
-            ExportSQLConnections.CreateLoaner(addLoaner.UNILogin, addLoaner.Name, addLoaner.Comment, addLoaner.Phone, addLoaner.IsStudent);
+            ObjectLoaner addLoaner = new ObjectLoaner(uniLogin, name, phone, isStudent);
+            ExportSQLConnections.CreateLoaner(addLoaner.UNILogin, addLoaner.Name, addLoaner.Phone, addLoaner.IsStudent);
         }
 
-        public static void CreateLoan(string uniLogin, string qrId, DateTime startDate)
+        public static void CreateLoan(string uniLogin, string qrId, string comment, DateTime startDate)
         {
-            ObjectLoan addLoan = new ObjectLoan(uniLogin, qrId, startDate);
-            ExportSQLConnections.CreateLoan(addLoan.UNILogin, addLoan.QRID, addLoan.StartDate);
+            ObjectLoan addLoan = new ObjectLoan(uniLogin, qrId, comment, startDate);
+            ExportSQLConnections.CreateLoan(addLoan.UNILogin, addLoan.QRID, addLoan.Comment, addLoan.StartDate);
         }
 
         #endregion
@@ -50,9 +50,9 @@ namespace UdlaansSystem
 
         public static bool CheckLoanTableForQRID(string qrId)
         {
-            bool pcInStock = ExportSQLConnections.CheckLoanTableForQR(qrId);
+            bool pcInLoan = ExportSQLConnections.CheckLoanTableForQR(qrId);
 
-            return pcInStock;
+            return pcInLoan;
         }
 
         public static string GetActiveStudentLoanInfo(string uniLogin)

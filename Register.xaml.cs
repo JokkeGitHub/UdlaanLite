@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
 using QRCoder;
+using System.Text.RegularExpressions;
 
 namespace UdlaansSystem
 {
@@ -46,7 +47,15 @@ namespace UdlaansSystem
                 try
                 {
                     e.Handled = true;
-                    RegisterPC();
+
+                    if (DeletePcCheckBox.IsChecked == false)
+                    {
+                        RegisterPC();
+                    }
+                    else if (DeletePcCheckBox.IsChecked == true)
+                    {
+                        Delete();
+                    }
                 }
                 catch (Exception)
                 { }
@@ -61,10 +70,10 @@ namespace UdlaansSystem
             NoEmptyFields = CheckForEmptyFields(NoEmptyFields);
 
             bool qrIdExists = true;
-            string qrId = QRIDInput.Text;
+            string qrId = QRIDInput.Text.ToLower();
 
-            string serialNumber = SerialNumberInput.Text;
-            string pcModel = PcModelInput.Text;
+            string serialNumber = SerialNumberInput.Text.ToLower();
+            string pcModel = PcModelInput.Text.ToLower();
 
             if (NoEmptyFields == true)
             {
@@ -103,7 +112,7 @@ namespace UdlaansSystem
             {
                 SerialLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
-            else if (QRIDInput.Text.Length < 11)
+            else if (QRIDInput.Text.Length < 6)
             {
                 QRLabel.Foreground = new SolidColorBrush(Colors.Red);
             }
@@ -123,13 +132,19 @@ namespace UdlaansSystem
 
             return qrIdExists;
         }
+        public bool CheckForExistingLoan(bool qrIdExists, string qrId)
+        {
+            qrIdExists = SQLManager.CheckLoanTableForQRID(qrId.ToLower());
+
+            return qrIdExists;
+        }
         #endregion
 
         #region MESSSAGEBOXES
         public void RegisteredPCMessageBox(string qrId)
         {
             string registeredPCInfo = "PC med denne QR kode er allerede registreret!\n";
-            registeredPCInfo += SQLManager.GetRegisteredPCInfo(qrId);
+            registeredPCInfo += SQLManager.GetRegisteredPCInfo(qrId.ToLower());
 
             MessageBox.Show(registeredPCInfo);
         }
@@ -162,18 +177,33 @@ namespace UdlaansSystem
         {
             string pcDeleted = "PC'en er blevet slettet fra databasen.";
             string pcNotFound = "PC'en kunne ikke findes i databasen.";
-            string deleteQR = QRIDInput.Text;
+            string pcActiveLoan = "Det er ikke muligt at slette udlånte PC'er!";
+            string deleteQR = QRIDInput.Text.ToLower();
 
-            if (CheckForExistingPC(true, QRIDInput.Text) != true)
-            {
-                MessageBox.Show(pcNotFound);
-            }
-            else if(CheckForExistingPC(true, QRIDInput.Text) == true)
-            {
-                SQLManager.DeletePC(deleteQR);   
-                MessageBox.Show(pcDeleted);
-            }
+            bool pcInLoan = true;
 
+            pcInLoan = CheckForExistingLoan(pcInLoan, deleteQR.ToLower());
+
+            if (pcInLoan == false)
+            {
+                if (CheckForExistingPC(true, QRIDInput.Text.ToLower()) != true)
+                {
+                    MessageBox.Show(pcNotFound);
+                }
+                else if (CheckForExistingPC(true, QRIDInput.Text.ToLower()) == true) // || loan exists == false
+                {
+                    SQLManager.DeletePC(deleteQR.ToLower());
+                    MessageBox.Show(pcDeleted);
+                }
+            }
+            else
+            {
+                MessageBox.Show(pcActiveLoan);
+            }
+        }
+
+        private void CheckLoanTableForQR(string qrId)
+        {
 
         }
         #endregion
@@ -252,7 +282,7 @@ namespace UdlaansSystem
                 SerialLabel.Visibility = Visibility.Visible;
                 SerialNumberInput.Visibility = Visibility.Visible;
                 BtnRegister.Visibility = Visibility.Visible;
-                
+
                 ListLabel.Visibility = Visibility.Hidden;
                 BtnAddSerialToList.Visibility = Visibility.Hidden;
                 SerialMultiInput.Visibility = Visibility.Hidden;
@@ -307,6 +337,25 @@ namespace UdlaansSystem
             SerialNumberInput.Clear();
         }
         #endregion
+
+        #region REGEX
+
+        //Letters & Numbers
+        private void LetterAndNumberPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^a-zA-Z0-9]+$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        //No spaces allowed
+        private void spacekey_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
+
         /*
         public void CreateFolderNewQRCodes()
         {

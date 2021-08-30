@@ -43,19 +43,23 @@ namespace UdlaansSystem
         */
         #endregion
 
-        #region PHONENUMBER
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-        #endregion
-
         // Submit region needs clean-up
         #region SUBMIT
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            Submit();
+            LoginCheck();
+        }
+
+        public void LoginCheck()
+        {
+            if (UniLoginInput.Text == "")
+            {
+                MessageBox.Show("Udfyld UNI Login");
+            }
+            else
+            {
+                Submit();
+            }
         }
 
         public void Submit()
@@ -71,13 +75,19 @@ namespace UdlaansSystem
 
             int isStudent = 1;
 
+            /*
+            string nameTemp = NameInput.Text.ToLower();
+            string phoneTemp = PhonenumberInput.Text;
+            string commentTemp = CommentInput.Text.ToLower();
+            string qrIdTemp = QRInput.Text.ToLower();*/
+
             string name = NameInput.Text.ToLower();
             string phone = PhonenumberInput.Text;
-            string comment = CommentInput.Text;
+            string comment = CommentInput.Text.ToLower();
+            string qrId = QRInput.Text.ToLower();
 
             bool isTeacher = false;
 
-            string qrId = QRInput.Text;
             bool pcInStock = false;
 
 
@@ -103,63 +113,37 @@ namespace UdlaansSystem
             DateTime startDate = DateTime.Now;
             //DateTime endDate = (DateTime)DateInput.SelectedDate;
 
-            if (uniLoginExists == false && isTeacher == false)
+            if (uniLoginExists == false || isTeacher == true)
             {
-                pcInStock = CheckForPCInStock(pcInStock, qrId);
+                bool pcInLoan = true;
+                string message = "Denne besked er opstaet ved en fejl";
 
-                if (pcInStock == true)
+                pcInStock = CheckForPCInStock(pcInStock, qrId);
+                pcInLoan = CheckForPCInLoan(pcInLoan, qrId);
+
+                if (pcInStock == false)
                 {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, comment, phone, isStudent);
-                    SQLManager.CreateLoan(uniLogin, qrId, startDate);
+                    message = $"PC'en med ID {qrId} er ikke registreret i databasen!";
+                }
+                else if (pcInLoan == true)
+                {
+                    message = SQLManager.GetActivePCNotInStockInfo(qrId);
+                }
+
+                if (pcInStock == true && pcInLoan == false)
+                {
+                    PassOnLoanerData(uniLoginExists, uniLogin, name, phone, isStudent, qrId, comment, startDate);
                     LoanConfirmationMessageBox();
                     Clear();
+                }
+                else
+                {
+                    PCNotInStockMessageBox(message);
                 }
             }
             else if (uniLoginExists == true && isTeacher == false)
             {
                 ActiveLoanMessageBox(uniLogin);
-            }/*
-            else if (uniLoginExists == true && isTeacher == false && IsTeacherCheckBox.IsChecked == true)
-            {
-                UniLoginBelongsToStudentMessage();
-            }*/
-            else if (uniLoginExists == true && isTeacher == true && IsStudentCheckBox.IsChecked == true)
-            {
-                UniLoginBelongsToTeacherMessage();
-            }
-            else if (isTeacher == true)
-            {
-                // Ny metode for de her og henvis til den
-                List<string> qrMultiList = new List<string>();
-
-                if (QRInput.Text != "")
-                {
-                    QRMultiInput.Items.Add(QRInput.Text);
-                }
-
-                foreach (var pc in QRMultiInput.Items)
-                {
-                    pcInStock = CheckForPCInStock(pcInStock, pc.ToString());
-
-                    if (pcInStock == true)
-                    {
-                        qrMultiList.Add(pc.ToString());
-                    }
-                }
-
-                if (qrMultiList.Count != 0)
-                {
-                    PassOnLoanerData(uniLoginExists, uniLogin, name, comment, phone, isStudent);
-
-                    foreach (string qr in qrMultiList)
-                    {
-                        SQLManager.CreateLoan(uniLogin, qr, startDate);
-                    }
-
-                    LoanConfirmationMessageBox();
-                    qrMultiList.Clear();
-                    Clear();
-                }
             }
         }
 
@@ -220,7 +204,14 @@ namespace UdlaansSystem
 
         public int CheckExistingUniLoginForStudentOrTeacher(int isStudent, string uniLogin)
         {
-           isStudent =  SQLManager.CheckIsStudentOrTeacher(isStudent, uniLogin);
+            if (uniLogin == "service")
+            {
+                isStudent = 0;
+            }
+            else
+            {
+                isStudent = SQLManager.CheckIsStudentOrTeacher(isStudent, uniLogin);
+            }
 
             return isStudent;
         }
@@ -241,15 +232,16 @@ namespace UdlaansSystem
         #endregion
 
         #region PASS ON LOANER DATA TO DATABASE
-        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string comment, string phone, int isStudent)
+        public void PassOnLoanerData(bool uniLoginExists, string uniLogin, string name, string phone, int isStudent, string qrId, string comment, DateTime startDate)
         {
             if (uniLoginExists == false)
             {
-                SQLManager.CreateLoaner(uniLogin, name, comment, phone, isStudent);
+                SQLManager.CreateLoaner(uniLogin, name, phone, isStudent);
+                SQLManager.CreateLoan(uniLogin, qrId, comment, startDate);
             }
             else if (uniLoginExists == true && isStudent == 0)
             {
-
+                SQLManager.CreateLoan(uniLogin, qrId, comment, startDate);
             }
         }
         #endregion
@@ -259,32 +251,15 @@ namespace UdlaansSystem
         {
             pcInStock = SQLManager.CheckPCTableForQRID(qrId);
 
-            if (pcInStock == true)
-            {
-                pcInStock = CheckForPCInLoan(pcInStock, qrId);
-            }
-            else
-            {
-                PCNotInStockMessageBox(qrId);
-            }
 
             return pcInStock;
         }
 
-        public bool CheckForPCInLoan(bool pcInStock, string qrId)
+        public bool CheckForPCInLoan(bool pcInLoan, string qrId)
         {
-            pcInStock = SQLManager.CheckLoanTableForQRID(qrId);
+            pcInLoan = SQLManager.CheckLoanTableForQRID(qrId);
 
-            if (pcInStock == true)
-            {
-                return pcInStock;
-            }
-            else
-            {
-                PCNotInStockMessageBox(qrId);
-            }
-
-            return pcInStock;
+            return pcInLoan;
         }
         #endregion
 
@@ -295,6 +270,8 @@ namespace UdlaansSystem
         {
             if (IsStudentCheckBox.IsChecked == true)
             {
+                UniLoginInput.IsReadOnly = false;
+
                 ToServiceCheckBox.IsChecked = false;
                 QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
@@ -311,13 +288,17 @@ namespace UdlaansSystem
                 CommentInput.Visibility = Visibility.Hidden;
 
                 UniLoginInput.Text = "";
+
+                BtnSubmit.Content = "Registrere Udlån";
             }
         }
-        
+
         private void ToServiceCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (ToServiceCheckBox.IsChecked == true)
             {
+                UniLoginInput.IsReadOnly = true;
+
                 IsStudentCheckBox.IsChecked = false;
                 QRMultiInput.Items.Clear();
                 QRMultiInput.Visibility = Visibility.Hidden;
@@ -334,6 +315,8 @@ namespace UdlaansSystem
                 CommentInput.Visibility = Visibility.Visible;
 
                 UniLoginInput.Text = "Service";
+
+                BtnSubmit.Content = "Registrere Service";
             }
         }
         #endregion
@@ -347,8 +330,8 @@ namespace UdlaansSystem
                 {
                     e.Handled = true;
 
-                    Submit();
-                    
+                    LoginCheck();
+
                 }
                 catch (Exception) { }
             }
@@ -390,17 +373,17 @@ namespace UdlaansSystem
             MessageBox.Show(activeLoanInfo);
         }
 
-        public void PCNotInStockMessageBox(string qrId)
+        public void PCNotInStockMessageBox(string message)
         {
+            //string pcNotInStockInfo = $"PC'en med ID {qrId} er ikke registreret i databasen!";
+            MessageBox.Show(message);
+            /*
             string pcNotInStockInfo = "";
-            pcNotInStockInfo += SQLManager.GetActivePCNotInStockInfo(qrId);
+            pcNotInStockInfo = SQLManager.GetActivePCNotInStockInfo(qrId);
 
-            if (pcNotInStockInfo == "")
+            if (pcNotInStockInfo != "")
             {
-                pcNotInStockInfo = $"PC'en med QR {qrId} er ikke registreret i databasen!";
-            }
-
-            MessageBox.Show(pcNotInStockInfo);
+            }*/
         }
 
         public void LoanConfirmationMessageBox()
@@ -442,12 +425,44 @@ namespace UdlaansSystem
 
         public void Clear()
         {
-            UniLoginInput.Clear();
+            if (UniLoginInput.Text != "Service")
+            {
+                UniLoginInput.Clear();
+            }
             NameInput.Clear();
             PhonenumberInput.Clear();
+            CommentInput.Clear();
             QRInput.Clear();
             QRMultiInput.Items.Clear();
         }
         #endregion
+
+        #region REGEX INPUT FIELDS
+
+        //Numbers Only
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^0-9]+$");
+            regex.Replace(" ", "");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        //Letters & Numbers
+        private void LetterAndNumberPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^a-zA-Z0-9]+$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        //No spaces allowed
+        private void spacekey_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion
+
     }
 }

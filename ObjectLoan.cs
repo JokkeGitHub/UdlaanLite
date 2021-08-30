@@ -10,7 +10,7 @@ namespace UdlaansSystem
     {
         private string _uniLogin;
         private string _qrId;
-
+        private string _comment;
         private DateTime _startDate;
 
         public string UNILogin
@@ -35,6 +35,17 @@ namespace UdlaansSystem
                 this._qrId = value;
             }
         }
+        public string Comment
+        {
+            get
+            {
+                return this._comment;
+            }
+            set
+            {
+                this._comment = value;
+            }
+        }
 
         public DateTime StartDate
         {
@@ -48,11 +59,12 @@ namespace UdlaansSystem
             }
         }
 
-        public ObjectLoan(string _uniLogin, string _qrId, DateTime _startDate)
+        public ObjectLoan(string _uniLogin, string _qrId, string _comment, DateTime _startDate)
         {
             // Måske find ud af at få foreign keys med
             UNILogin = _uniLogin;
             QRID = _qrId;
+            Comment = _comment;
             StartDate = _startDate;
         }
     }
